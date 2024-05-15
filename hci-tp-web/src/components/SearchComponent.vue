@@ -1,9 +1,9 @@
 <template>
   <v-card class="custom-card" height="4rem" flat>
     <v-toolbar dense flat class="custom-toolbar">
-      <v-icon class="custom-icon">mdi-magnify</v-icon>
+      <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
       <v-text-field class="custom-text-field" hide-details single-line outlined></v-text-field>
-      <v-icon class="custom-icon">mdi-filter</v-icon>
+      <v-icon class="custom-icon mr-2 ml-2">mdi-filter</v-icon>
     </v-toolbar>
   </v-card>
 </template>
@@ -24,15 +24,11 @@
 
 .custom-icon {
   color: black;
-  padding: 0.5rem; /* Reducido el espaciado alrededor del ícono */
 }
 
 .custom-text-field {
   background-color: rgb(var(--v-theme-primary_v));
-  
-  border: none;
   border-radius: 3rem; /* Ajustado el valor de los bordes */
-  padding: 0.5rem 1rem; /* Añadido un espacio interno al campo de texto */
 }
 
 .custom-text-field:focus {

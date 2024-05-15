@@ -5,11 +5,11 @@
     <v-main >
       <div class="d-flex">
         <NavigationBar/>
-        <div class="flex-grow-1 custom-canvas-div">
+        <div class="flex-grow-1 custom-outer-canvas-div">
         <div >
-          <SearchComponent class=" mt-2 mb-4 ml-2 mr-2 "/>
+          <SearchComponent class="mt-2 mb-4"/>
         </div>
-        <div>
+        <div class="d-grid custom-inner-canvas-div">
           <!--CANVA-->
         </div>
       </div>
@@ -32,7 +32,10 @@ import SearchComponent from './components/SearchComponent.vue';
 </script>
 
 <style scoped>
-.custom-canvas-div {
+.custom-outer-canvas-div {
   background-color: rgb(var(--v-theme-secondary));
+}
+.custom-inner-canvas-div {
+  background-color: rgb(var(--v-theme-secondary-v));
 }
 </style>
