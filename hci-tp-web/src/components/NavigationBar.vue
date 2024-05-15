@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-layout>
-      <v-navigation-drawer class="drawer" v-model="drawer" >
+      <v-navigation-drawer class="drawer" v-model="drawer" permanent="true">
         <v-list-item class="drawer_header">CONNECTIT</v-list-item>
 
         <v-divider class="divider"></v-divider>
@@ -71,13 +71,13 @@ export default {
   }
   .drawer_header {
     font-size: 2.5rem;
-    color: rgb(var(--v-theme-tertiary));
+    color: rgb(var(--v-theme-primary_v));
     text-align: center;
   }
   .divider {
     border-width: 0.1rem;
-    border-color: rgb(var(--v-theme-background));
-    color: rgb(var(--v-theme-background));
+    border-color: rgb(var(--v-theme-primary_v));
+    color: rgb(var(--v-theme-primary_v));
   }
   .drawer_button {
     color: rgb(var(--v-theme-tertiary));
