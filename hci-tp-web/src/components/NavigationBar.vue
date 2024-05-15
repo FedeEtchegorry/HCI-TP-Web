@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-layout>
-      <v-navigation-drawer class="drawer" v-model="drawer" temporary>
+      <v-navigation-drawer class="drawer" v-model="drawer" >
         <v-list-item class="drawer_header">CONNECTIT</v-list-item>
 
         <v-divider class="divider"></v-divider>
@@ -38,12 +38,7 @@
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 100vh">
-        <div class="d-flex justify-center align-left h-100">
-          <v-btn 
-            @click.stop="toggleDrawer">
-            Toggle
-          </v-btn>
-        </div>
+        
       </v-main>
     </v-layout>
   </v-card>
@@ -53,7 +48,7 @@
 export default {
   data() {
     return {
-      drawer: false, // initialize drawer state
+      drawer: true, // initialize drawer state
       currentPage: '' // store the currently selected page
     };
   },
