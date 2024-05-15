@@ -1,23 +1,8 @@
 <template>
-  <v-card
-    class="custom-card"
-    height="4rem"
-    flat
-  >
-    <v-toolbar
-      dense
-      flat
-      class="custom-toolbar"
-    >
+  <v-card class="custom-card" height="4rem" flat>
+    <v-toolbar dense flat class="custom-toolbar">
       <v-icon class="custom-icon">mdi-magnify</v-icon>
-
-      <v-text-field
-        class="custom-text-field"
-        hide-details
-        single-line
-        outlined
-      />
-
+      <v-text-field class="custom-text-field" hide-details single-line outlined></v-text-field>
       <v-icon class="custom-icon">mdi-filter</v-icon>
     </v-toolbar>
   </v-card>
@@ -25,25 +10,33 @@
 
 <style scoped>
 .custom-card {
-  background-color: transparent; /* Color de fondo de la tarjeta */
-  border-radius: 0.5rem; /* Bordes redondeados de la tarjeta */
+  background-color: transparent;
+  border-radius: 0.5rem;
 }
 
 .custom-toolbar {
-  background-color: transparent; /* Color de fondo del campo de texto */
-  border-radius: 1rem; /* Bordes redondeados del toolbar */
+  background-color: transparent;
+  border-radius: 1rem;
+  display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .custom-icon {
-  color: black; /* Color del ícono */
-  padding: 1.7rem; /* Espaciado alrededor del ícono */
+  color: black;
+  padding: 0.5rem; /* Reducido el espaciado alrededor del ícono */
 }
 
 .custom-text-field {
-  background-color: rgb(var(--v-theme-primary_v)); /* Color de fondo del campo de texto */
-  border: none; /* Sin bordes */
-  border-radius: 5rem; /* Bordes redondeados */
+  background-color: rgb(var(--v-theme-primary_v));
+  
+  border: none;
+  border-radius: 3rem; /* Ajustado el valor de los bordes */
+  padding: 0.5rem 1rem; /* Añadido un espacio interno al campo de texto */
+}
+
+.custom-text-field:focus {
+  background-color: rgb(var(--v-theme-primary_v)); /* Mantener el mismo color de fondo */
+  box-shadow: none; /* Eliminar cualquier sombra al enfocar el campo */
 }
 </style>
