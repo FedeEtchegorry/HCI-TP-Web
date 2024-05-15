@@ -1,22 +1,20 @@
 <template>
   <v-app>
-      <!--Primer Pagina -->
-      <div class="d-flex flex-column">
-        <v-main>
-          <div class="d-flex">
-            <NavigationBar />
-            <div class="flex-grow-1 custom-outer-canvas-div custom-div">
-              <div>
-                <SearchComponent class="mt-2 mb-4" />
-              </div>
-              <div class="d-grid custom-inner-canvas-div">
-                <div></div>
-              </div>
-            </div>
-          </div>
-        </v-main>
+      <!-- Primer Página -->
+      <div class="d-flex flex-column vh-100">
+        <v-main class="d-flex flex-grow-1">
+          <NavigationBar />
+          <v-sheet class="d-flex flex-column flex-grow-1 custom-outer-canvas-div">
+            <v-sheet class="mt-2 mb-4" elevation="0" outlined color="transparent">
+              <SearchComponent />
+            </v-sheet>
+            <v-sheet class="d-flex flex-grow-1 ml-4 mr-4 mb-4 rounded-xl custom-inner-canvas-div">
+              <!-- Contenido adicional aquí -->
+            </v-sheet>
+          </v-sheet>
+        </v-main> 
       </div>
-      <!--Segunda Pagina -->
+      <!-- Segunda Página -->
       <div>
         <v-main>
         </v-main>
@@ -28,19 +26,24 @@
 import NavigationBar from './components/NavigationBar.vue';
 import SearchComponent from './components/SearchComponent.vue';
 
-//
+// 
 </script>
 
 <style scoped>
+.vh-100 {
+  height: 100vh;
+}
+
 .custom-outer-canvas-div {
   background-color: rgb(var(--v-theme-secondary));
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .custom-inner-canvas-div {
-  background-color: rgb(var(--v-theme-secondary-v));
-}
-
-.custom-div {
-  height: 50%; 
+  background-color: rgb(var(--v-theme-secondary_v));
+  flex-grow: 1;
+  /* Añadir otros estilos según sea necesario */
 }
 </style>
