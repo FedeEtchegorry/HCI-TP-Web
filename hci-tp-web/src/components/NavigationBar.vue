@@ -27,7 +27,7 @@
             <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'routines' }"
               @click="navigateTo('routines')">
               <template v-slot:prepend>
-                <v-icon class="icon">mdi-day</v-icon>
+                <v-icon class="icon">mdi-calendar-clock</v-icon>
               </template>
               <v-list-item-title class="text">ROUTINES</v-list-item-title>
             </v-list-item>
@@ -41,10 +41,10 @@
             </v-list-item>
           </v-list>
           <div class="d-flex justify-space-between icons_bottom">
-          <v-icon class="icon_bottom" @click="navigateTo('settings')">mdi-cog</v-icon>
-          <v-icon class="icon_bottom" @click="navigateTo('help')">mdi-help-circle-outline</v-icon>
+            <v-icon class="icon_bottom" @click="navigateTo('settings')">mdi-cog</v-icon>
+            <v-icon class="icon_bottom" @click="navigateTo('help')">mdi-help-circle-outline</v-icon>
           </div>
-        
+
         </v-navigation-drawer>
 
 
@@ -62,9 +62,6 @@ export default {
     };
   },
   methods: {
-    toggleDrawer() {
-      this.drawer = !this.drawer; // toggle drawer state
-    },
     navigateTo(page) {
       // Perform navigation based on the selected page
       console.log(`Navigating to ${page}`);
@@ -81,12 +78,15 @@ export default {
 }
 
 .drawer_header {
+  padding-top: 1rem;
+  padding-bottom: 0.75rem;
   font-size: 2.5rem;
   color: rgb(var(--v-theme-primary_v));
   text-align: center;
 }
 
 .divider {
+  padding-bottom: 1rem;
   color: rgb(var(--v-theme-primary_v));
   opacity: 1;
 }
@@ -103,7 +103,6 @@ export default {
 
 .drawer_elem.selected {
   background: rgba(var(--v-theme-blue_state));
-  /* Change background color of selected item */
 }
 
 .drawer_elem.selected .icon {
@@ -116,14 +115,17 @@ export default {
 
 /* Scoped styles for the text */
 .drawer_elem .text {
-  font-size: 1.3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
   /* Change text font size */
   color: rgb(var(--v-theme-primary));
 }
 
 /* Scoped styles for the icons */
 .drawer_elem .icon {
-  font-size: 1.6rem;
+  margin-left: 30%;
+  font-size: 2rem;
   /* Change icon font size */
   color: rgb(var(--v-theme-primary));
   opacity: 1;
@@ -135,12 +137,10 @@ export default {
   left: 0;
   width: 100%;
 }
+
 .icon_bottom {
   font-size: 3rem;
   color: rgb(var(--v-theme-primary_v));
   opacity: 1;
 }
 </style>
-
-
-<--!class="d-flex justify-space-between"-->

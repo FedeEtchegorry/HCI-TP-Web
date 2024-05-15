@@ -24,11 +24,13 @@
 
 .custom-icon {
   color: black;
+  font-size: 2rem;
 }
 
 .custom-text-field {
   background-color: rgb(var(--v-theme-primary_v));
   border-radius: 3rem; /* Ajustado el valor de los bordes */
+  
 }
 
 .custom-text-field:focus {
