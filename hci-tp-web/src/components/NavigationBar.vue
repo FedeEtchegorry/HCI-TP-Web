@@ -4,50 +4,21 @@
       <v-main style="height: 100vh">
         <v-navigation-drawer class="drawer" v-model="drawer" :permanent="true">
           <v-list-item class="drawer_header">CONNECTIT</v-list-item>
-
           <v-divider class="divider"></v-divider>
-
-          <v-list nav class="drawer_button">
-            <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'devices' }"
-              @click="navigateTo('devices')">
+          <v-list>
+            <v-list-item v-for="(item, key) in menuItems" :key="key"
+              :class="{ 'drawer_elem': true, 'selected': currentPage === key }" @click="navigateTo(key)">
               <template v-slot:prepend>
-                <v-icon class="icon">mdi-devices</v-icon>
+                <v-icon class="icon mr-2">{{ item.icon }}</v-icon> <!-- Added margin-right for spacing -->
+                <v-list-item-title class="text">{{ item.title }}</v-list-item-title>
               </template>
-              <v-list-item-title class="text">DISPOSITIVOS</v-list-item-title>
-            </v-list-item>
-
-            <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'rooms' }"
-              @click="navigateTo('rooms')">
-              <template v-slot:prepend>
-                <v-icon class="icon">mdi-home</v-icon>
-              </template>
-              <v-list-item-title class="text">HABITACIONES</v-list-item-title>
-            </v-list-item>
-
-            <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'routines' }"
-              @click="navigateTo('routines')">
-              <template v-slot:prepend>
-                <v-icon class="icon">mdi-calendar-clock</v-icon>
-              </template>
-              <v-list-item-title class="text">RUTINAS</v-list-item-title>
-            </v-list-item>
-
-            <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'users' }"
-              @click="navigateTo('users')">
-              <template v-slot:prepend>
-                <v-icon class="icon">mdi-account-multiple</v-icon>
-              </template>
-              <v-list-item-title class="text">USUARIOS</v-list-item-title>
             </v-list-item>
           </v-list>
           <div class="d-flex justify-space-between icons_bottom">
             <v-icon class="icon_bottom" @click="navigateTo('settings')">mdi-cog</v-icon>
             <v-icon class="icon_bottom" @click="navigateTo('help')">mdi-help-circle-outline</v-icon>
           </div>
-
         </v-navigation-drawer>
-
-
       </v-main>
     </v-layout>
   </v-card>
@@ -57,10 +28,17 @@
 export default {
   data() {
     return {
-      drawer: true, // initialize drawer state
-      currentPage: 'devices' // store the currently selected page
+      drawer: true,
+      currentPage: 'devices',
+      menuItems: {
+        'devices': { title: 'DISPOSITIVOS', icon: 'mdi-devices' },
+        'rooms': { title: 'HABITACIONES', icon: 'mdi-home' },
+        'routines': { title: 'RUTINAS', icon: 'mdi-calendar-clock' },
+        'users': { title: 'USUARIOS', icon: 'mdi-account-multiple' }
+      }
     };
   },
+
   methods: {
     navigateTo(page) {
       // Perform navigation based on the selected page
@@ -86,19 +64,19 @@ export default {
 }
 
 .divider {
-  padding-bottom: 1rem;
   color: rgb(var(--v-theme-primary_v));
   opacity: 1;
 }
 
-.drawer_button {
-  color: rgb(var(--v-theme-tertiary));
-}
-
 .drawer_elem {
-  border-radius: 0.5rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
   background: rgb(var(--v-theme-primary_v));
+  justify-content: center;
   color: rgb(var(--v-theme-primary));
+  align-items: center;
+  margin-bottom: 0.1rem;
+  border-radius: 0.5rem !important;
 }
 
 .drawer_elem.selected {
@@ -113,20 +91,14 @@ export default {
   color: rgb(var(--v-theme-primary_v));
 }
 
-/* Scoped styles for the text */
 .drawer_elem .text {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   font-size: 1.3rem;
-  /* Change text font size */
   color: rgb(var(--v-theme-primary));
+  font-weight: 500;
 }
 
-/* Scoped styles for the icons */
 .drawer_elem .icon {
-  margin-left: 30%;
   font-size: 2rem;
-  /* Change icon font size */
   color: rgb(var(--v-theme-primary));
   opacity: 1;
 }
@@ -134,13 +106,9 @@ export default {
 .icons_bottom {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.icon_bottom {
-  font-size: 3rem;
+  font-size: 2rem;
   color: rgb(var(--v-theme-primary_v));
   opacity: 1;
+  width: 100%;
 }
 </style>
