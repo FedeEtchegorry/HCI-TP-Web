@@ -13,7 +13,7 @@
               <template v-slot:prepend>
                 <v-icon class="icon">mdi-devices</v-icon>
               </template>
-              <v-list-item-title class="text">DEVICES</v-list-item-title>
+              <v-list-item-title class="text">DISPOSITIVOS</v-list-item-title>
             </v-list-item>
 
             <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'rooms' }"
@@ -21,7 +21,7 @@
               <template v-slot:prepend>
                 <v-icon class="icon">mdi-home</v-icon>
               </template>
-              <v-list-item-title class="text">ROOMS</v-list-item-title>
+              <v-list-item-title class="text">HABITACIONES</v-list-item-title>
             </v-list-item>
 
             <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'routines' }"
@@ -29,7 +29,7 @@
               <template v-slot:prepend>
                 <v-icon class="icon">mdi-calendar-clock</v-icon>
               </template>
-              <v-list-item-title class="text">ROUTINES</v-list-item-title>
+              <v-list-item-title class="text">RUTINAS</v-list-item-title>
             </v-list-item>
 
             <v-list-item class="drawer_elem" :class="{ 'selected': currentPage === 'users' }"
@@ -37,7 +37,7 @@
               <template v-slot:prepend>
                 <v-icon class="icon">mdi-account-multiple</v-icon>
               </template>
-              <v-list-item-title class="text">USERS</v-list-item-title>
+              <v-list-item-title class="text">USUARIOS</v-list-item-title>
             </v-list-item>
           </v-list>
           <div class="d-flex justify-space-between icons_bottom">
@@ -117,7 +117,7 @@ export default {
 .drawer_elem .text {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   /* Change text font size */
   color: rgb(var(--v-theme-primary));
 }
