@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       drawer: true, // initialize drawer state
-      currentPage: '' // store the currently selected page
+      currentPage: 'devices' // store the currently selected page
     };
   },
   methods: {
@@ -75,9 +75,10 @@ export default {
     text-align: center;
   }
   .divider {
-    border-width: 0.1rem;
-    border-color: rgb(var(--v-theme-primary_v));
+  
+
     color: rgb(var(--v-theme-primary_v));
+    opacity: 1;
   }
   .drawer_button {
     color: rgb(var(--v-theme-tertiary));
