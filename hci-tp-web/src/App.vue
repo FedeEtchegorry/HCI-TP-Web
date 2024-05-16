@@ -1,6 +1,5 @@
 <template>
   <v-app>
-      <!-- Primer Página -->
       <div class="d-flex flex-column vh-100">
         <v-main class="d-flex flex-grow-1">
           <NavigationBar />
@@ -13,11 +12,6 @@
             </v-sheet>
           </v-sheet>
         </v-main> 
-      </div>
-      <!-- Segunda Página -->
-      <div>
-        <v-main>
-        </v-main>
       </div>
   </v-app>
 </template>
