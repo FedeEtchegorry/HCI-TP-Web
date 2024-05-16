@@ -7,10 +7,10 @@
           <v-divider class="divider"></v-divider>
           <v-list>
             <v-list-item v-for="(item, key) in menuItems" :key="key"
-              :class="{ 'drawer_elem': true, 'selected': currentPage === key }" @click="navigateTo(key)">
+              :class="{ 'drawer_elem mr-1 ml-1 mb-1': true, 'selected': currentPage === key }" @click="navigateTo(key)">
               <template v-slot:prepend>
                 <v-icon class="icon mr-2">{{ item.icon }}</v-icon> <!-- Added margin-right for spacing -->
-                <v-list-item-title class="text">{{ item.title }}</v-list-item-title>
+                <v-list-item-title class="text ml-2">{{ item.title }}</v-list-item-title>
               </template>
             </v-list-item>
           </v-list>
@@ -51,7 +51,6 @@ export default {
 
 <style scoped>
 .drawer {
-  display: flex;
   background: rgb(var(--v-theme-primary));
 }
 
@@ -69,18 +68,13 @@ export default {
 }
 
 .drawer_elem {
-  margin-left: 0.1rem;
-  margin-right: 0.1rem;
   background: rgb(var(--v-theme-primary_v));
-  justify-content: center;
   color: rgb(var(--v-theme-primary));
-  align-items: center;
-  margin-bottom: 0.1rem;
   border-radius: 0.5rem !important;
 }
 
 .drawer_elem.selected {
-  background: rgba(var(--v-theme-blue_state));
+  background: rgb(var(--v-theme-blue_state));
 }
 
 .drawer_elem.selected .icon {
