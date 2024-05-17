@@ -5,7 +5,7 @@ import:
       <v-main style="height: 100vh">
         <v-navigation-drawer class="drawer" v-model="drawer" :permanent="true">
           <v-list-item class="drawer_header">CONNECTIT</v-list-item>
-          <v-divider class="divider"></v-divider>
+          <v-divider :thickness="3" class="divider"></v-divider>
           <v-list>
             <v-list-item v-for="(item, key) in menuItems" :key="key"
               :class="{ 'drawer_elem mr-1 ml-1 mb-1': true, 'selected': currentPage === key }" @click="navigateTo(key)">
@@ -15,7 +15,7 @@ import:
               </template>
             </v-list-item>
           </v-list>
-          <div class="icons_bottom">
+          <div class="bottom">
             <ProfileComponent></ProfileComponent>
           </div>
         </v-navigation-drawer>
@@ -24,33 +24,26 @@ import:
   </v-card>
 </template>
 <script setup>
+import { ref } from 'vue';
 import ProfileComponent from './ProfileComponent.vue';
-</script>
-<script>
-export default {
-  data() {
-    return {
-      drawer: true,
-      currentPage: 'devices',
-      menuItems: {
-        'devices': { title: 'DISPOSITIVOS', icon: 'mdi-devices' },
-        'rooms': { title: 'HABITACIONES', icon: 'mdi-home' },
-        'routines': { title: 'RUTINAS', icon: 'mdi-calendar-clock' },
-        'users': { title: 'USUARIOS', icon: 'mdi-account-multiple' }
-      }
-    };
-  },
+import DropdownHouses from './DropdownHouses.vue';
 
-  methods: {
-    navigateTo(page) {
-      // Perform navigation based on the selected page
-      console.log(`Navigating to ${page}`);
-      this.currentPage = page; // update the currently selected page
-    }
+const drawer = ref(true);
+const currentPage = ref('devices');
+const menuItems = ref({
+  devices: { title: 'DISPOSITIVOS', icon: 'mdi-devices' },
+  rooms: { title: 'HABITACIONES', icon: 'mdi-home' },
+  routines: { title: 'RUTINAS', icon: 'mdi-calendar-clock' },
+  users: { title: 'USUARIOS', icon: 'mdi-account-multiple' },
+});
+
+const navigateTo = (page) => {
+  if (page!=currentPage.value){
+  console.log(`Navigating to ${page}`);
+  currentPage.value = page;
   }
 };
 </script>
-
 <style scoped>
 .drawer {
   background: rgb(var(--v-theme-primary));
@@ -68,6 +61,7 @@ export default {
 
 .divider {
   color: rgb(var(--v-theme-primary_v));
+  
   opacity: 1;
 }
 
@@ -101,11 +95,12 @@ export default {
   opacity: 1;
 }
 
-.icons_bottom {
+.bottom {
   width: 100%;
   position: absolute;
   bottom: 0;
   color: rgb(var(--v-theme-primary_v));
   opacity: 1;
 }
+
 </style>
