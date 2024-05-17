@@ -4,6 +4,7 @@
       <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
       <v-text-field class="custom-text-field" hide-details single-line outlined></v-text-field>
       <v-icon class="custom-icon mr-2 ml-2">mdi-filter</v-icon>
+      <DropdownHouses class="dropdown mr-5 ml-2"></DropdownHouses>
     </v-toolbar>
   </v-card>
 </template>
@@ -36,5 +37,10 @@
 .custom-text-field:focus {
   background-color: rgb(var(--v-theme-primary_v)); /* Mantener el mismo color de fondo */
   box-shadow: none; /* Eliminar cualquier sombra al enfocar el campo */
+}
+.dropdown{
+  width: 20rem;
+  height: 3.5rem;
+  background-color: rgb(var(--v-theme-secondary_v))
 }
 </style>
