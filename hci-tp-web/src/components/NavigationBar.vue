@@ -1,3 +1,4 @@
+import: 
 <template>
   <v-card>
     <v-layout>
@@ -9,21 +10,22 @@
             <v-list-item v-for="(item, key) in menuItems" :key="key"
               :class="{ 'drawer_elem mr-1 ml-1 mb-1': true, 'selected': currentPage === key }" @click="navigateTo(key)">
               <template v-slot:prepend>
-                <v-icon class="icon mr-2">{{ item.icon }}</v-icon> <!-- Added margin-right for spacing -->
+                <v-icon class="icon mr-2">{{ item.icon }}</v-icon> 
                 <v-list-item-title class="text ml-2">{{ item.title }}</v-list-item-title>
               </template>
             </v-list-item>
           </v-list>
-          <div class="d-flex justify-space-between icons_bottom">
-            <v-icon class="icon_bottom" @click="navigateTo('settings')">mdi-cog</v-icon>
-            <v-icon class="icon_bottom" @click="navigateTo('help')">mdi-help-circle-outline</v-icon>
+          <div class="icons_bottom">
+            <ProfileComponent></ProfileComponent>
           </div>
         </v-navigation-drawer>
       </v-main>
     </v-layout>
   </v-card>
 </template>
-
+<script setup>
+import ProfileComponent from './ProfileComponent.vue';
+</script>
 <script>
 export default {
   data() {
@@ -57,9 +59,11 @@ export default {
 .drawer_header {
   padding-top: 1rem;
   padding-bottom: 0.75rem;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   color: rgb(var(--v-theme-primary_v));
   text-align: center;
+  font-weight: 900;
+  font-family:'Lucida Sans Unicode';
 }
 
 .divider {
@@ -98,11 +102,10 @@ export default {
 }
 
 .icons_bottom {
+  width: 100%;
   position: absolute;
   bottom: 0;
-  font-size: 2rem;
   color: rgb(var(--v-theme-primary_v));
   opacity: 1;
-  width: 100%;
 }
 </style>
