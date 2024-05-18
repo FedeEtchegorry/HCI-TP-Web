@@ -41,6 +41,6 @@
 .dropdown{
   width: 20rem;
   height: 3.5rem;
-  background-color: rgb(var(--v-theme-secondary_v))
+  background-color: rgb(var(--v-theme-secondary_v));
 }
 </style>

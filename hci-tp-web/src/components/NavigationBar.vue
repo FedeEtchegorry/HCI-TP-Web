@@ -4,7 +4,7 @@ import:
     <v-layout>
       <v-main style="height: 100vh">
         <v-navigation-drawer class="drawer" v-model="drawer" :permanent="true">
-          <v-list-item class="drawer_header">CONNECTIT</v-list-item>
+          <v-img :src="profileImage" class="logo-image"></v-img>
           <v-divider :thickness="3" class="divider"></v-divider>
           <v-list>
             <v-list-item v-for="(item, key) in menuItems" :key="key"
@@ -26,8 +26,7 @@ import:
 <script setup>
 import { ref } from 'vue';
 import ProfileComponent from './ProfileComponent.vue';
-import DropdownHouses from './DropdownHouses.vue';
-
+import profileImage from '../assets/connectit.png';
 const drawer = ref(true);
 const currentPage = ref('devices');
 const menuItems = ref({
@@ -49,14 +48,11 @@ const navigateTo = (page) => {
   background: rgb(var(--v-theme-primary));
 }
 
-.drawer_header {
-  padding-top: 1rem;
-  padding-bottom: 0.75rem;
-  font-size: 2.4rem;
-  color: rgb(var(--v-theme-primary_v));
-  text-align: center;
-  font-weight: 900;
-  font-family:'Lucida Sans Unicode';
+.logo-image{
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  margin-bottom: 1rem;
+  
 }
 
 .divider {
