@@ -1,12 +1,14 @@
 <template>
   <v-card class="custom-card" height="4rem" flat>
     <v-toolbar dense flat class="custom-toolbar">
+      
       <v-text-field class="custom-text-field ml-4" hide-details variant="outlined" single-line outlined rounded dense>
         <template v-slot:prepend-inner>
           <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
         </template>
       </v-text-field>
-      <v-icon class="custom-icon mr-2 ml-2">mdi-filter</v-icon>
+      <v-icon class="custom-icon mr-15 ml-2">mdi-filter</v-icon>
+      
       <DropdownHouses class="custom-dropdown mr-2 ml-2"></DropdownHouses>
       <v-icon class="custom-icon-2 mr-5">mdi-pencil</v-icon>
     </v-toolbar>
@@ -44,9 +46,12 @@ export default {
 }
 
 .custom-text-field {
+  max-width: unset;
+  min-width: 20rem;
   background-color: rgb(var(--v-theme-primary_v));
   border-radius: 1.5rem;
-  height: 3.5rem; 
+  height: 3.5rem;
+
 }
 
 
@@ -54,9 +59,17 @@ export default {
   background-color: rgb(var(--v-theme-primary_v));
   box-shadow: none;
 }
+.custom-container{
+  background-color: rgb(var(--v-theme-primary));;
+  border-color: aqua;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  box-sizing: border-box
+}
 
 .custom-dropdown {
-  width: 16rem;
+  max-width: 16rem;
+  min-width: 10rem;
   height: 3.5rem;
   background-color: rgb(var(--v-theme-primary_v));
   color: black

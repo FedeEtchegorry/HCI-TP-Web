@@ -45,6 +45,7 @@ const navigateTo = (page) => {
 </script>
 <style scoped>
 .drawer {
+  width: fit-content;
   background: rgb(var(--v-theme-primary));
 }
 
