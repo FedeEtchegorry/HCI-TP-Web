@@ -1,15 +1,7 @@
 <template>
     <v-container class="no-padding">
       <v-form>
-        <v-select
-          ref="homeSelect"
-          v-model="selectedOption"
-          :items="options"
-          required
-          rounded
-          hide-selected
-          variant="outlined"    
-        ></v-select>
+        <v-select ref="homeSelect" v-model="selectedOption" :items="options" required rounded hide-selected variant="outlined"></v-select>
       </v-form>
     </v-container>
   </template>
@@ -20,10 +12,10 @@
       return {
         selectedOption: 'Casa 1', // Set the initial value to the first home
         options: [
-          'Casa 1',
-          'Casa 2',
-          'Casa 3',
-          'Casa 4'
+          'Casa en la ciudad',
+          'Casa en el country',
+          'Casa en la costa',
+          'Casa en China'
         ]
       };
     },
