@@ -1,13 +1,14 @@
 <template>
     <v-container class="no-padding">
       <v-form>
-        <v-select 
+        <v-select
           ref="homeSelect"
           v-model="selectedOption"
           :items="options"
-          label="Hogar en el que se encuentra"
-          persistent-hint
           required
+          rounded
+          hide-selected
+          variant="outlined"    
         ></v-select>
       </v-form>
     </v-container>
@@ -35,7 +36,9 @@
   <style scoped>
   .no-padding {
     padding: 0;
+    border-radius: 1.5rem;
+
   }
 
   </style>
-  
+  <!--label="Hogar en el que se encuentra"-->

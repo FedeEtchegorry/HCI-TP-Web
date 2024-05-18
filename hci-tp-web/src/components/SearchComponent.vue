@@ -1,8 +1,9 @@
 <template>
   <v-card class="custom-card" height="4rem" flat>
     <v-toolbar dense flat class="custom-toolbar">
-      <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
-      <v-text-field class="custom-text-field" hide-details single-line outlined></v-text-field>
+      <v-text-field class="custom-text-field ml-4" hide-details variant="outlined"   single-line outlined rounded>
+        <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
+      </v-text-field>
       <v-icon class="custom-icon mr-2 ml-2">mdi-filter</v-icon>
       <DropdownHouses class="dropdown mr-5 ml-2"></DropdownHouses>
     </v-toolbar>
@@ -30,8 +31,9 @@
 
 .custom-text-field {
   background-color: rgb(var(--v-theme-primary_v));
-  border-radius: 3rem; /* Ajustado el valor de los bordes */
-  
+  border-radius: 1.5rem; /* Ajustado el valor de los bordes */
+
+
 }
 
 .custom-text-field:focus {
@@ -41,6 +43,8 @@
 .dropdown{
   width: 20rem;
   height: 3.5rem;
+  font-size: 30rem;
   background-color: rgb(var(--v-theme-secondary_v));
+  
 }
 </style>
