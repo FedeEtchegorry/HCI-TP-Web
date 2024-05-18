@@ -37,10 +37,7 @@ export default {
   justify-content: space-between;
 }
 
-.custom-icon {
-  color: black;
-  font-size: 2rem;
-}
+
 .custom-icon {
   color: black;
   font-size: 1.5rem;
@@ -52,17 +49,6 @@ export default {
   height: 3.5rem; 
 }
 
-.custom-text-field .v-input__control {
-  height: 100%; 
-  display: flex;
-  align-items: center;
-}
-
-.custom-text-field .v-field__input {
-  height: 100%; 
-  display: flex;
-  align-items: center;
-}
 
 .custom-text-field:focus {
   background-color: rgb(var(--v-theme-primary_v));
