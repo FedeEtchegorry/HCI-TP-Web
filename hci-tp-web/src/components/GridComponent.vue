@@ -1,7 +1,8 @@
 <template>
   <v-container fluid>
-    <v-row dense justify="start" class="grid-container">
-      <v-col v-for="(item, index) in items" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
+    <v-row dense justify="center">
+      <v-col class="d-flex flex-column grow-1 ma-2 fixed-size-cell" v-for="(item, index) in items" :key="index" cols="12" sm="6" md="4" lg="3"
+        xl="2">
         <DeviceDetail :name="item.name" :room="item.room" :deviceType="item.deviceType"></DeviceDetail>
       </v-col>
     </v-row>
@@ -27,9 +28,10 @@ export default {
 </script>
 
 <style scoped>
-
-.grid-container {
+.fixed-size-cell {
+  width: 15rem;
+  height: 20rem;
   overflow: hidden;
-  /* Evita overflow del grid */
 }
+
 </style>

@@ -11,9 +11,9 @@ const status = defineModel('status');
 <style scoped>
 
 .fixed-card {
-    height: 15rem;
-    /* Ajusta según tus necesidades */
+    height: 100%;
     width: 100%;
     border: 3px solid;
+    background-color: rgb(var(--v-theme-primary_v));
 }
 </style>
