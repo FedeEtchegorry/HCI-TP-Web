@@ -1,11 +1,8 @@
 <template>
-    <CanvasComponent>
-        <GridComponent/>
-    </CanvasComponent>
+    <CommonListViewComponent/>
 </template>
 
 
 <script>
-import CanvasComponent from '../components/CanvasComponent.vue';
-import GridComponent from '../components/GridComponent.vue';
+import CommonListViewComponent from '../components/CommonListViewComponent.vue';
 </script>

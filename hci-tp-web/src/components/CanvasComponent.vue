@@ -18,8 +18,8 @@
 </template>
 
 <script setup>
-import NavigationBar from './DrawerComponent.vue';
-import SearchComponent from './TopBar.vue';
+import DrawerComponent from './DrawerComponent.vue';
+import TopBar from './TopBar.vue';
 </script>
 
 <style scoped>
