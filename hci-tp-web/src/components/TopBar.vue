@@ -3,7 +3,7 @@
     <v-toolbar dense flat class="custom-toolbar">
       <SearchComponent />      
       <DropdownHouses class="custom-dropdown mr-2 ml-2"/>
-      <!--v-icon class="custom-icon-2 mr-5">mdi-pencil</v-icon>-->
+      <v-icon class="custom-icon-2 mr-5">mdi-pencil</v-icon>
     </v-toolbar>
   </v-card>
 </template>
