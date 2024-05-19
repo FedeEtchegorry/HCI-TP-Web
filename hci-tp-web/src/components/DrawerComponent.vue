@@ -16,18 +16,23 @@
       <v-list-item
         v-for="(item, key) in menuItems"
         :key="key"
-        :class="['drawer_elem', 'mr-1', 'ml-1', 'mb-1', { selected: currentPage === key }]"
+        :class="['d-flex drawer_elem mr-1 mb-1 ml-1' , { selected: currentPage === key }]"
         @click="navigateTo(key)"
       >
-        <template v-slot:prepend>
+        <template v-slot:prepend v-if="!mini">
           <v-icon class="icon">{{ item.icon }}</v-icon>
           <v-list-item-title v-if="!mini" class="text">{{ item.title }}</v-list-item-title>
         </template>
+        <template v-if="mini">
+          <v-icon class="icon">{{ item.icon }}</v-icon>
+        </template>
       </v-list-item>
     </v-list>
-    <div class="bottom" v-if="!mini">
-      <ProfileComponent></ProfileComponent>
-    </div>
+    <div class="bottom">
+      <ProfileComponent v-if="!mini"></ProfileComponent>
+      <v-icon class="icon-account" v-if="mini">mdi-account</v-icon>
+    </div>  
+    
   </v-navigation-drawer>
 </template>
 
@@ -67,24 +72,24 @@ const navigateTo = (page) => {
 }
 
 .drawer-header {
-    justify-content:space-evenly;
-    padding: 0.8rem 0.5rem;
-
+  justify-content: space-evenly;
+  padding: 0.8rem 0.5rem;
 }
-.ham-button{
+
+.ham-button {
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
   font-size: 1.5rem;
   border-radius: 50%;
   margin-top: 1rem;
 }
-.mini-mode .ham-button{
+
+.mini-mode .ham-button {
   justify-content: center;
   font-size: 1.5rem;
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
 }
-
 
 .logo-image {
   margin-left: 0.3rem;
@@ -130,6 +135,12 @@ const navigateTo = (page) => {
   opacity: 1;
 }
 
+.mini-mode .drawer_elem {
+  font-size: 2rem;
+  color: rgb(var(--v-theme-primary));
+  opacity: 1;
+}
+
 .bottom {
   width: 100%;
   position: absolute;
@@ -141,7 +152,21 @@ const navigateTo = (page) => {
 .mini-mode .icon {
   font-size: 2.2rem;
 }
-.mini-mode .drawer_elem.selected .icon{
+
+.mini-mode .drawer_elem.selected .icon {
   font-size: 2.4rem;
+  justify-self:right;
+}
+.mini-mode .drawer_elem .icon {
+  margin-right: 0;
+  font-size: 2.4rem;
+}
+.icon-account{
+  color: rgb(var(--v-theme-primary));
+  font-size: 3rem;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 50%;
+  background-color: rgb(var(--v-theme-primary_v));
 }
 </style>
