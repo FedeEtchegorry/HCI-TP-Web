@@ -44,8 +44,8 @@ import AddButton from './AddButton.vue';
     flex-grow: 1;
 }
 .absolute-bottom-right {
-  position: sticky;
-  bottom: 1rem; /* Distancia desde la parte inferior */
-  right: 1rem; /* Distancia desde la derecha */
+  position: fixed;
+  bottom: 2rem; 
+  right: 1rem; 
 }
 </style>
