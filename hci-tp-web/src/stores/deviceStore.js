@@ -41,5 +41,5 @@ export const useDeviceStore = defineStore('device', () => {
         return result
     }
 
-    return { devices, add, modify, remove, get, getAll }
+    return { devices, add, modify, execute, remove, get, getAll }
 })
