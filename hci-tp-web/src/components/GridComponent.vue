@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
     <v-row dense justify="center">
-      <v-col class="d-flex flex-column grow-1 ma-2 fixed-size-cell" v-for="(item, index) in items" :key="index" cols="12" sm="6" md="4" lg="3"
-        xl="2">
+      <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" v-for="(item, index) in items"
+        :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
         <DeviceDetail :name="item.name" :room="item.room" :deviceType="item.deviceType"></DeviceDetail>
       </v-col>
     </v-row>
@@ -33,5 +33,4 @@ export default {
   height: 20rem;
   overflow: hidden;
 }
-
 </style>
