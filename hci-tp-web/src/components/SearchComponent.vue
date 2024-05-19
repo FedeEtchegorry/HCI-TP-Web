@@ -15,7 +15,7 @@
 
 .custom-text-field {
   max-width: unset;
-  min-width: 20rem;
+  min-width: 10rem;
   background-color: rgb(var(--v-theme-primary_v));
   border-radius: 1.5rem;
   height: 3.5rem;

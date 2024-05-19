@@ -74,10 +74,12 @@ const navigateTo = (page) => {
 
 .drawer_elem.selected .icon {
   color: rgb(var(--v-theme-primary_v));
+  font-size: 2.2rem;
 }
 
 .drawer_elem.selected .text {
   color: rgb(var(--v-theme-primary_v));
+  font-weight: 900;
 }
 
 .drawer_elem .text {
