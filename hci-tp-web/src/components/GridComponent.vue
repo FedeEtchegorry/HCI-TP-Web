@@ -1,8 +1,9 @@
 <template>
   <v-container fluid>
     <v-row dense justify="start">
-      <v-col class="ma-2 fixed-size-cell" v-for="(item, index) in items" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
-        <EmptyCard/>
+      <v-col class="ma-2 fixed-size-cell" v-for="(item, index) in items" :key="index" cols="12" sm="6" md="4" lg="3"
+        xl="2">
+        <EmptyCard />
       </v-col>
     </v-row>
   </v-container>

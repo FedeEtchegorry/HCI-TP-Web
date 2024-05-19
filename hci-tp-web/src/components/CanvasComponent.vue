@@ -11,6 +11,7 @@
                         <div>
                             <slot></slot>
                         </div>
+                        <AddButton class="absolute-bottom-right"/>
                     </v-card>
                 </v-sheet>
             </v-main>
@@ -21,6 +22,7 @@
 <script setup>
 import DrawerComponent from './DrawerComponent.vue';
 import TopBar from './TopBar.vue';
+import AddButton from './AddButton.vue';
 </script>
 
 <style scoped>
@@ -32,13 +34,18 @@ import TopBar from './TopBar.vue';
     background-color: rgb(var(--v-theme-secondary));
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Adjust the outer canvas to fit within the viewport minus 2rem top and 2rem bottom */
+    height: 100vh;
     box-sizing: border-box;
 }
 
 .custom-inner-canvas-div {
     background-color: rgb(var(--v-theme-secondary_v));
     overflow-y: auto;
-    flex-grow: 1; /* Allow the inner card to grow and fill the remaining space */
+    flex-grow: 1;
+}
+.absolute-bottom-right {
+  position: sticky;
+  bottom: 1rem; /* Distancia desde la parte inferior */
+  right: 1rem; /* Distancia desde la derecha */
 }
 </style>
