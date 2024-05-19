@@ -7,7 +7,7 @@
                     <v-sheet class="mt-2 mb-4" elevation="0" outlined color="transparent">
                         <TopBar />
                     </v-sheet>
-                    <v-card class="ml-4 mr-4 mb-4 rounded-xl custom-inner-canvas-div" v-scroll.self="onScroll">
+                    <v-card class="ml-4 mr-4 mb-4 rounded-xl custom-inner-canvas-div">
                         <div>
                             <slot></slot>
                         </div>
