@@ -9,28 +9,26 @@
   >
     <v-layout class="d-flex drawer-header">
       <v-app-bar-nav-icon @click="toggleMini" class="ham-button"></v-app-bar-nav-icon>
-      <v-img :src="profileImage" class="logo-image" v-if="!isMini"></v-img>
+      <v-img :src="profileImage" class="logo-image" v-show="!isMini"></v-img>
     </v-layout>
     <v-divider :thickness="3" class="divider"></v-divider>
     <v-list>
       <v-list-item
         v-for="(item, key) in menuItems"
+        class="d-flex drawer_elem mr-1 mb-1 ml-1"
         :key="key"
-        :class="['d-flex drawer_elem mr-1 mb-1 ml-1' , { selected: currentPage === key }]"
+        :class="{ selected: currentPage === key }"
         @click="navigateTo(key)"
       >
-        <template v-slot:prepend v-if="!isMini">
+        <template v-slot:prepend>
           <v-icon class="icon">{{ item.icon }}</v-icon>
-          <v-list-item-title v-if="!isMini" class="text">{{ item.title }}</v-list-item-title>
-        </template>
-        <template v-if="isMini">
-          <v-icon class="icon">{{ item.icon }}</v-icon>
+          <v-list-item-title v-show="!isMini" class="text">{{ item.title }}</v-list-item-title>
         </template>
       </v-list-item>
     </v-list>
     <div class="bottom">
       <ProfileComponent v-if="!isMini"></ProfileComponent>
-      <v-icon class="icon-account" v-if="mini">mdi-account</v-icon>
+      <v-icon class="icon-account" v-else>mdi-account</v-icon>
     </div>  
   </v-navigation-drawer>
 </template>
@@ -47,7 +45,7 @@ const menuItems = ref({
   devices: { title: 'DISPOSITIVOS', icon: 'mdi-devices' },
   rooms: { title: 'HABITACIONES', icon: 'mdi-home' },
   routines: { title: 'RUTINAS', icon: 'mdi-calendar-clock' },
-  users: { title: 'USUARIOS', icon: 'mdi-account-multiple' },
+  houses:{ title: 'HOGARES', icon: 'mdi-home-group'},
 });
 
 const isMini = computed( () => {

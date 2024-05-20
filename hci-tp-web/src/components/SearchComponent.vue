@@ -1,5 +1,5 @@
 <template>
-    <v-text-field class="custom-text-field ml-4" hide-details variant="outlined" single-line outlined rounded dense>
+    <v-text-field label="Buscar" clearable class="custom-text-field ml-4" hide-details variant="outlined" single-line outlined rounded dense>
         <template v-slot:prepend-inner>
             <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
         </template>
