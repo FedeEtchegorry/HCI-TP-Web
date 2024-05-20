@@ -9,8 +9,14 @@ class DeviceApi {
         return await Api.post(DeviceApi.getUrl(), device, controller);
     }
 
-    static async addDeviceToRoom(roomId, deviceId) {
+    static async addDeviceToRoom(roomId, deviceId, controller) {
         return await Api.post(RoomApi.getUrl(roomId + '/devices/' + deviceId), null, controller);
+    }
+
+    static async addDeviceWithRoom(device, roomId, controller){
+        let result = await DeviceApi.add(device, controller);
+        await DeviceApi.addDeviceToRoom(roomId, device.id, controller);
+        return result;
     }
 
     static async execute(id, action, data, controller){

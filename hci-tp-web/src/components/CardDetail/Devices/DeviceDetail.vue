@@ -9,10 +9,11 @@ defineProps({
     device: Object,
 })
 
+
 //mapea el nombre del device con el componente
 const devices = {
     blinds: BlindDetail,
-    vaccum: VacuumDetail,
+    vacuum: VacuumDetail,
     door: DoorDetail,
     refrigerator: RefrigeratorDetail,
 };
@@ -25,8 +26,8 @@ const devices = {
         <v-card class="title-box">
             <h2>{{ device.name }}</h2>
             <h3>{{ device.room?.name }}</h3>
-            <component class="device" :is="devices[device.type.name]"></component>
         </v-card>
+        <component :is="devices[device.type.name]" :device="device"></component>
     </EmptyCard>
 </template>
 
@@ -35,13 +36,6 @@ const devices = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #003153; 
-}
-.device {
-    padding: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    height: 100%;
+    background: rgb(var(--v-theme-tertiary_c)); 
 }
 </style>

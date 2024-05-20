@@ -9,6 +9,8 @@
 .fixed-card {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     border: 3px solid;
     background-color: rgb(var(--v-theme-primary_v));
 }
