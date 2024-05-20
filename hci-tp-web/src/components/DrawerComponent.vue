@@ -1,15 +1,15 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    :rail="mini"
+    :rail="isMini"
     permanent
-    :class="{ 'mini-mode': mini }"
+    :class="{ 'mini-mode': isMini }"
     :rail-width="80"
     class="drawer"
   >
     <v-layout class="d-flex drawer-header">
       <v-app-bar-nav-icon @click="toggleMini" class="ham-button"></v-app-bar-nav-icon>
-      <v-img :src="profileImage" class="logo-image" v-if="!mini"></v-img>
+      <v-img :src="profileImage" class="logo-image" v-if="!isMini"></v-img>
     </v-layout>
     <v-divider :thickness="3" class="divider"></v-divider>
     <v-list>
@@ -19,25 +19,24 @@
         :class="['d-flex drawer_elem mr-1 mb-1 ml-1' , { selected: currentPage === key }]"
         @click="navigateTo(key)"
       >
-        <template v-slot:prepend v-if="!mini">
+        <template v-slot:prepend v-if="!isMini">
           <v-icon class="icon">{{ item.icon }}</v-icon>
-          <v-list-item-title v-if="!mini" class="text">{{ item.title }}</v-list-item-title>
+          <v-list-item-title v-if="!isMini" class="text">{{ item.title }}</v-list-item-title>
         </template>
-        <template v-if="mini">
+        <template v-if="isMini">
           <v-icon class="icon">{{ item.icon }}</v-icon>
         </template>
       </v-list-item>
     </v-list>
     <div class="bottom">
-      <ProfileComponent v-if="!mini"></ProfileComponent>
+      <ProfileComponent v-if="!isMini"></ProfileComponent>
       <v-icon class="icon-account" v-if="mini">mdi-account</v-icon>
     </div>  
-    
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import ProfileComponent from './ProfileComponent.vue';
 import profileImage from '../assets/connectit.png';
 
@@ -51,6 +50,10 @@ const menuItems = ref({
   users: { title: 'USUARIOS', icon: 'mdi-account-multiple' },
 });
 
+const isMini = computed( () => {
+  return mini.value
+})
+
 const toggleMini = () => {
   mini.value = !mini.value;
 };
@@ -61,6 +64,19 @@ const navigateTo = (page) => {
     currentPage.value = page;
   }
 };
+
+const handleResize = () => {
+  mini.value = window.innerWidth < 750.5;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize(); 
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
 </script>
 
 <style scoped>
