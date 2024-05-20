@@ -10,7 +10,7 @@
             <div class="mode">
                 Change Mode
                 <v-btn class="mb-2" density="compact" size="large" @click="handleClickMode">
-                    {{ isMopping ? "Vacuum" : "Mop" }}
+                    {{ isMopping ? "Mop" : "Vacuum" }}
                 </v-btn>
             </div>
             <v-btn class="mb-2" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
