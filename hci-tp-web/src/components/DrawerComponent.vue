@@ -93,14 +93,14 @@ onBeforeUnmount(() => {
 .ham-button {
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: 50%;
   margin-top: 1rem;
 }
 
 .mini-mode .ham-button {
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
 }
