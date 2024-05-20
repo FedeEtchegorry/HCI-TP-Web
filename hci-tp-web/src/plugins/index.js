@@ -9,7 +9,6 @@ import vuetify from './vuetify'
 import { createPinia } from 'pinia'
 
 export function registerPlugins (app) {
-  const pinia = createPinia()
-  app.use(pinia)
+  app.use(createPinia())
   app.use(vuetify)
 }

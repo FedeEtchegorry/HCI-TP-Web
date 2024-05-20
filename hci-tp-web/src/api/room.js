@@ -9,6 +9,7 @@ class RoomApi {
         return await Api.post(RoomApi.getUrl(), room, controller);
     }
 
+
     static async modify(room, controller) {
         return await Api.put(RoomApi.getUrl(room.id), room, controller);
     }

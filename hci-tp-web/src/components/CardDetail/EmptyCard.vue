@@ -4,10 +4,6 @@
     </v-card>
 </template>
 
-<script setup>
-const status = defineModel('status');
-</script>
-
 <style scoped>
 
 .fixed-card {

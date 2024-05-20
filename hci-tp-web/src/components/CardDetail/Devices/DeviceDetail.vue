@@ -1,33 +1,31 @@
 <script setup>
 import EmptyCard from '../EmptyCard.vue';
-import CurtainDetail from './BlindDetail.vue';
-import VaccumDetail from './VacuumDetail.vue';
+import DoorDetail from './DoorDetail.vue';
+import BlindDetail from './BlindDetail.vue';
+import RefrigeratorDetail from './RefrigeratorDetail.vue';
+import VacuumDetail from './VacuumDetail.vue';
 
 defineProps({
-    name: String,
-    room: String,
-    deviceType: String,
+    device: Object,
 })
 
 //mapea el nombre del device con el componente
 const devices = {
-    Curtain: CurtainDetail,
-    Vaccum: VaccumDetail,
+    blinds: BlindDetail,
+    vaccum: VacuumDetail,
+    door: DoorDetail,
+    refrigerator: RefrigeratorDetail,
 };
-
-const value = defineModel('value')
-const status = defineModel('status')
-const color = defineModel('color')
 
 </script>
 
 
 <template> 
-    <EmptyCard v-model:status="status">
+    <EmptyCard>
         <v-card class="title-box">
-            <h2>{{ name }}</h2>
-            <h3>{{ room }}</h3>
-            <component class="device" :is="devices[deviceType]" :color="color" :value="value" :status="status"></component>
+            <h2>{{ device.name }}</h2>
+            <h3>{{ device.room?.name }}</h3>
+            <component class="device" :is="devices[device.type.name]"></component>
         </v-card>
     </EmptyCard>
 </template>
