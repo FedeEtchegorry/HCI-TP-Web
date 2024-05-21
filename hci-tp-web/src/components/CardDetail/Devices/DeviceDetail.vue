@@ -27,11 +27,15 @@ const devices = {
             <h2>{{ device.name }}</h2>
             <h3>{{ device.room?.name }}</h3>
         </v-card>
-        <component :is="devices[device.type.name]" :device="device"></component>
+        <component class="device" :is="devices[device.type.name]" :device="device"></component>
     </EmptyCard>
 </template>
 
 <style scoped>
+.device {
+    flex-grow: 1;
+}
+
 .title-box{
     display: flex;
     flex-direction: column;
