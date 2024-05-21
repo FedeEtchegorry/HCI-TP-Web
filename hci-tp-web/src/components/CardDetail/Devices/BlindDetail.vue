@@ -1,71 +1,101 @@
 <template>
-    <v-card width="20rem">
-        <v-slider v-model="openPercentage" class="range-set" :step="1" thumb-label @update:model-value="increment" :min="-1" :max="100" >
-            <template v-slot:append>
-                <v-btn class="value-setter" icon @click="increment">
-                    <v-icon >mdi-chevron-up</v-icon>
-                </v-btn>
-            </template>
-            <template  v-slot:prepend>
-                <v-btn  class="value-setter" icon @click="decrement">
-                    <v-icon >mdi-chevron-down</v-icon>
-                </v-btn>
-            </template>
-        </v-slider>
-
-        <v-switch  :class="openPercentage >= 100 ? 'switch' : 'no-switch'" v-model="status" inset></v-switch>
+    <v-card width="15rem">
+        <v-slider class="blind" 
+            v-model="openPercentage"
+            append-icon="mdi-blinds-open"
+            prepend-icon="mdi-roller-shade-closed"
+            @click:append="openBlind"
+            @click:prepend="closeBlind"
+            step="1"
+            min="0"
+            max="100"
+            track-fill-color="blue_state"
+            track-color="grey"
+            track-size="4"
+            thumb-label="always"
+            thumb-color="blue_state"
+            reverse
+        ></v-slider>
+        <p> {{percentageClosed}}%</p>
     </v-card>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onBeforeMount } from 'vue';
+import { useRoomStore } from '@/stores/roomStore';
+import { useDeviceStore } from '@/stores/deviceStore';
 
-const openValue = ref(0);
-const status = ref(false);
 
-const openPercentage = computed({
-    get() {
-        return openValue.value;
-    },
-    set(newValue) {
-        openValue.value = newValue;
-    }
+
+
+const openPercentage = ref(0);
+
+const props = defineProps({
+    device: Object,
 });
 
-function increment() {
-    if (openValue.value < 100) {
-        openValue.value++;
+const roomStore = useRoomStore();
+const deviceStore = useDeviceStore();
+
+const myDevice = ref(props.device);
+
+
+const deviceId = computed(() => { return myDevice.value.id });
+const isOpening = computed(() => { return myDevice.value.state.status == 'opening' });
+const isClosing = computed(() => { return myDevice.value.state.status == 'closing' });
+const isOpen = computed(() => { return myDevice.value.state.status == 'opened' });
+const isClosed = computed(() => { return myDevice.value.state.status == 'closed'});
+const percentageClosed = myDevice.value.state.currentLevel;
+const position = myDevice.value.state.level;
+
+
+// Watch for changes in openPercentage and call setPosition
+watch(openPercentage, (newValue) => {
+    setPosition(newValue);
+});
+
+async function setPosition(value) {
+    if (value >= 0 && value <= 100) {
+        try {await deviceStore.execute(deviceId.value, 'setLevel', [value]);
+        openPercentage.value = value;
+        console.log(`Open ${openPercentage.value}%`);}
+        catch(e){
+        console.log(e);
+        }   
     }
-    console.log(`Closed ${openPercentage.value}%`);
 }
 
-function decrement() {
-    if (openValue.value > 0) {
-        openValue.value--;
+async function openBlind() {
+    try {await deviceStore.execute(deviceId.value, 'open', []);
+        openPercentage.value = 0;
     }
-    console.log(`Closed ${openPercentage.value}%`);
+    catch(e){
+        console.log(e);
+    }   
 }
+
+async function closeBlind() {
+    try {await deviceStore.execute(deviceId.value, 'close', []);
+        openPercentage.value = 100;
+    }
+    catch(e){
+        console.log(e);
+    }   
+}
+
+
 </script>
 
 <style scoped>
-
-.range-set{
-    background-color: rgb(var(--v-theme-primary_v));
-    color: rgb(var(--v-theme-primary_v));
-    accent-color: rgb(var(--v-theme-blue_state));
-}
-
-.value-setter{
-    background-color: rgb(var(--v-theme-primary));
-    color: rgb(var(--v-theme-primary_v));
-
-}
-.switch {
-    justify-self: center;
+.blind {
     color: rgb(var(--v-theme-primary));
+    background-color: rgb(var(--v-theme-primary_v));
+    accent-color: red;
+    margin-top: 2rem;
 }
-.no-switch {
-    justify-self: center;
-    color: grey;
+.open-value{
+    justify-content: center;
+    align-self: center;
+    font-size: medium;
 }
 </style>
