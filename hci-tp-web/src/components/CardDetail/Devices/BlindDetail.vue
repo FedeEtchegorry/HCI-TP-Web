@@ -46,11 +46,9 @@ function debounce(func, wait) {
 
 onBeforeMount(() => {
     openPercentage.value = myDevice.value.state.level;
-    initialState.value = myDevice.value.state.status;
 });
 
 const openPercentage = ref(0);
-const initialState = ref(null)
 
 const props = defineProps({
     device: Object,
@@ -58,17 +56,13 @@ const props = defineProps({
 
 const roomStore = useRoomStore();
 const deviceStore = useDeviceStore();
-
 const myDevice = ref(props.device);
 
 const deviceId = computed(() => myDevice.value.id);
-const isOpening = computed(() => initialState.value == 'opening');
-const isClosing = computed(() => initialState.value == 'closing');
-const isOpen = computed(() => initialState.value == 'opened');
-const isClosed = computed(() => initialState.value == 'closed');
-
-const percentageClosed = myDevice.value.state.currentLevel;
-const position = myDevice.value.state.level;
+const isOpening = computed(() => myDevice.value.state.status == 'opening');
+const isClosing = computed(() => myDevice.value.state.status == 'closing');
+const isOpen = computed(() => myDevice.value.state.status == 'opened');
+const isClosed = computed(() => myDevice.value.state.status == 'closed');
 
 const debouncedSetPosition = debounce(setPosition, 300);
 
@@ -89,7 +83,7 @@ async function setPosition(value) {
 async function openBlind() {
     try {
         await deviceStore.execute(deviceId.value, 'open', []);
-        initialState.value='opening';
+        myDevice.value.state.status='opening';
     } catch (e) {
         console.log(e);
     }
@@ -98,7 +92,7 @@ async function openBlind() {
 async function closeBlind() {
     try {
         await deviceStore.execute(deviceId.value, 'close', []);
-        initialState.value='closing';
+        myDevice.value.state.status='closing';
     } catch (e) {
         console.log(e);
     }
