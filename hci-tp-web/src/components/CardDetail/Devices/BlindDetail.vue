@@ -3,6 +3,7 @@
             <v-card class="box">
             <p v-if="isOpening" class="align-center title">ABIERTO</p>
             <p v-if="isClosing" class="align-center title">CERRADO</p>
+            <p v-if="!isClosing && !isOpening" class="align-center title">-</p>
             </v-card>
       <v-container fluid class="mb-5">
             <v-slider class="blind" 
@@ -23,7 +24,7 @@
             <v-icon class="icon mr-2">mdi-blinds-open</v-icon>
             Abrir
           </v-btn>
-          <v-btn @click="closeBlind" :disabled="isClosing" color="red" rounded elevation="5">
+          <v-btn  @click="closeBlind" :disabled="isClosing" color="red" rounded elevation="5">
             <v-icon class="icon mr-2">mdi-roller-shade-closed</v-icon>
             Cerrar
           </v-btn>
