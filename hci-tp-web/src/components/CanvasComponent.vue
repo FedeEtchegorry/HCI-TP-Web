@@ -24,7 +24,6 @@
 import DrawerComponent from './DrawerComponent.vue';
 import TopBar from './TopBar.vue';
 import AddButton from './AddButton.vue';
-import { defineEmits } from 'vue';
 
 const emit = defineEmits(['update:addOptionActive']);
 const emitAddOptionActive = () => {

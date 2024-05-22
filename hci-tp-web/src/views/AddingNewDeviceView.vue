@@ -50,7 +50,6 @@
 <script setup>
 
     import { ref, watch } from 'vue';
-    import { defineProps, defineEmits } from 'vue';
 
     const props = defineProps({ addOptionActive: Boolean });
     const emit = defineEmits(['update:addOptionActive']);
