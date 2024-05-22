@@ -5,7 +5,7 @@
             <p v-if="isClosing || isClosed" class="align-center title">CERRADO</p>
         </v-card>
         <v-container fluid class="mb-5">
-            <v-slider class="blind" 
+            <v-slider 
                 v-model="openPercentage"
                 step="1"
                 min="0"
@@ -16,15 +16,17 @@
                 thumb-label="always"
                 thumb-color="blue_state"
                 height="50" elevation="5"
+                persistent-hint
+                hint="Cerrado de ventana"
             ></v-slider>
         </v-container>
-        <v-row justify="space-around">
-            <v-btn @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="5">
-                <v-icon class="icon mr-2">mdi-blinds-open</v-icon>
+        <v-row >
+            <v-btn class="mr-1 buttom" @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="5">
+                <v-icon class="icon mr-1">mdi-blinds-open</v-icon>
                 Abrir
             </v-btn>
-            <v-btn @click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="5">
-                <v-icon class="icon mr-2">mdi-roller-shade-closed</v-icon>
+            <v-btn class="ml-1 buttom"@click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="5">
+                <v-icon class="icon mr-1">mdi-roller-shade-closed</v-icon>
                 Cerrar
             </v-btn>
         </v-row>
@@ -117,7 +119,6 @@ async function closeBlind() {
     padding-right: 2rem;
     margin-bottom: 2rem;
 }
-
 .title {
     font-size: xx-large;
     font-weight: 500;
