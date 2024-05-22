@@ -5,8 +5,10 @@
 </template>
 
 <style scoped>
+
 .icon-size {
     font-size: 4rem;
     color: rgba(var(--v-theme-secondary_v));
 }
+
 </style>

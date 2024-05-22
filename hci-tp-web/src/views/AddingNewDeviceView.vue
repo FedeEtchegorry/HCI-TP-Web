@@ -1,8 +1,7 @@
 <template>
 
     <v-container>
-
-        <v-dialog v-model="showAddDeviceDialog" persistent max-width="600px">
+        <v-dialog v-model="localAddOptionActive" max-width="600px">
             <v-card class="rounded-xl custom-card">
 
                 <v-card-title class="custom-title">
@@ -41,44 +40,38 @@
                     <v-spacer></v-spacer>
                     <v-btn class="cancel-btn" text @click="closeDialog">Cancelar</v-btn>
                 </v-card-actions>
-                
             </v-card>
-        </v-dialog>
 
+        </v-dialog>
     </v-container>
   
 </template>
 
+<script setup>
 
-<script>
+    import { ref, watch } from 'vue';
+    import { defineProps, defineEmits } from 'vue';
 
-    export default {
+    const props = defineProps({ addOptionActive: Boolean });
+    const emit = defineEmits(['update:addOptionActive']);
+    const localAddOptionActive = ref(props.addOptionActive);
 
-        name: 'AddingNewDeviceView',
-        data() {
+    watch(() => props.addOptionActive, (newValue) => { localAddOptionActive.value = newValue; });
 
-            return {
-                showAddDeviceDialog: true,
-                newDeviceName: '',
-                newDeviceType: '',
-                deviceTypes: ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'],
-                valid: false,
-            };
-        },
-        methods: {
+    const newDeviceName = ref('');
+    const newDeviceType = ref('');
+    const deviceTypes = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
+    const valid = ref(false);
 
-            toogleDialog() {
-                this.showAddDeviceDialog = !this.showAddDeviceDialog;
-                this.newDeviceName = '';
-                this.newDeviceType = '';
-            },
-            addDevice() {
-                if (this.$refs.form.validate()) {
-                    console.log('Nuevo Dispositivo:', this.newDeviceName, 'Tipo:', this.newDeviceType);
-                    this.toogleDialog();
-                }
-            }
+    const addDevice = () => {
+        if (valid.value) {
+            console.log('Nuevo Dispositivo:', newDeviceName.value, 'Tipo:', newDeviceType.value);
         }
+    };
+
+    const closeDialog = () => {
+        localAddOptionActive.value = false;
+        emit('update:addOptionActive', false);
     };
 
 </script>
