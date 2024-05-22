@@ -109,7 +109,7 @@ async function handleClickDock() {
 
 </script>
 
-<style setup>
+<style scoped>
 .device {
     padding: 10%;
     display: flex;

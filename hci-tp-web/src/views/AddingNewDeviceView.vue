@@ -83,7 +83,7 @@
 
 </script>
     
-  <style>
+  <style scoped>
   
   .custom-card {
   

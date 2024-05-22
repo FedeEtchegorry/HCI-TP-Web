@@ -11,7 +11,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    border: 3px solid;
+    border: 0.2rem solid;
+    border-radius: 15%;
     background-color: rgb(var(--v-theme-primary_v));
 }
 </style>

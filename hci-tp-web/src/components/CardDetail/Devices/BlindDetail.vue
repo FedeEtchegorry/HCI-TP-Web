@@ -4,7 +4,7 @@
             <p v-if="isOpening || isOpen" class="align-center title">ABIERTO</p>
             <p v-if="isClosing || isClosed" class="align-center title">CERRADO</p>
         </v-card>
-        <v-container fluid class="mb-5">
+        <v-container class="mb-5">
             <v-slider 
                 v-model="openPercentage"
                 step="1"
@@ -21,11 +21,11 @@
             ></v-slider>
         </v-container>
         <v-row >
-            <v-btn class="mr-1 buttom" @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="5">
+            <v-btn v-if="isClosing || isClosed" class="mr-1 button" @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="5">
                 <v-icon class="icon mr-1">mdi-blinds-open</v-icon>
                 Abrir
             </v-btn>
-            <v-btn class="ml-1 buttom"@click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="5">
+            <v-btn v-if="isOpening || isOpen" class="ml-1 button"@click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="5">
                 <v-icon class="icon mr-1">mdi-roller-shade-closed</v-icon>
                 Cerrar
             </v-btn>
@@ -76,7 +76,6 @@ async function setPosition(value) {
     try {
         await deviceStore.execute(deviceId.value, 'setLevel', [value]);
         openPercentage.value = value;
-        console.log(`Open ${openPercentage.value}%`);
     } catch (e) {
         console.log(e);
     }
@@ -124,5 +123,8 @@ async function closeBlind() {
     font-weight: 500;
     color: white;
     background-color: rgb(var(--v-theme-blue_state));
+}
+.button{
+    font-size: large;
 }
 </style>

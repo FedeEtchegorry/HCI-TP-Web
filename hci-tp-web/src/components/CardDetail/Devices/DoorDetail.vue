@@ -82,7 +82,7 @@ async function handleClickLock() {
 
 </script>
 
-<style setup>
+<style scoped>
 .lock {
     display: flex;
     flex-direction: column;
