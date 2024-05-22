@@ -77,7 +77,7 @@
 </script>
   
 <style>
-
+/*
 .custom-card {
 
   background-color: rgb(var(--v-theme-secondary_v));
@@ -107,7 +107,7 @@
   border-radius: 2rem;
   margin: 1rem;
   padding: auto;
-}
+}*/
 
 </style>
   

@@ -1,10 +1,9 @@
 <template>
     <CommonListViewComponent/>
-    <AddingNewRoomView/>
 </template>
 
 
 <script>
 import CommonListViewComponent from '../components/CommonListViewComponent.vue';
-import AddingNewRoomView from '../components/AddingNewRoomView.vue';
+import AddingNewRoomView from '../views/AddingNewRoomView.vue';
 </script>
