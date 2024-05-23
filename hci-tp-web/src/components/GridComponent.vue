@@ -1,32 +1,21 @@
 <template>
   <v-container fluid>
     <v-row dense justify="center">
-      <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell"
-        v-for="(device, index) in deviceStore.devices" :key="device.id" cols="12" sm="6" md="4" lg="3" xl="2">
-        <DeviceDetail :device="device"></DeviceDetail>
-      </v-col>
+      <template v-for="(item, index) in items" :key="index">
+        <slot :item="item"></slot>
+      </template>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import {  onMounted } from 'vue';
-import DeviceDetail from './CardDetail/Devices/DeviceDetail.vue';
-import { useDeviceStore } from '@/stores/deviceStore';
-import { Refrigerator } from '@/api/device';
+import { defineProps } from 'vue';
 
-const deviceStore = useDeviceStore();
-
-onMounted(async () => { //PREGUNTAR SI ESTA BIEN EL HOOK O ES BEFOREMOUNT
-  await deviceStore.getAll();
-})
-
+const props = defineProps({
+  items: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
 
-<style scoped>
-.fixed-size-cell {
-  width: 15rem;
-  height: 20rem;
-  overflow: hidden;
-}
-</style>
