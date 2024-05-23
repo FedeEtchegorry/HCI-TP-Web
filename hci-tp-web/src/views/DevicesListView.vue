@@ -1,5 +1,5 @@
 <template>
-    <CommonListViewComponent @addButtonEvent="handleAddButtonPressed"/>
+    <CommonListViewComponent @emitAddButton="handleAddButtonPressed"/>
     <AddingNewDeviceView :addOptionActive="addButtonState" @newDeviceEvent="handleNewDevice"/>
 </template>
 

@@ -24,7 +24,7 @@
                             <v-select
                                 v-model="newDeviceType"
                                 class="custom-text-field"
-                                :items="roomTypes"
+                                :items="deviceTypes"
                                 label="Tipo de dispositivo"
                                 :rules="[v => !!v || 'El tipo es obligatorio']"
                                 required
@@ -57,7 +57,7 @@
     const deviceTypes = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
 
     const props = defineProps({ addOptionActive: Boolean });
-    const emit = defineEmits('newDeviceEvent');
+    const emit = defineEmits(['newDeviceEvent']);
     const closeDialog = () => emit('newDeviceEvent', false);
     const addDevice = () => emit('newDeviceEvent', true);
 

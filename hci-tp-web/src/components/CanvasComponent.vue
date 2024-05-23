@@ -25,8 +25,8 @@ import DrawerComponent from './DrawerComponent.vue';
 import TopBar from './TopBar.vue';
 import AddButton from './AddButton.vue';
 
-const emit = defineEmits('addButtonEvent');
-const addButtonPressed = () => emit('addButtonEvent');
+const emit = defineEmits(['emitAddButton']);
+const addButtonPressed = () => emit('emitAddButton');
 
 </script>
 
