@@ -6,44 +6,23 @@
       <v-img :src="profileImage" class="logo-image" v-show="!isMini"></v-img>
     </v-layout>
     <v-divider :thickness="3" class="divider"></v-divider>
-    <v-list>
-      <!--<v-list-item
-        v-for="(item, key) in menuItems"
-        class="d-flex drawer_elem mr-1 mb-1 ml-1"
-        :key="key"
-        :class="{ selected: currentPage === key }"
-        @click="navigateTo(key)"
-      >
-        <template v-slot:prepend>
-          <v-icon class="icon">{{ item.icon }}</v-icon>
-          <v-list-item-title v-show="!isMini" class="text">{{ item.title }}</v-list-item-title>
-        </template>
-</v-list-item>-->
-      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <RouterLink class="link-with-icon" to="/">
+        <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/">
           <v-icon class="icon">mdi-devices</v-icon>
           <span v-show="!isMini" class="text">DISPOSITIVOS</span>
         </RouterLink>
-      </v-list-item>
-      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <RouterLink class="link-with-icon" to="/rooms">
+        <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/rooms">
           <v-icon class="icon">mdi-home</v-icon>
           <span v-show="!isMini" class="text">HABITACIONES</span>
         </RouterLink>
-      </v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <RouterLink class="link-with-icon" to="/routines">
+        <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/routines">
           <v-icon class="icon">mdi-calendar-clock</v-icon>
           <span v-show="!isMini" class="text">RUTINAS</span>
         </RouterLink>
-      </v-list-item>
-      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <RouterLink class="link-with-icon" to="/houses">
+        <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/houses">
           <v-icon class="icon">mdi-home-group</v-icon>
           <span v-show="!isMini" class="text">HOGARES</span>
         </RouterLink>
-      </v-list-item>
-    </v-list>
+    
     <div class="bottom">
       <ProfileComponent v-if="!isMini"></ProfileComponent>
       <v-icon class="icon-account" v-else>mdi-account</v-icon>
@@ -137,20 +116,22 @@ onBeforeUnmount(() => {
 .drawer_elem {
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
-  border-radius: 0.5rem !important;
+  border-radius: 0.5rem;
+  text-decoration: none;
 }
 
-.drawer_elem.selected {
+.router-link-exact-active  {
   background: rgb(var(--v-theme-blue_state));
+  text-decoration: none;
 }
 
-.drawer_elem.selected .icon {
-  color: rgb(var(--v-theme-primary_v));
+.router-link-exact-active .icon {
+  color: rgb(var(--v-theme-primary_v)) !important;
   font-size: 2.2rem;
 }
 
-.drawer_elem.selected .text {
-  color: rgb(var(--v-theme-primary_v));
+.router-link-exact-active .text {
+  color: rgb(var(--v-theme-primary_v)) !important;
   font-weight: 900;
 }
 
