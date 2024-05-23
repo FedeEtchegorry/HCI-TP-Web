@@ -11,18 +11,23 @@
                         <div>
                             <slot></slot>
                         </div>
-                        <AddButton class="absolute-bottom-right"/>
+                        <AddButton class="absolute-bottom-right" @click="addButtonPressed"/>
                     </v-card>
                 </v-sheet>
             </v-main>
         </div>
     </v-app>
+
 </template>
 
 <script setup>
 import DrawerComponent from './DrawerComponent.vue';
 import TopBar from './TopBar.vue';
 import AddButton from './AddButton.vue';
+
+const emit = defineEmits(['emitAddButton']);
+const addButtonPressed = () => emit('emitAddButton');
+
 </script>
 
 <style scoped>

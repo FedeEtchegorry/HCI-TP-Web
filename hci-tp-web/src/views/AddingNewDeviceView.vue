@@ -1,8 +1,7 @@
 <template>
 
     <v-container>
-
-        <v-dialog v-model="showAddDeviceDialog" persistent max-width="600px">
+        <v-dialog v-model="props.addOptionActive" max-width="600px">
             <v-card class="rounded-xl custom-card">
 
                 <v-card-title class="custom-title">
@@ -25,7 +24,7 @@
                             <v-select
                                 v-model="newDeviceType"
                                 class="custom-text-field"
-                                :items="roomTypes"
+                                :items="deviceTypes"
                                 label="Tipo de dispositivo"
                                 :rules="[v => !!v || 'El tipo es obligatorio']"
                                 required
@@ -41,49 +40,30 @@
                     <v-spacer></v-spacer>
                     <v-btn class="cancel-btn" text @click="closeDialog">Cancelar</v-btn>
                 </v-card-actions>
-                
             </v-card>
-        </v-dialog>
 
+        </v-dialog>
     </v-container>
   
 </template>
 
+<script setup>
 
-<script>
+    import { ref } from 'vue';
 
-    export default {
+    const valid = ref(false);
+    const newDeviceName = ref('');
+    const newDeviceType = ref('');
+    const deviceTypes = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
 
-        name: 'AddingNewDeviceView',
-        data() {
-
-            return {
-                showAddDeviceDialog: true,
-                newDeviceName: '',
-                newDeviceType: '',
-                deviceTypes: ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'],
-                valid: false,
-            };
-        },
-        methods: {
-
-            toogleDialog() {
-                this.showAddDeviceDialog = !this.showAddDeviceDialog;
-                this.newDeviceName = '';
-                this.newDeviceType = '';
-            },
-            addDevice() {
-                if (this.$refs.form.validate()) {
-                    console.log('Nuevo Dispositivo:', this.newDeviceName, 'Tipo:', this.newDeviceType);
-                    this.toogleDialog();
-                }
-            }
-        }
-    };
+    const props = defineProps({ addOptionActive: Boolean });
+    const emit = defineEmits(['newDeviceEvent']);
+    const closeDialog = () => emit('newDeviceEvent', false);
+    const addDevice = () => emit('newDeviceEvent', true);
 
 </script>
     
-  <style>
+  <style scoped>
   
   .custom-card {
   

@@ -40,6 +40,8 @@ const devices = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgb(var(--v-theme-tertiary_c)); 
+    background: rgb(var(--v-theme-primary)); 
+    color: rgb(var(--v-theme-primary_v));
+    font-size: large;
 }
 </style>
