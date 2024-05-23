@@ -4,8 +4,7 @@
         <p v-if="isArmStay">ACTIVA - DENTRO DE CASA</p>
         <p v-if="isDisarm">DESACTIVADA</p>
         <v-row class="row">
-        
-        <v-text-field class="input-class"
+        <v-text-field class="input-class-1"
             v-model="input"
             label="Pass (4 caracteres)"
             maxlength="4"
@@ -15,8 +14,10 @@
             rounded
             hide-details
         ></v-text-field>
+        <p v-if="hasError" class="error" color="red">ERROR</p>
+    </v-row>
         <v-text-field v-show="changePassOn"
-            class="input-class"
+            class="input-class-2"
             v-model="input_2"
             label="Nueva contraseña (4 caracteres)"
             maxlength="4"
@@ -26,14 +27,13 @@
             rounded
             hide-details
         ></v-text-field>
-        <p v-if="hasError" class="error" color="red">ERROR</p>
-        </v-row>
                 <v-btn
                     v-show="!isDisarm && !changePassOn"
                     @click="disarm"
                     rounded
                     size="large"
                     color="red"
+                    class="mb-1"
                 ><v-icon size="30">mdi-lock-open</v-icon>
                     Desactivar
                 </v-btn>
@@ -58,14 +58,27 @@
                     Activar-En casa
                 </v-btn>
                 <v-btn
+                    v-if="!changePassOn"
                     class="mb-1"
-                    @click="changePassOn? changePasscode:changePassValue"
+                    @click="changePasstoOn"
                     rounded
                     size="large"
                     color="blue_state"
                 >
                     Cambiar contraseña
                 </v-btn>
+                <v-btn
+                    v-if="changePassOn"
+                    class="mb-1"
+                    @click="changePasscode"
+                    rounded
+                    size="large"
+                    color="blue_state"
+                >
+                    Confirmar contraseña
+                </v-btn>
+
+                
     </v-card>
 </template>
 
@@ -98,8 +111,10 @@ const isArmStay = computed(() => myDevice.value.state.status == 'armedStay');
 const isArmAway = computed(() => myDevice.value.state.status == 'armedAway');
 const hasError = computed(() => error.value==true);
 const changePassOn = computed(() => changePass.value==true);
-const changePassValue = computed(() => changePass.value=!changePass.value);
 
+function changePasstoOn(){
+    changePass.value=true;
+}
 
 async function disarm() {
     try {
@@ -115,6 +130,7 @@ async function disarm() {
     } catch (e) {
         console.error(e);
     }
+    input.value=' ';
 }
 async function armedAway() {
     try {
@@ -130,6 +146,7 @@ async function armedAway() {
     } catch (e) {
         console.error(e);
     }
+    input.value='';
 }
 
 async function armedStay() {
@@ -146,6 +163,7 @@ async function armedStay() {
     } catch (e) {
         console.error(e);
     }
+    input.value='';
 }
 
 async function changePasscode(){
@@ -156,7 +174,7 @@ async function changePasscode(){
         }
         
         if (await deviceStore.execute(deviceId.value, 'changeSecurityCode', [passcode.value, passcode_2.value])) {
-            changePassValue;
+            changePass.value=false;
             error.value = false; 
         } else {
             error.value = true; 
@@ -164,6 +182,8 @@ async function changePasscode(){
     } catch (e) {
         console.error(e);
     }
+    input.value='';
+    input_2.value=''
 }
 
 </script>
@@ -181,18 +201,30 @@ async function changePasscode(){
     font-size: large;
 }
 
-.input-class{
+.input-class-1{
     align-items: center;
     justify-items: center;
-    width: 70%;
     font-weight: 900;
+    width: 70%;
+}
+.input-class-2{
+    align-items: center;
+    justify-items: center;
+    font-weight: 900;
+    width: 100%;
+}
+.row{
+    align-items: center;
+    justify-items: center;
+    width: 100%;
 }
 
 .error{
+    
     justify-self: center;
     align-self: center;
     color: red;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
 }
 
 .arm {
