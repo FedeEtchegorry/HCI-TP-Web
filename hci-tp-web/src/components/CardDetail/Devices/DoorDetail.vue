@@ -1,8 +1,8 @@
 <template>
     <v-card class="device">
 
-        <v-btn class="button" variant="outlined" size="124" elevation="24" :disabled="isLocked && !isOpen" 
-             @click="handleClickStatus">
+        <v-btn class="button" variant="outlined" size="124" elevation="24" :disabled="isLocked && !isOpen"
+            @click="handleClickStatus">
             <v-icon size="86" :icon="isOpen ? 'mdi-door-open' : 'mdi-door'"></v-icon>
         </v-btn>
 
@@ -69,7 +69,7 @@ async function handleClickLock() {
 </script>
 
 <style scoped>
-.button{
+.button {
     border-radius: 50%;
 }
 

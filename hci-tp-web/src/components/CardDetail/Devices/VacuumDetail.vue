@@ -87,7 +87,7 @@ async function handleClickDock() {
     justify-content: space-evenly;
 }
 
-.button{
+.button {
     border-radius: 50%;
 }
 

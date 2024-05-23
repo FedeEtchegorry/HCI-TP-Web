@@ -25,18 +25,14 @@
             </div>
         </div>
 
-        
-        <v-select item-title="mode" item-value="value"
-        :readonly="!isEditing" label="Select mode" variant="outlined" v-model="mode" class="select" :hide-details="true"
-            :items="allMode" @update:modelValue="changeMode">
+
+        <v-select item-title="mode" item-value="value" :readonly="!isEditing" label="Select mode" variant="outlined"
+            v-model="mode" class="select" :hide-details="true" :items="allMode" @update:modelValue="changeMode">
             <template v-slot:append>
-                  <v-icon
-                    :key="`icon-${isEditing}`"
-                    :color="isEditing ? 'success' : 'info'"
+                <v-icon :key="`icon-${isEditing}`" :color="isEditing ? 'success' : 'info'"
                     :icon="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'"
-                    @click="isEditing = !isEditing"
-                  ></v-icon>
-              </template></v-select>
+                    @click="isEditing = !isEditing"></v-icon>
+            </template></v-select>
     </v-card>
 
 </template>
@@ -60,9 +56,9 @@ let isEditing = ref(false);
 let fridgeTemp = ref(myDevice.value.state.temperature)
 let freezerTemp = ref(myDevice.value.state.freezerTemperature)
 const allMode = [
-    {mode: 'Default', value:'default'},
-    {mode: 'Party', value: 'party'},
-    {mode: 'Vacation', value: 'vacation'},
+    { mode: 'Default', value: 'default' },
+    { mode: 'Party', value: 'party' },
+    { mode: 'Vacation', value: 'vacation' },
 ]
 
 let mode = ref(allMode.find(m => m.value === myDevice.value.state.mode))

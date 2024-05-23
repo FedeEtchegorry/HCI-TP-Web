@@ -1,35 +1,23 @@
 <template>
-    <v-card class="device" >
+    <v-card class="device">
         <v-card class="box">
             <p v-if="isOpening || isOpen" class="align-center title">ABIERTO</p>
             <p v-if="isClosing || isClosed" class="align-center title">CERRADO</p>
         </v-card>
         <v-container class="mb-5">
-            <v-slider 
-                append-icon="mdi-window-shutter"
-                prepend-icon="mdi-window-shutter-open"
-                @click:append="openPercentage+=1"
-                @click:prepend="openPercentage-=1"
-                v-model="openPercentage"
-                step="1"
-                min="0"
-                max="100"
-                track-fill-color="blue_state"
-                track-color="grey"
-                track-size="6"
-                thumb-label="always"
-                thumb-color="blue_state"
-                height="50" elevation="24"
-                persistent-hint
-                hint="Nivel de ventana"
-            ></v-slider>
+            <v-slider append-icon="mdi-window-shutter" prepend-icon="mdi-window-shutter-open"
+                @click:append="openPercentage += 1" @click:prepend="openPercentage -= 1" v-model="openPercentage" step="1"
+                min="0" max="100" track-fill-color="blue_state" track-color="grey" track-size="6" thumb-label="always"
+                thumb-color="blue_state" height="50" elevation="24" persistent-hint hint="Nivel de ventana"></v-slider>
         </v-container>
-        <v-row >
-            <v-btn v-if="isClosing || isClosed" class="mr-1 button" @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="24">
+        <v-row>
+            <v-btn v-if="isClosing || isClosed" class="mr-1 button" @click="openBlind" :disabled="isOpening || isOpen"
+                color="green" rounded elevation="24">
                 <v-icon class="icon mr-1">mdi-blinds-open</v-icon>
                 Abrir
             </v-btn>
-            <v-btn v-if="isOpening || isOpen" class="ml-1 button"@click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="24">
+            <v-btn v-if="isOpening || isOpen" class="ml-1 button" @click="closeBlind" :disabled="isClosing || isClosed"
+                color="red" rounded elevation="24">
                 <v-icon class="icon mr-1">mdi-roller-shade-closed</v-icon>
                 Cerrar
             </v-btn>
@@ -88,7 +76,7 @@ async function setPosition(value) {
 async function openBlind() {
     try {
         await deviceStore.execute(deviceId.value, 'open', []);
-        myDevice.value.state.status='opening';
+        myDevice.value.state.status = 'opening';
     } catch (e) {
         console.log(e);
     }
@@ -97,7 +85,7 @@ async function openBlind() {
 async function closeBlind() {
     try {
         await deviceStore.execute(deviceId.value, 'close', []);
-        myDevice.value.state.status='closing';
+        myDevice.value.state.status = 'closing';
     } catch (e) {
         console.log(e);
     }
@@ -122,13 +110,15 @@ async function closeBlind() {
     padding-right: 2rem;
     margin-bottom: 2rem;
 }
+
 .title {
     font-size: xx-large;
     font-weight: 500;
     color: white;
     background-color: rgb(var(--v-theme-blue_state));
 }
-.button{
+
+.button {
     font-size: large;
 }
 </style>

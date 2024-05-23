@@ -23,7 +23,7 @@ const devices = {
 </script>
 
 
-<template> 
+<template>
     <EmptyCard>
         <v-card class="title-box">
             <h2>{{ device.name }}</h2>
@@ -38,11 +38,11 @@ const devices = {
     flex-grow: 1;
 }
 
-.title-box{
+.title-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgb(var(--v-theme-primary)); 
+    background: rgb(var(--v-theme-primary));
     color: rgb(var(--v-theme-primary_v));
     font-size: large;
 }
