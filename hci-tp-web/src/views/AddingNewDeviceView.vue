@@ -1,7 +1,7 @@
 <template>
 
     <v-container>
-        <v-dialog v-model="localAddOptionActive" max-width="600px">
+        <v-dialog v-model="props.addOptionActive" max-width="600px">
             <v-card class="rounded-xl custom-card">
 
                 <v-card-title class="custom-title">
@@ -49,29 +49,17 @@
 
 <script setup>
 
-    import { ref, watch } from 'vue';
+    import { ref } from 'vue';
 
-    const props = defineProps({ addOptionActive: Boolean });
-    const emit = defineEmits(['update:addOptionActive']);
-    const localAddOptionActive = ref(props.addOptionActive);
-
-    watch(() => props.addOptionActive, (newValue) => { localAddOptionActive.value = newValue; });
-
+    const valid = ref(false);
     const newDeviceName = ref('');
     const newDeviceType = ref('');
     const deviceTypes = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
-    const valid = ref(false);
 
-    const addDevice = () => {
-        if (valid.value) {
-            console.log('Nuevo Dispositivo:', newDeviceName.value, 'Tipo:', newDeviceType.value);
-        }
-    };
-
-    const closeDialog = () => {
-        localAddOptionActive.value = false;
-        emit('update:addOptionActive', false);
-    };
+    const props = defineProps({ addOptionActive: Boolean });
+    const emit = defineEmits('newDeviceEvent');
+    const closeDialog = () => emit('newDeviceEvent', false);
+    const addDevice = () => emit('newDeviceEvent', true);
 
 </script>
     

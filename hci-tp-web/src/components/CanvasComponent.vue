@@ -11,7 +11,7 @@
                         <div>
                             <slot></slot>
                         </div>
-                        <AddButton class="absolute-bottom-right" @click="emitAddOptionActive"/>
+                        <AddButton class="absolute-bottom-right" @click="addButtonPressed"/>
                     </v-card>
                 </v-sheet>
             </v-main>
@@ -25,10 +25,9 @@ import DrawerComponent from './DrawerComponent.vue';
 import TopBar from './TopBar.vue';
 import AddButton from './AddButton.vue';
 
-const emit = defineEmits(['update:addOptionActive']);
-const emitAddOptionActive = () => {
-  emit('update:addOptionActive', true);
-};
+const emit = defineEmits('addButtonEvent');
+const addButtonPressed = () => emit('addButtonEvent');
+
 </script>
 
 <style scoped>

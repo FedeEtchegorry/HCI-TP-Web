@@ -1,6 +1,6 @@
 <template>
-    <CommonListViewComponent @update:addOptionActive="handleAddOptionActive"/>
-    <AddingNewDeviceView :addOptionActive="addOptionActive" @update:addOptionActive="setAddOptionActive"/>
+    <CommonListViewComponent @addButtonEvent="handleAddButtonPressed"/>
+    <AddingNewDeviceView :addOptionActive="addButtonState" @newDeviceEvent="handleNewDevice"/>
 </template>
 
 
@@ -9,13 +9,8 @@ import { ref } from 'vue';
 import CommonListViewComponent from '../components/CommonListViewComponent.vue';
 import AddingNewDeviceView from '../views/AddingNewDeviceView.vue';
 
-const addOptionActive = ref(false);
-const handleAddOptionActive = (value) => {
-    setAddOptionActive(value);
-};
-
-const setAddOptionActive = (value) => {
-  addOptionActive.value = true;
-};
+const addButtonState = ref(false);
+const handleAddButtonPressed = () => { addButtonState.value = !addButtonState.value; };
+const handleNewDevice = (state) => { addButtonState.value = state; }; // Temporall
 
 </script>
