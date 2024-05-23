@@ -1,33 +1,19 @@
 <template>
     <v-card class="device">
 
-        <v-btn class="mb-2" rounded="xl" :disabled="isLocked && !isOpen" elevation="24" size="x-large" @click="handleClickStatus"
-            :color="isOpen ? '' : 'green'">
-            {{ isOpen ? "CLOSE" : "OPEN" }}
+        <v-btn class="button" variant="outlined" size="124" elevation="24" :disabled="isLocked && !isOpen" 
+             @click="handleClickStatus">
+            <v-icon size="86" :icon="isOpen ? 'mdi-door-open' : 'mdi-door'"></v-icon>
         </v-btn>
+
 
         <div class="lock">
             <v-btn class="mb-2" @click="handleClickLock" :icon="isLocked ? 'mdi-lock' : 'mdi-lock-open'" rounded="xl"
                 size="x-large" :color="isLocked ? 'red' : 'green'"></v-btn>
 
-            {{isLocked ? "LOCKED" : "UNLOCKED"}}
+            {{ isLocked ? "LOCKED" : "UNLOCKED" }}
         </div>
-        
-        <!-- <v-text-field v-model="value" type="Number">
-            <template v-slot:append>
-                <v-btn icon @click="value++">
-                    <v-icon>mdi-chevron-up</v-icon>
-                </v-btn>
-            </template>
-<template v-slot:prepend>
-                <v-btn icon @click="value--">
-                    <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-            </template>
-</v-text-field> -->
 
-
-        <!-- <v-switch :value='status' color="green" inset></v-switch> -->
     </v-card>
 
 </template>
@@ -82,19 +68,22 @@ async function handleClickLock() {
 
 </script>
 
-<style setup>
+<style scoped>
+.button{
+    border-radius: 50%;
+}
+
 .lock {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
 .device {
-    padding: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    flex-grow: 1;
+    justify-content: space-evenly;
 }
 </style>
