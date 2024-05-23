@@ -4,6 +4,7 @@ import DoorDetail from './DoorDetail.vue';
 import BlindDetail from './BlindDetail.vue';
 import RefrigeratorDetail from './RefrigeratorDetail.vue';
 import VacuumDetail from './VacuumDetail.vue';
+import AlarmDetail from './AlarmDetail.vue';
 
 defineProps({
     device: Object,
@@ -16,6 +17,7 @@ const devices = {
     vacuum: VacuumDetail,
     door: DoorDetail,
     refrigerator: RefrigeratorDetail,
+    alarm: AlarmDetail
 };
 
 </script>

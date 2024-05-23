@@ -1,11 +1,15 @@
 <template>
-    <v-card class="device">
+    <v-card class="device" >
         <v-card class="box">
             <p v-if="isOpening || isOpen" class="align-center title">ABIERTO</p>
             <p v-if="isClosing || isClosed" class="align-center title">CERRADO</p>
         </v-card>
         <v-container class="mb-5">
             <v-slider 
+                append-icon="mdi-window-shutter"
+                prepend-icon="mdi-window-shutter-open"
+                @click:append="openPercentage+=1"
+                @click:prepend="openPercentage-=1"
                 v-model="openPercentage"
                 step="1"
                 min="0"
@@ -15,17 +19,17 @@
                 track-size="6"
                 thumb-label="always"
                 thumb-color="blue_state"
-                height="50" elevation="5"
+                height="50" elevation="24"
                 persistent-hint
-                hint="Cerrado de ventana"
+                hint="Nivel de ventana"
             ></v-slider>
         </v-container>
         <v-row >
-            <v-btn v-if="isClosing || isClosed" class="mr-1 button" @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="5">
+            <v-btn v-if="isClosing || isClosed" class="mr-1 button" @click="openBlind" :disabled="isOpening || isOpen" color="green" rounded elevation="24">
                 <v-icon class="icon mr-1">mdi-blinds-open</v-icon>
                 Abrir
             </v-btn>
-            <v-btn v-if="isOpening || isOpen" class="ml-1 button"@click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="5">
+            <v-btn v-if="isOpening || isOpen" class="ml-1 button"@click="closeBlind" :disabled="isClosing || isClosed" color="red" rounded elevation="24">
                 <v-icon class="icon mr-1">mdi-roller-shade-closed</v-icon>
                 Cerrar
             </v-btn>
@@ -102,7 +106,7 @@ async function closeBlind() {
 
 <style scoped>
 .device {
-    padding: 10%;
+    padding: 10% 0;
     display: flex;
     flex-direction: column;
     align-items: center;

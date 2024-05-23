@@ -83,6 +83,13 @@ class Blind extends Device{
     }
 }
 
+class Alarm extends Device{
+    constructor(... args){
+        super(...args)
+        this.type.id = "mxztsyjzsrq7iaqc";
+    }
+}
+
 //------------------------------------Info de Device-----------------------------
 class DeviceType {
     constructor(id, name, powerUsage) {
