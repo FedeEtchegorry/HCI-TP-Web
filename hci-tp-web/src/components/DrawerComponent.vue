@@ -20,28 +20,28 @@
         </template>
 </v-list-item>-->
       <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <template v-slot:prepend>
+        <RouterLink class="link-with-icon" to="/">
           <v-icon class="icon">mdi-devices</v-icon>
-          <RouterLink class="text" v-show="!isMini" to="/">DISPOSITIVOS</RouterLink>
-        </template>
+          <span v-show="!isMini" class="text">DISPOSITIVOS</span>
+        </RouterLink>
       </v-list-item>
       <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <template v-slot:prepend>
+        <RouterLink class="link-with-icon" to="/rooms">
           <v-icon class="icon">mdi-home</v-icon>
-          <RouterLink class="text" v-show="!isMini" to="/rooms">HABITACIONES</RouterLink>
-        </template>
+          <span v-show="!isMini" class="text">HABITACIONES</span>
+        </RouterLink>
       </v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
       <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <template v-slot:prepend>
+        <RouterLink class="link-with-icon" to="/routines">
           <v-icon class="icon">mdi-calendar-clock</v-icon>
-          <RouterLink class="text" v-show="!isMini" to="/routines">RUTINAS</RouterLink>
-        </template>
+          <span v-show="!isMini" class="text">RUTINAS</span>
+        </RouterLink>
       </v-list-item>
       <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
-        <template v-slot:prepend>
+        <RouterLink class="link-with-icon" to="/houses">
           <v-icon class="icon">mdi-home-group</v-icon>
-          <RouterLink class="text" v-show="!isMini" to="/houses">HOGARES</RouterLink>
-        </template>
+          <span v-show="!isMini" class="text">HOGARES</span>
+        </RouterLink>
       </v-list-item>
     </v-list>
     <div class="bottom">
