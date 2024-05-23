@@ -1,4 +1,7 @@
 <template>
+    <CanvasComponent>
+        <p>Rooms view</p>
+    </CanvasComponent>
 </template>
 
 

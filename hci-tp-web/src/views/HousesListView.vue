@@ -1,6 +1,6 @@
 <template>
     <CanvasComponent>
-        <p>Routines view</p>
+        <p>Houses view</p>
     </CanvasComponent>
 </template>
 

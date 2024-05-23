@@ -1,19 +1,13 @@
 <template>
-  <v-navigation-drawer
-    v-model="drawer"
-    :rail="isMini"
-    permanent
-    :class="{ 'mini-mode': isMini }"
-    :rail-width="80"
-    class="drawer"
-  >
+  <v-navigation-drawer v-model="drawer" :rail="isMini" permanent :class="{ 'mini-mode': isMini }" :rail-width="80"
+    class="drawer">
     <v-layout class="d-flex drawer-header">
       <v-app-bar-nav-icon @click="toggleMini" class="ham-button"></v-app-bar-nav-icon>
       <v-img :src="profileImage" class="logo-image" v-show="!isMini"></v-img>
     </v-layout>
     <v-divider :thickness="3" class="divider"></v-divider>
     <v-list>
-      <v-list-item
+      <!--<v-list-item
         v-for="(item, key) in menuItems"
         class="d-flex drawer_elem mr-1 mb-1 ml-1"
         :key="key"
@@ -24,12 +18,36 @@
           <v-icon class="icon">{{ item.icon }}</v-icon>
           <v-list-item-title v-show="!isMini" class="text">{{ item.title }}</v-list-item-title>
         </template>
+</v-list-item>-->
+      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
+        <template v-slot:prepend>
+          <v-icon class="icon">mdi-devices</v-icon>
+          <RouterLink class="text" v-show="!isMini" to="/">DISPOSITIVOS</RouterLink>
+        </template>
+      </v-list-item>
+      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
+        <template v-slot:prepend>
+          <v-icon class="icon">mdi-home</v-icon>
+          <RouterLink class="text" v-show="!isMini" to="/rooms">HABITACIONES</RouterLink>
+        </template>
+      </v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
+      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
+        <template v-slot:prepend>
+          <v-icon class="icon">mdi-calendar-clock</v-icon>
+          <RouterLink class="text" v-show="!isMini" to="/routines">RUTINAS</RouterLink>
+        </template>
+      </v-list-item>
+      <v-list-item class="d-flex drawer_elem mr-1 mb-1 ml-1">
+        <template v-slot:prepend>
+          <v-icon class="icon">mdi-home-group</v-icon>
+          <RouterLink class="text" v-show="!isMini" to="/houses">HOGARES</RouterLink>
+        </template>
       </v-list-item>
     </v-list>
     <div class="bottom">
       <ProfileComponent v-if="!isMini"></ProfileComponent>
       <v-icon class="icon-account" v-else>mdi-account</v-icon>
-    </div>  
+    </div>
   </v-navigation-drawer>
 </template>
 
@@ -45,10 +63,10 @@ const menuItems = ref({
   devices: { title: 'DISPOSITIVOS', icon: 'mdi-devices' },
   rooms: { title: 'HABITACIONES', icon: 'mdi-home' },
   routines: { title: 'RUTINAS', icon: 'mdi-calendar-clock' },
-  houses:{ title: 'HOGARES', icon: 'mdi-home-group'},
+  houses: { title: 'HOGARES', icon: 'mdi-home-group' },
 });
 
-const isMini = computed( () => {
+const isMini = computed(() => {
   return mini.value
 })
 
@@ -69,7 +87,7 @@ const handleResize = () => {
 
 onMounted(() => {
   window.addEventListener('resize', handleResize);
-  handleResize(); 
+  handleResize();
 });
 
 onBeforeUnmount(() => {
@@ -169,13 +187,15 @@ onBeforeUnmount(() => {
 
 .mini-mode .drawer_elem.selected .icon {
   font-size: 2.4rem;
-  justify-self:right;
+  justify-self: right;
 }
+
 .mini-mode .drawer_elem .icon {
   margin-right: 0;
   font-size: 2.4rem;
 }
-.icon-account{
+
+.icon-account {
   color: rgb(var(--v-theme-primary));
   font-size: 3rem;
   margin-left: 1rem;

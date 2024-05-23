@@ -1,10 +1,12 @@
 <template>
-  <DevicesListView />
-
+  <RouterView />
 </template>
 
 <script setup>
 import DevicesListView from './views/DevicesListView.vue'
+
+import RoomsListView from './views/RoomsListView.vue'
+
 import { useDeviceStore } from '@/stores/deviceStore';
 import { RouterLink, RouterView } from 'vue-router'
 import SearchComponent from './components/SearchComponent.vue'
