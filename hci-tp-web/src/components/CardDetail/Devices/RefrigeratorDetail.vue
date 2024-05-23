@@ -64,6 +64,7 @@ const allMode = [
     {mode: 'Party', value: 'party'},
     {mode: 'Vacation', value: 'vacation'},
 ]
+
 let mode = ref(allMode.find(m => m.value === myDevice.value.state.mode))
 
 const deviceId = computed(() => { return myDevice.value.id });
@@ -92,7 +93,7 @@ async function changeFreezerTemp(value) {
 
 async function changeMode() {
     try {
-        await deviceStore.execute(deviceId.value, 'setMode', [mode.value.mode])
+        await deviceStore.execute(deviceId.value, 'setMode', [mode.value])
     } catch (e) {
         console.log(e);
     }
