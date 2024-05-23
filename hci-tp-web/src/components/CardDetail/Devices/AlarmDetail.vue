@@ -1,8 +1,8 @@
 <template>
     <v-card class="device">
-        <p v-if="isArmAway" color="green">ACTIVA - FUERA DE CASA</p>
-        <p v-if="isArmStay" color="green">ACTIVA - DENTRO DE CASA</p>
-        <p v-if="isDisarm" color="red">DESACTIVADA</p>
+        <p v-if="isArmAway">ACTIVA - FUERA DE CASA</p>
+        <p v-if="isArmStay">ACTIVA - DENTRO DE CASA</p>
+        <p v-if="isDisarm">DESACTIVADA</p>
         <v-row class="row">
         
         <v-text-field class="input-class"
@@ -17,7 +17,7 @@
         ></v-text-field>
         <v-text-field v-show="changePassOn"
             class="input-class"
-            v-model="input_new"
+            v-model="input_2"
             label="Nueva contraseña (4 caracteres)"
             maxlength="4"
             single-line
@@ -28,33 +28,29 @@
         ></v-text-field>
         <p v-if="hasError" class="error" color="red">ERROR</p>
         </v-row>
-            <v-row class="arm">
                 <v-btn
                     v-show="!isDisarm && !changePassOn"
                     @click="disarm"
-                    icon="mdi-lock-open"
                     rounded
                     size="large"
                     color="red"
-                >
+                ><v-icon size="30">mdi-lock-open</v-icon>
                     Desactivar
                 </v-btn>
                 <v-btn
                     v-show="isDisarm && !changePassOn"
                     class="mb-1"
                     @click="armedAway"
-                    :icon="mdi-lock"
                     rounded
                     size="large"
                     color="green"
                 ><v-icon size="30">mdi-lock</v-icon>
-                    Activar-Fuera
+                    Activar-Fuera 
                 </v-btn>
                 <v-btn
                     v-show="isDisarm && !changePassOn"
                     class="mb-1"
                     @click="armedStay"
-                    :icon="mdi-home-lock"
                     rounded
                     size="large"
                     color="green"
@@ -63,22 +59,20 @@
                 </v-btn>
                 <v-btn
                     class="mb-1"
-                    @click="changePassOn ? changePasscode : changePassValue"
-                    :icon="mdi-home-lock"
+                    @click="changePassOn? changePasscode:changePassValue"
                     rounded
                     size="large"
                     color="blue_state"
                 >
                     Cambiar contraseña
                 </v-btn>
-            </v-row>
     </v-card>
 </template>
 
 
 <script setup>
 import { useRoomStore } from '@/stores/roomStore';
-import { computed, ref ,onBeforeMount} from 'vue';
+import { computed, ref} from 'vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 
 
@@ -109,6 +103,10 @@ const changePassValue = computed(() => changePass.value=!changePass.value);
 
 async function disarm() {
     try {
+        if (passcode.value.length!=4){
+            error.value = true;
+            return;
+        }
         if(await deviceStore.execute(deviceId.value, 'disarm', [passcode.value])){
             myDevice.value.state.status = 'disarmed';
             error.value=false;
@@ -120,6 +118,10 @@ async function disarm() {
 }
 async function armedAway() {
     try {
+        if (passcode.value.length!=4){
+            error.value = true;
+            return;
+        }
         if (await deviceStore.execute(deviceId.value, 'armAway', [passcode.value])){
             myDevice.value.state.status = 'armedAway';
             error.value=false;
@@ -132,6 +134,10 @@ async function armedAway() {
 
 async function armedStay() {
     try {
+        if (passcode.value.length!=4){
+            error.value = true;
+            return;
+        }
         if (await deviceStore.execute(deviceId.value, 'armStay', [passcode.value])){
             myDevice.value.state.status = 'armedStay';
             error.value=false;
@@ -144,10 +150,17 @@ async function armedStay() {
 
 async function changePasscode(){
     try {
-        if (await deviceStore.execute(deviceId.value, 'changeSecurityCode', [passcode.value, passcode_2.value])){
-            changePassOn=false;
+        if (passcode_2.value.length!=4 || passcode.value.length!=4){
+            error.value = true;
+            return;
         }
-        else error.value=true;
+        
+        if (await deviceStore.execute(deviceId.value, 'changeSecurityCode', [passcode.value, passcode_2.value])) {
+            changePassValue;
+            error.value = false; 
+        } else {
+            error.value = true; 
+        }
     } catch (e) {
         console.error(e);
     }
@@ -174,11 +187,7 @@ async function changePasscode(){
     width: 70%;
     font-weight: 900;
 }
-.row{
-    align-items: center;
-    justify-items: center;
-    width: 100%;
-}
+
 .error{
     justify-self: center;
     align-self: center;
