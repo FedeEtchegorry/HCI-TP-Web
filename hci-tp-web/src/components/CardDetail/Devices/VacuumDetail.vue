@@ -9,7 +9,7 @@
         <div class="actions">
             <div class="mode">
                 Change Mode
-                <v-btn class="mb-2" density="compact" size="large" @click="handleClickMode">
+                <v-btn class="mb-2 mode-btn" density="compact" color="blue_state" size="large" @click="handleClickMode">
                     {{ isMopping ? "Mop" : "Vacuum" }}
                 </v-btn>
             </div>
@@ -94,6 +94,9 @@ async function handleClickDock() {
 .mode {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    font-weight: 500;
+    font-size: large;
 }
 
 .actions {
