@@ -5,7 +5,7 @@
             <v-card class="rounded-xl custom-card">
 
                 <v-card-title class="custom-title">
-                <span class="headline">Agregar Nuevo Dispositivo</span>
+                <span class="headline">{{ headlineName }}</span>
                 </v-card-title>
 
                 <v-card-text>
@@ -13,22 +13,24 @@
                     <v-container>
                         <v-form ref="form" v-model="valid">
                             <v-text-field
-                                v-model="newDeviceName"
+                                v-model="newThingName"
                                 class="custom-text-field"
-                                label="Nombre del dispositivo"
+                                :label="thingNameLabel"
                                 :rules="[v => !!v || 'El nombre es obligatorio']"
                                 required
                                 rounded
+                                variant="outlined"
                             ></v-text-field>
                             
                             <v-select
-                                v-model="newDeviceType"
+                                v-model="newThingType"
                                 class="custom-text-field"
-                                :items="deviceTypes"
-                                label="Tipo de dispositivo"
+                                :label="thingTypeLabel"
+                                :items="thingTypes"
                                 :rules="[v => !!v || 'El tipo es obligatorio']"
                                 required
                                 rounded
+                                variant="outlined"
                             ></v-select>
                         </v-form>
                     </v-container>
@@ -36,7 +38,7 @@
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn class="accept-btn" text @click="addDevice">Agregar</v-btn>
+                    <v-btn class="accept-btn" text @click="addThing">Agregar</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn class="cancel-btn" text @click="closeDialog">Cancelar</v-btn>
                 </v-card-actions>
@@ -49,26 +51,53 @@
 
 <script setup>
 
-    import { ref } from 'vue';
+import { ref } from 'vue';
 
-    const valid = ref(false);
-    const newDeviceName = ref('');
-    const newDeviceType = ref('');
-    const deviceTypes = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
+const valid = ref(false);
+const newThingName = ref('');
+const newThingType = ref('');
+const emit = defineEmits(['newThingEvent']);
+const closeDialog = () => emit('newThingEvent', false, '', '');
 
-    const props = defineProps({ addOptionActive: Boolean });
-    const emit = defineEmits(['newDeviceEvent']);
-    const closeDialog = () => emit('newDeviceEvent', false);
-    const addDevice = () => emit('newDeviceEvent', true);
+const addThing = () => {
+    emit('newThingEvent', true, newThingName.value, newThingType.value);
+    newThingName.value = '';
+    newThingType.value = '';
+} 
+
+const props = defineProps({
+    
+    addOptionActive: {
+        type: Boolean,
+        required: true
+    },
+    headlineName: {
+        type: String,
+        required: true
+    },
+    thingNameLabel: {
+        type: String,
+        required: true
+    },
+    thingTypeLabel: {
+        type: String,
+        required: true
+    },
+    thingTypes: {
+        type: Array,
+        required: true
+    }
+});
 
 </script>
     
-  <style scoped>
+<style scoped>
   
   .custom-card {
-  
     background-color: rgb(var(--v-theme-secondary_v));
+    padding-top: 1rem;
   }
+
   .custom-title {
     display: flex;
     justify-content: center;
@@ -77,24 +106,22 @@
   }
   
   .custom-text-field {
-    border-radius: 1rem;
     border: 1rem solid #ddd;
     padding: 1rem;
   }
   
   .cancel-btn {
-    border-radius: 2rem;
-    margin: 1rem;
-    padding: auto;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
   }
   
   .accept-btn {
     background-color: rgb(var(--v-theme-primary));
     color: white;
-    border-radius: 2rem;
-    margin: 1rem;
-    padding: auto;
+    border-radius: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
   }
   
-  </style>
-    
+</style>

@@ -1,5 +1,8 @@
 <template>
-  <CanvasComponent>
+
+  <CanvasComponent @emitAddButton="handleAddButtonPressed">
+    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" :addOptionActive="addButtonState" headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo" thingTypeLabel="Tipo de dispositivo" :thingTypes="deviceTypeArray"/>
+
     <GridComponent :items="components">
       <template v-slot:default="{ item }">
         <v-col
@@ -23,9 +26,19 @@ import DeviceDetail from '@/components/CardDetail/Devices/DeviceDetail.vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import GridComponent from '@/components/GridComponent.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
+import AddingNewSimpleThingView from './AddingNewSimpleThingView';
 
 const deviceStore = useDeviceStore();
 const components = shallowRef([]);
+const addButtonState = ref(false);
+const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
+const handleAddButtonPressed = () => { addButtonState.value = !addButtonState.value; };
+const handleNewDevice = (state, name, type) => {
+  
+  addButtonState.value = false;
+  console.log(`Nuevo device: ${name} de tipo: ${type}`);
+}
+
 
 onMounted(async () => {
   await deviceStore.getAll();
