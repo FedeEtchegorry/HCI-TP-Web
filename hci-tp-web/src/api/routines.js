@@ -21,22 +21,46 @@ class RoutineApi {
         return await Api.get(RoutineApi.getUrl(id), controller);
     }
 
+    static async execute(routineId, controller){
+        return await Api.put(RoutineApi.getUrl(id + '/execute'), null, controller);
+    }
+
     static async getAll(controller) {
         return await Api.get(RoutineApi.getUrl(), controller);
     }
 }
 
+//----------------------------Routines--------------------------
 class Routine {
-    constructor() {
-      
+    constructor(name, meta) {
+        this.name = name;
+        this.actions = [];
+        this.meta= meta;
     }
+
+    addAction(action){
+        actions.push(action);
+    }
+
     toString() {
         return JSON.stringify(this, null, 2);
     }
 }
+
 class RoutineMeta {
     constructor() {
        //Agregar informacion extra si se desea
     }
 }
-export { RoutineApi, Routine, RoutineMeta };
+
+//------------------------Actions for routines---------------------------
+class Action {
+    constructor(deviceId, actionName, params, meta){
+        this.device.id = deviceId;
+        this.actionName = actionName;
+        this.params = params;
+        this.meta = meta;
+    }
+}
+
+export {RoutineApi, Routine, RoutineMeta, Action};

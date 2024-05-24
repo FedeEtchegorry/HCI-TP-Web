@@ -2,7 +2,6 @@
 
     <CanvasComponent @emitAddButton="handleAddButtonPressed">
         <AddingNewSimpleThingView @newThingEvent="handleNewRoom" :addOptionActive="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="roomTypeArray"/>
-        <p>Rooms view</p>
     </CanvasComponent>
 
 </template>
