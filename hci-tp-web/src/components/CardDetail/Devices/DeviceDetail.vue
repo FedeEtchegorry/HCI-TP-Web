@@ -84,7 +84,7 @@ async function modifyDevice() {
             id: props.device.id,
             name: editedDeviceName.value,
         };
-        if (editedDeviceName.value.length<15 && await deviceStore.modify(updatedDevice)) {
+        if (editedDeviceName.value.length<20 && await deviceStore.modify(updatedDevice)) {
             props.device.name = editedDeviceName.value;
             toggleDialog();
         } else {
