@@ -1,11 +1,11 @@
 <template>
 
     <v-container>
-        <v-dialog v-model="props.addOptionActive" max-width="600px">
+        <v-dialog v-model="props.addOptionActive" max-width="60rem">
             <v-card class="rounded-xl custom-card">
 
                 <v-card-title class="custom-title">
-                <span class="headline">{{ headlineName }}</span>
+                    <span class="headline">{{ headlineName }}</span>
                 </v-card-title>
 
                 <v-card-text>
@@ -32,15 +32,16 @@
                                 rounded
                                 variant="outlined"
                             ></v-select>
+
                         </v-form>
                     </v-container>
 
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn class="accept-btn" text @click="addThing">Agregar</v-btn>
+                    <v-btn class="accept-button" text @click="addThing">Agregar</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn class="cancel-btn" text @click="closeDialog">Cancelar</v-btn>
+                    <v-btn class="cancel-button" text @click="closeDialog">Cancelar</v-btn>
                 </v-card-actions>
             </v-card>
 
@@ -93,35 +94,35 @@ const props = defineProps({
     
 <style scoped>
   
-  .custom-card {
-    background-color: rgb(var(--v-theme-secondary_v));
+.custom-card {
+    background-color: rgb(var(--v-theme-primary_v));
     padding-top: 1rem;
-  }
+}
 
-  .custom-title {
+.custom-title {
     display: flex;
     justify-content: center;
     text-align: center;
     width: 100%;
-  }
-  
-  .custom-text-field {
-    border: 1rem solid #ddd;
+}
+
+.custom-text-field {
+    border: 1rem;
     padding: 1rem;
-  }
-  
-  .cancel-btn {
+}
+
+.cancel-button {
     border-radius: 1rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
-  }
-  
-  .accept-btn {
-    background-color: rgb(var(--v-theme-primary));
+}
+
+.accept-button {
+    background-color: rgb(var(--v-theme-blue_state));
     color: white;
     border-radius: 1rem;
     margin-left: 1rem;
     margin-bottom: 1rem;
-  }
+}
   
 </style>

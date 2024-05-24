@@ -1,9 +1,13 @@
 <template>
     <CanvasComponent>
+        <AddingNewRoutineView/>
         <p>Routines view</p>
     </CanvasComponent>
 </template>
 
 
-<script>
+<script setup>
+
+import AddingNewRoutineView from './AddingNewRoutineView';
+
 </script>
