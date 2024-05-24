@@ -27,15 +27,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, shallowRef } from 'vue';
+import { ref, onMounted, shallowRef, computed } from 'vue';
 import DeviceDetail from '@/components/CardDetail/Devices/DeviceDetail.vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import GridComponent from '@/components/GridComponent.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
+import { useSearchStore } from '@/stores/searchStore';
 
+const searchStore = useSearchStore();
+const search = computed(() => searchStore.getSearch);
 const deviceStore = useDeviceStore();
-const components = shallowRef([]);
+const components = ref([]);
 const addButtonState = ref(false);
 const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
 
@@ -70,3 +73,6 @@ onMounted(async () => {
   color: rgb(var(--v-theme-primary));
 }
 </style>
+
+
+
