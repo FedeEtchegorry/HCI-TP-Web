@@ -154,13 +154,6 @@ onBeforeUnmount(() => {
   opacity: 1;
 }
 
-.bottom {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  color: rgb(var(--v-theme-primary_v));
-  opacity: 1;
-}
 
 .mini-mode .icon {
   font-size: 2.2rem;
@@ -174,6 +167,14 @@ onBeforeUnmount(() => {
 .mini-mode .drawer_elem .icon {
   margin-right: 0;
   font-size: 2.4rem;
+}
+.bottom {
+  width: 95%;
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+  color: rgb(var(--v-theme-primary_v));
+  opacity: 1;
 }
 
 .icon-account {
