@@ -31,7 +31,7 @@ import AddingNewSimpleThingView from './AddingNewSimpleThingView';
 const deviceStore = useDeviceStore();
 const components = shallowRef([]);
 const addButtonState = ref(false);
-const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta'];
+const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
 const handleAddButtonPressed = () => { addButtonState.value = !addButtonState.value; };
 const handleNewDevice = (state, name, type) => {
   
