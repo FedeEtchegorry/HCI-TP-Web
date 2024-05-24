@@ -9,7 +9,7 @@
       :thingTypes="deviceTypeArray"
     />
     <h1 class="title">DISPOSITIVOS</h1>
-    <GridComponent :items="components">
+    <GridComponent :items="filteredComponents">
       <template v-slot:default="{ item }">
         <v-col
           class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, shallowRef, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import DeviceDetail from '@/components/CardDetail/Devices/DeviceDetail.vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import GridComponent from '@/components/GridComponent.vue';
@@ -49,6 +49,7 @@ const handleAddButtonPressed = () => {
 const handleNewDevice = (state, name, type) => {
   addButtonState.value = false;
   console.log(`Nuevo device: ${name} de tipo: ${type}`);
+  // Aquí puedes agregar lógica para añadir el nuevo dispositivo al store y a components
 };
 
 onMounted(async () => {
@@ -57,6 +58,16 @@ onMounted(async () => {
     component: DeviceDetail,
     props: { device }
   }));
+});
+
+// Computed property for filtered components based on search
+const filteredComponents = computed(() => {
+  if (!search.value) {
+    return components.value;
+  }
+  return components.value.filter(item =>
+    item.props.device.name.toLowerCase().includes(search.value.toLowerCase())
+  );
 });
 </script>
 
@@ -73,6 +84,3 @@ onMounted(async () => {
   color: rgb(var(--v-theme-primary));
 }
 </style>
-
-
-
