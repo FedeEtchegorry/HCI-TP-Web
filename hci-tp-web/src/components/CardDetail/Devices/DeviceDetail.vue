@@ -6,25 +6,25 @@
                     <h2>{{ device.name }}</h2>
                     <h3>{{ device.room?.name }}</h3>
                 </v-col>
-                <v-icon class="setting" @click="toggleDialog">mdi-pencil</v-icon>
+                <v-icon class="setting" @click="toggleDialog">mdi-menu</v-icon>
             </v-row>
         </v-card>
         
         <component class="device" :is="devices[device.type.name]" :device="device"></component>
 
-        <v-dialog v-model="dialog" persistent max-width="20rem">
+        <v-dialog rounded v-model="dialog" persistent max-width="20rem">
             <v-card class="dialog-card">
                 <v-card-title>
-                    <p class="headline">Editar Dispositivo</p>
+                    <h3 class="headline">Editar Dispositivo</h3>
                 </v-card-title>
-                <v-text-field class="text-field" v-model="editedDeviceName" label="Nombre del dispositivo"></v-text-field>
-                <v-text-field class="text-field" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-text-field>
+                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceName" label="Nombre del dispositivo"></v-text-field>
+                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-text-field>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
                 <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
                 <v-card-actions class="mb-3">
-                    <v-btn class="canc-btn" elevation="5" text @click="toggleDialog">Cancelar</v-btn>
+                    <v-btn class="save-btn" rounded elevation="5" text @click="modifyDevice">Guardar</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn class="save-btn" elevation="5" text @click="modifyDevice">Guardar</v-btn>
+                    <v-btn class="canc-btn" rounded elevation="5" text @click="toggleDialog">Cancelar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -84,7 +84,7 @@ async function modifyDevice() {
             id: props.device.id,
             name: editedDeviceName.value,
         };
-        if (await deviceStore.modify(updatedDevice)) {
+        if (editedDeviceName.value.length<15 && await deviceStore.modify(updatedDevice)) {
             props.device.name = editedDeviceName.value;
             toggleDialog();
         } else {
@@ -119,7 +119,7 @@ async function modifyDevice() {
 .dialog-card{
     display: flex;
     color: rgb(var(--v-theme-primary));
-    background-color: rgb(var(--v-theme-secondary_v));
+    background-color: rgb(var(--v-theme-primary_v));
     align-items:center;
     width: 100%;
 }

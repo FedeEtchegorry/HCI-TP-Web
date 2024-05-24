@@ -1,6 +1,6 @@
 <template>
     <v-card class="device">
-        <v-card class="box">
+        <v-card :class="isClosed || isClosing ? 'boxClose' : 'boxOpen'">
              <p class="title">{{ isClosed || isClosing ? 'CERRADO' : 'ABIERTO' }}</p>
         </v-card>
         <v-container class="mb-5">
@@ -103,8 +103,18 @@ async function closeBlind() {
     flex-grow: 1;
 }
 
-.box {
-    background-color: rgb(var(--v-theme-blue_state));
+.boxClose {
+    background-color: rgb(var(--v-theme-primary));
+    border-color: black;
+    border-width: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+    color: rgb(var(--v-theme-primary_v));
+}
+.boxOpen {
+    background-color: white;
+    color: rgb(var(--v-theme-primary));
     border-color: black;
     border-width: 0.2rem;
     padding-left: 1rem;
@@ -115,8 +125,6 @@ async function closeBlind() {
 .title {
     font-size: xx-large;
     font-weight: 500;
-    color: white;
-    background-color: rgb(var(--v-theme-blue_state));
 }
 
 .button {

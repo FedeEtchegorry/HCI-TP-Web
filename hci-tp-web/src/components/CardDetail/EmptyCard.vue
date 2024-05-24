@@ -11,5 +11,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    border: 0.15rem solid;
+    border-radius: 5%;
 }
 </style>

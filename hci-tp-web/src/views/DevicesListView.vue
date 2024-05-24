@@ -12,6 +12,7 @@
           md="4"
           lg="3"
           xl="2"
+    
         >
           <component :is="item.component" v-bind="item.props"></component>
         </v-col>
@@ -52,7 +53,7 @@ onMounted(async () => {
 <style scoped>
 .fixed-size-cell {
   width: 15rem;
-  height: 20rem;
+  height: 21rem;
   overflow: hidden;
 }
 </style>
