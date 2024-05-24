@@ -1,8 +1,7 @@
 <template>
     <v-card class="device">
         <v-card class="box">
-            <p v-if="isOpening || isOpen" class="align-center title">ABIERTO</p>
-            <p v-if="isClosing || isClosed" class="align-center title">CERRADO</p>
+             <p class="title">{{ isClosed || isClosing ? 'CERRADO' : 'ABIERTO' }}</p>
         </v-card>
         <v-container class="mb-5">
             <v-slider append-icon="mdi-window-shutter" prepend-icon="mdi-window-shutter-open"
@@ -11,16 +10,10 @@
                 thumb-color="blue_state" height="50" elevation="24" persistent-hint hint="Nivel de ventana"></v-slider>
         </v-container>
         <v-row>
-            <v-btn v-if="isClosing || isClosed" class="mr-1 button" @click="openBlind" :disabled="isOpening || isOpen"
-                color="green" rounded elevation="24">
-                <v-icon class="icon mr-1">mdi-blinds-open</v-icon>
-                Abrir
-            </v-btn>
-            <v-btn v-if="isOpening || isOpen" class="ml-1 button" @click="closeBlind" :disabled="isClosing || isClosed"
-                color="red" rounded elevation="24">
-                <v-icon class="icon mr-1">mdi-roller-shade-closed</v-icon>
-                Cerrar
-            </v-btn>
+            <v-btn class="mr-1 button" @click="toggleBlind" :color="isClosed || isClosing ? 'green' : 'red'" rounded elevation="24">
+        <v-icon class="icon mr-1">{{ isClosed || isClosing ? 'mdi-blinds-open' : 'mdi-roller-shade-closed' }}</v-icon>
+        {{ isClosed || isClosing ? 'Abrir' : 'Cerrar' }}
+    </v-btn>
         </v-row>
     </v-card>
 </template>
@@ -53,9 +46,9 @@ const deviceStore = useDeviceStore();
 const myDevice = ref(props.device);
 
 const deviceId = computed(() => myDevice.value.id);
-const isOpening = computed(() => myDevice.value.state.status == 'opening');
+//const isOpening = computed(() => myDevice.value.state.status == 'opening');
 const isClosing = computed(() => myDevice.value.state.status == 'closing');
-const isOpen = computed(() => myDevice.value.state.status == 'opened');
+//const isOpen = computed(() => myDevice.value.state.status == 'opened');
 const isClosed = computed(() => myDevice.value.state.status == 'closed');
 
 const debouncedSetPosition = debounce(setPosition, 300);
@@ -63,6 +56,14 @@ const debouncedSetPosition = debounce(setPosition, 300);
 watch(openPercentage, (newValue) => {
     debouncedSetPosition(newValue);
 });
+
+const toggleBlind = () => {
+    if (isClosed.value || isClosing.value) {
+        openBlind();
+    } else {
+        closeBlind();
+    }
+};
 
 async function setPosition(value) {
     try {
@@ -106,9 +107,9 @@ async function closeBlind() {
     background-color: rgb(var(--v-theme-blue_state));
     border-color: black;
     border-width: 0.2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
 }
 
 .title {

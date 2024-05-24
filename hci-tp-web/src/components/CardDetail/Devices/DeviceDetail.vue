@@ -17,17 +17,10 @@
                 <v-card-title>
                     <p class="headline">Editar Dispositivo</p>
                 </v-card-title>
-                <v-card-text>
-                        <v-col>
-                                <v-text-field v-model="editedDeviceName" label="Device Name"></v-text-field>
-                            <!--
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field v-model="editedDeviceRoom" label="Room Name"></v-text-field>
-                            </v-col>
-                            -->
-                            <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
-                        </v-col>
-                </v-card-text>
+                <v-text-field class="text-field" v-model="editedDeviceName" label="Nombre del dispositivo"></v-text-field>
+                <v-text-field class="text-field" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-text-field>
+                <p v-show="errorMessageOn">{{ errorMsg }}</p>
+                <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
                 <v-card-actions class="mb-3">
                     <v-btn class="canc-btn" elevation="5" text @click="toggleDialog">Cancelar</v-btn>
                     <v-spacer></v-spacer>
@@ -39,8 +32,9 @@
 </template>
 
 
+
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import EmptyCard from '../EmptyCard.vue';
 import DoorDetail from './DoorDetail.vue';
 import BlindDetail from './BlindDetail.vue';
@@ -57,6 +51,9 @@ const dialog = ref(false);
 const editedDeviceName = ref(props.device.name);
 const editedDeviceRoom = ref(props.device.room?.name);
 const deviceStore = useDeviceStore();
+const errorMsg=ref('');
+const errorMessageOn =computed(()=>errorMsg.value!='');
+
 
 const devices = {
     blinds: BlindDetail,
@@ -68,32 +65,36 @@ const devices = {
 
 const toggleDialog = () => {
     dialog.value = !dialog.value;
+    errorMsg.value='';
 };
 
 async function deleteDevice(){
     try {
-        if(await deviceStore.remove(props.device.id))
-            console.log("DEVICE DELETED SUCCESSFULLY");
-        else console.log("COULDNT DELETE DEVICE");
+        await deviceStore.remove(props.device.id);
+        toggleDialog();
     } catch (e) {
         console.log(e);
+        errorMsg.value="Error al borrar dispositivo";
     }
-    toggleDialog();
 };
 
-async function modifyDevice(){
+async function modifyDevice() {
     try {
-        console.log("TRATO DE ENTRAR")
-        if(await deviceStore.modify(props.device.id, [editedDeviceName.value])){
-            console.log("DEVICE MODIFIED SUCCESSFULLY");
-            device.type.name=editedDeviceName;
+        const updatedDevice = {
+            id: props.device.id,
+            name: editedDeviceName.value,
+        };
+        if (await deviceStore.modify(updatedDevice)) {
+            props.device.name = editedDeviceName.value;
+            toggleDialog();
+        } else {
+            errorMsg.value = "Error al editar dispositivo";
         }
-        else console.log("COULDNT MODIFY DEVICE");
     } catch (e) {
-        console.log(e);
+        console.error(e);
+        errorMsg.value = "Error al editar dispositivo";
     }
-    toggleDialog();
-};
+}
 
 </script>
 
@@ -109,8 +110,10 @@ async function modifyDevice(){
     align-items: center;
     background: rgb(var(--v-theme-primary));
     color: rgb(var(--v-theme-primary_v));
-    font-size: large;
+    font-size: medium;
     justify-content: center;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .dialog-card{
@@ -118,12 +121,18 @@ async function modifyDevice(){
     color: rgb(var(--v-theme-primary));
     background-color: rgb(var(--v-theme-secondary_v));
     align-items:center;
+    width: 100%;
 }
+.text-field{
+    width: 15rem;
+    min-width: 10rem;
+
+} 
 .del-btn{
     color: rgb(var(--v-theme-primary_v));
     background-color: red;
-
     font-size: medium;
+    margin-bottom: 1rem;
 }
 .canc-btn{
     color: rgb(var(--v-theme-primary));
