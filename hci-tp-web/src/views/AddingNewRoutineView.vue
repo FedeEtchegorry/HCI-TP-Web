@@ -1,114 +1,102 @@
 <!-- src/components/RoutineDialog.vue -->
 <template>
-    <v-dialog v-model="dialog" max-width="60rem">
+    <v-dialog v-model="props.addOptionActive" max-width="60rem">
       <v-card class="rounded-xl custom-card">
 
-        <v-card-text class="custom-top-text-card">
+        <v-card-title class="custom-title-card">
           <v-row>
-              <v-col>
+              <v-col cols="12" sm="6">
                   <v-text-field
                       v-model="routine.name"
-                      class="routine-name-field"
-                      label="Routine Name"
+                      class="custom-large-field"
+                      label="New Routine Name"
                       :rules="[v => !!v || 'El nombre es obligatorio']"
                       required
                       rounded
+                      outlined
                       variant="outlined"
                   ></v-text-field>
               </v-col>
-              <v-col>
+              <v-col cols="12" sm="6">
                   <v-btn-toggle v-model="routine.days" multiple>
-                      <v-btn class=day-selector-button color="rgb(var(--v-theme-blue_state))" v-for="(day, index) in days" :key="index" @click="toggleDay(day)">
-                        {{ day }}
+                      <v-btn class=day-selector-button color="rgb(var(--v-theme-blue_state))" v-for="(days, index) in daysSelect" :key="index" @click="toggleDay(index)">
+                        {{ days.day }}
                       </v-btn>
                   </v-btn-toggle>
               </v-col>
           </v-row>
-        </v-card-text>
+          <div class="custom-divider"></div>
+        </v-card-title>
 
-        <div class="custom-divider"></div>
+        <v-card-text class="devices-section">
+          <v-col v-for="(device, index) in routine.devices" :key="index">
 
-        <v-card-text>
-
-          <v-row v-for="(device, index) in routine.devices" :key="index">
-            <v-col cols="12" sm="6">
-              <v-autocomplete
+            <v-row class="custom-row" cols="12" sm="6">
+              <v-select
                 v-model="device.device"
+                class="custom-large-field"
                 :items="devices"
                 label="Device"
                 required
                 rounded
                 variant="outlined"
-              ></v-autocomplete>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-menu
-                ref="menu"
-                v-model="device.timeMenu"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                min-width="29rem"
-                rounded
-                variant="outlined"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="device.time"
-                    label="Time"
-                    prepend-icon="mdi-clock-time-four-outline"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                    rounded
-                   variant="outlined"
-                  ></v-text-field>
-                </template>
-                <v-time-picker
-                  v-model="device.time"
-                  full-width
-                  @click:minute="$refs.menu.save(device.time)"
-                ></v-time-picker>
-              </v-menu>
-            </v-col>
-            <v-col cols="12" sm="6">
+              ></v-select>
               <v-select
                 v-model="device.state"
+                class="custom-flexible-field"
+                label="Time"
+                rounded
+                variant="outlined"
+              ></v-select>
+              <v-select
+                v-model="device.state"
+                class="custom-flexible-field"
                 :items="states"
                 label="State"
                 rounded
                 variant="outlined"
               ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
+            </v-row>
+            <!-- <v-time-picker></v-time-picker> -->
+            <v-row class="custom-row" cols="12" sm="6">
+
+              <v-select
+                v-model="device.state"
+                class="custom-flexible-field"
+                :items="states"
+                label="Action"
+                rounded
+                variant="outlined"
+              ></v-select>
               <v-text-field
                 v-model="device.param1"
+                class="custom-flexible-field"
                 label="Param1"
                 rounded
                 variant="outlined"
               ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="device.param2"
+                class="custom-flexible-field"
                 label="Param2"
                 rounded
                 variant="outlined"
               ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
               <v-text-field
                 v-model="device.param3"
+                class="custom-flexible-field"
                 label="Param3"
                 rounded
                 variant="outlined"
               ></v-text-field>
-            </v-col>
-          </v-row>
 
+            </v-row>
 
-          <v-col cols="12">
-            <v-btn @click="addDevice">+ Add New Device</v-btn>
+            <div class="custom-divider"></div>
+          </v-col>
+
+          <v-col cols="12" class="add-new-device-col">
+            <v-btn class="add-new-device-button" @click="addDevice">+ Add New Device +</v-btn>
           </v-col>
 
         </v-card-text>
@@ -125,8 +113,45 @@
     </v-dialog>
 </template>
   
-<script>
+<script setup>
 
+import { ref } from 'vue';
+import { VTimePicker } from 'vuetify/labs/VTimePicker'
+
+const emit = defineEmits(['newRoutineEvent']);
+const closeDialog = () => emit('newRoutineEvent', false, '', '');
+const timeMenu = true;
+const selectedTime = true;
+
+const routine = {
+
+  name: '',
+  devices: [{ device: '', time: '', state: '', param1: '', param2: '', param3: '', timeMenu: false }],
+  days: [],
+};
+
+const devicesAvailable = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
+const devicesAvailableStates = ['Activado', 'Desactivado'];
+const daysSelect = ref([ 
+  
+  { day: 'M', active: false },
+  { day: 'T', active: false },
+  { day: 'W', active: false },
+  { day: 'T', active: false },
+  { day: 'F', active: false },
+  { day: 'S', active: false },
+  { day: 'S', active: false }
+]);
+
+const props = defineProps({
+  
+  addOptionActive: {
+      type: Boolean,
+      required: true
+  }
+});
+
+/*
   export default {
     data() {
       return {
@@ -167,20 +192,35 @@
         this.closeDialog();
       },
     },
-  };
+  };*/
 </script>
   
 <style scoped>
 
 .custom-card {
   background-color: rgb(var(--v-theme-primary_v));
+  max-height: 60rem;
   padding: 1rem;
 }
 
-.routine-name-field {
-  max-inline-size: 25rem;
+.custom-large-field {
+  margin: .5rem .4rem;
+  min-width: 50%;
 }
 
+.custom-flexible-field {
+  margin: .5rem .4rem;
+}
+
+.devices-section {
+  max-height: 25rem;
+  overflow-y: auto;
+}
+
+.custom-row {
+  display: flex;
+  justify-content: space-between;
+}
 .day-selector-button {
 
   background-color: lightgray;
@@ -194,13 +234,24 @@
   border-end-start-radius: 50% !important;
 }
 
-.custom-top-text-card {
+.custom-title-card {
   padding-bottom: .5rem;
 }
 
 .custom-divider {
   border-top: .1rem solid #000;
   margin-bottom: 1.2rem;
+}
+
+.add-new-device-col {
+  display: flex;
+  justify-content: center;
+}
+
+.add-new-device-button {
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 90rem;
 }
 
 .cancel-button {
