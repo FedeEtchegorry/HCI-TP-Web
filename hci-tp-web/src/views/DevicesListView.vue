@@ -73,12 +73,13 @@ async function addDevice(name, type) {
 }
 
 async function handleNewDevice(state, name, type){
-  addButtonState.value = false;
-  blurStatus.value = false;
-  if(!state)
-    return;
+  if(!state){
+    addButtonState.value = false;
+    blurStatus.value = false;
+  }
   if (await addDevice(name, type)) {
     addButtonState.value = false;
+    blurStatus.value = false;
   } else {
     errorMsg.value = "Error Al agregar el dispositivo";
   }
