@@ -1,6 +1,6 @@
 <template>
     <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" :addOptionActive="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="Object.keys(roomType)"/>
+        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" v-model:toggle="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="Object.keys(roomType)"/>
         <h1 class="title">HABITACIONES</h1>
         <GridComponent :items="components">
       <template v-slot:default="{ item }">
@@ -31,7 +31,7 @@ import { Room, RoomMeta } from '@/api/room';
 
 const roomStore = useRoomStore();
 const components = ref([]);
-const addButtonState = ref(false);
+let addButtonState = ref(false);
 const blurStatus = ref(false);
 
 const roomType = {
@@ -51,6 +51,8 @@ const handleAddButtonPressed = () => {
 async function handleNewRoom(state, name, type){
   addButtonState.value = false;
   blurStatus.value = false;
+  if(!state)
+    return;
   try {
     const roomMeta = new RoomMeta(roomType[type])
     const room = new Room(null, name, roomMeta);

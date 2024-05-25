@@ -1,7 +1,7 @@
 <template>
 
     <v-container>
-        <v-dialog v-model="props.addOptionActive" max-width="60rem">
+        <v-dialog v-model="addOptionActive" @after-leave="emit('newThingEvent', false, '', '')" max-width="60rem">
             <v-card class="rounded-xl custom-card">
 
                 <v-card-title class="custom-title">
@@ -69,6 +69,7 @@ const newThingType = ref('');
 const newExtraThingParameter = ref('');
 const emit = defineEmits(['newThingEvent']);
 const closeDialog = () => emit('newThingEvent', false, '', '');
+let addOptionActive = defineModel('toggle');
 
 const addThing = () => {
     emit('newThingEvent', true, newThingName.value, newThingType.value, newExtraThingParameter.value);
@@ -79,10 +80,6 @@ const addThing = () => {
 
 const props = defineProps({
 
-    addOptionActive: {
-        type: Boolean,
-        required: true
-    },
     headlineName: {
         type: String,
         required: true
@@ -110,6 +107,8 @@ const props = defineProps({
         }
     }
 });
+
+console.log(props.extraThingParameter)
 
 </script>
 

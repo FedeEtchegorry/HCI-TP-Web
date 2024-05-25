@@ -1,6 +1,6 @@
 <template>
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" :addOptionActive="addButtonState"
+    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" v-model:toggle="addButtonState"
       headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo"
       thingTypeLabel="Tipo de dispositivo" :thingTypes="Object.keys(deviceType)" :extraThingParameter="roomsForDevice" />
     <h1 class="title">DISPOSITIVOS</h1>
@@ -23,12 +23,14 @@ import { useDeviceStore } from '@/stores/deviceStore';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useSearchStore } from '@/stores/searchStore';
 import { Vacuum, Blind, Refrigerator, Door } from '@/api/device';
+import { useRoomStore } from '@/stores/roomStore';
 
+const roomStore = useRoomStore();
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
 const deviceStore = useDeviceStore();
 const components = shallowRef([]);
-const addButtonState = ref(false);
+let addButtonState = ref(false);
 const blurStatus = ref(false);
 const deviceType = {
   'Aspiradora': Vacuum,
@@ -36,9 +38,11 @@ const deviceType = {
   'Heladera': Refrigerator,
   'Puerta': Door,
 };
+
+
 const roomsForDevice = {
   label: 'Vincular a habitación',
-  options: ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio']
+  options: roomStore.rooms.map(room => room.name),
 };
 
 const handleAddButtonPressed = () => {
@@ -60,14 +64,17 @@ async function addDevice(name, type) {
 
 }
 
-const handleNewDevice = (state, name, type) => {
-  if (addDevice(name, type)) {
+async function handleNewDevice(state, name, type){
+  addButtonState.value = false;
+  blurStatus.value = false;
+  if(!state)
+    return;
+  if (await addDevice(name, type)) {
     addButtonState.value = false;
   } else {
     errorMsg.value = "Error Al agregar el dispositivo";
   }
-  addButtonState.value = false;
-  blurStatus.value = false;
+
 };
 
 onMounted(async () => {
