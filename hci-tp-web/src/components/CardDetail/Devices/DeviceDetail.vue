@@ -17,7 +17,10 @@
                 <v-card-title>
                     <h3 class="headline">Editar Dispositivo</h3>
                 </v-card-title>
-                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceName" label="Nombre del dispositivo"></v-text-field>
+                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceName" label="Nombre del dispositivo" :rules="[
+                                    v => !!v || 'El nombre es obligatorio',
+                                    v => (v && v.length <= 20) || 'El nombre no puede tener más de 20 letras'
+                                ]"></v-text-field>
                 <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-text-field>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
                 <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
