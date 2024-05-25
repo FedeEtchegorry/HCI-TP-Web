@@ -1,5 +1,5 @@
 <template>
-    <CanvasComponent @emitAddButton="handleAddButtonPressed">
+    <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
         <AddingNewSimpleThingView @newThingEvent="handleNewRoom" :addOptionActive="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="roomTypeArray"/>
         <h1 class="title">HABITACIONES</h1>
         <GridComponent :items="components">
@@ -31,11 +31,15 @@ import RoomDetail from '@/components/CardDetail/Rooms/RoomDetail.vue'
 const roomStore = useRoomStore();
 const components = ref([]);
 const addButtonState = ref(false);
+const blurStatus = ref(false);
 const roomTypeArray = ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio'];
-const handleAddButtonPressed = () => { addButtonState.value = !addButtonState.value; };
+const handleAddButtonPressed = () => {
+  addButtonState.value = !addButtonState.value;
+  blurStatus.value = addButtonState.value;
+};
 const handleNewRoom = (state, name, type) => {
-  
   addButtonState.value = false;
+  blurStatus.value = false;
   console.log(`Nueva habitacion: ${name} de tipo: ${type}`);
 }
 

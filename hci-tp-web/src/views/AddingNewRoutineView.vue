@@ -117,13 +117,13 @@ const routine = ref({
   name: '',
   devices: [{ device: '', time: '', state: '', action: '', param1: '', param2: '', param3: ''}],
   days: [
+    { day: 'L', active: false },
     { day: 'M', active: false },
-    { day: 'T', active: false },
-    { day: 'W', active: false },
-    { day: 'T', active: false },
-    { day: 'F', active: false },
+    { day: 'X', active: false },
+    { day: 'J', active: false },
+    { day: 'V', active: false },
     { day: 'S', active: false },
-    { day: 'S', active: false }
+    { day: 'D', active: false }
   ]
 });
 

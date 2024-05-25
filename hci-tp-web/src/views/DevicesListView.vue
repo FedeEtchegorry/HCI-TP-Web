@@ -1,5 +1,5 @@
 <template>
-  <CanvasComponent @emitAddButton="handleAddButtonPressed">
+  <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
     <AddingNewSimpleThingView
       @newThingEvent="handleNewDevice"
       :addOptionActive="addButtonState"
@@ -7,6 +7,7 @@
       thingNameLabel="Nombre del dispositivo"
       thingTypeLabel="Tipo de dispositivo"
       :thingTypes="deviceTypeArray"
+      :extraThingParameter="roomsForDevice"
     />
     <h1 class="title">DISPOSITIVOS</h1>
     <GridComponent :items="filteredComponents">
@@ -40,14 +41,21 @@ const search = computed(() => searchStore.getSearch);
 const deviceStore = useDeviceStore();
 const components = ref([]);
 const addButtonState = ref(false);
+const blurStatus = ref(false);
 const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
+const roomsForDevice = {
+  label: 'Vincular a habitación',
+  options: ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio']
+};
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
+  blurStatus.value = addButtonState.value;
 };
 
 const handleNewDevice = (state, name, type) => {
   addButtonState.value = false;
+  blurStatus.value = false;
   console.log(`Nuevo device: ${name} de tipo: ${type}`);
   // Aquí puedes agregar lógica para añadir el nuevo dispositivo al store y a components
 };
