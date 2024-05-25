@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import {Routine, RoutineApi } from '@/api/routines'
 
-export const useDeviceStore = defineStore('routine', () => {
+export const useRoutineStore = defineStore('routine', () => {
     const routines = ref([]);
 
     async function add(routine) {
@@ -34,6 +34,11 @@ export const useDeviceStore = defineStore('routine', () => {
         await getAll()
         return Object.assign(new Routine(), result);
     }
+    async function getDevicesByRoutine(routineId) {
+        let result = await RoutineApi.getDevicesByRoutine(routineId);
+        result = result.map((routine) => Object.assign(new Routine(), routine));
+        return result
+    }
 
     async function getAll(controller = null) {
         let result = await RoutineApi.getAll(controller);
@@ -42,5 +47,5 @@ export const useDeviceStore = defineStore('routine', () => {
         return result
     }
 
-    return { routines, add, modify, execute, remove, get, getAll }
+    return { routines, add, modify, execute, remove, get, getDevicesByRoutine, getAll }
 })
