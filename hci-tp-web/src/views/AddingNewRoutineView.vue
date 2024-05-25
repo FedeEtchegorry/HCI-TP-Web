@@ -1,29 +1,26 @@
-<!-- src/components/RoutineDialog.vue -->
 <template>
     <v-dialog v-model="props.addOptionActive" max-width="60rem">
       <v-card class="rounded-xl custom-card">
 
         <v-card-title class="custom-title-card">
-          <v-row>
-              <v-col cols="12" sm="6">
-                  <v-text-field
-                      v-model="routine.name"
-                      class="custom-large-field"
-                      label="New Routine Name"
-                      :rules="[v => !!v || 'El nombre es obligatorio']"
-                      required
-                      rounded
-                      outlined
-                      variant="outlined"
-                  ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                  <v-btn-toggle v-model="routine.days" multiple>
-                      <v-btn class=day-selector-button color="rgb(var(--v-theme-blue_state))" v-for="(days, index) in daysSelect" :key="index" @click="toggleDay(index)">
-                        {{ days.day }}
-                      </v-btn>
-                  </v-btn-toggle>
-              </v-col>
+          <v-row class="custom-row" no-gutters>
+            <v-col cols="12" sm="6">
+                <v-text-field
+                    v-model="routine.name"
+                    class="custom-large-field"
+                    label="New Routine Name"
+                    :rules="[v => !!v || 'El nombre es obligatorio']"
+                    required
+                    rounded
+                    outlined
+                    variant="outlined"
+                ></v-text-field>
+            </v-col>
+            <v-col class="day-buttons-col">
+              <v-btn v-for="(day, index) in routine.days" :key="index" :class="day.active === true ? 'day-button day-button-selected' : 'day-button'" @click="toggleDay(index)">
+                {{ day.day }}
+              </v-btn>
+            </v-col>
           </v-row>
           <div class="custom-divider"></div>
         </v-card-title>
@@ -51,7 +48,6 @@
               <v-select
                 v-model="device.state"
                 class="custom-flexible-field"
-                :items="states"
                 label="State"
                 rounded
                 variant="outlined"
@@ -63,7 +59,6 @@
               <v-select
                 v-model="device.state"
                 class="custom-flexible-field"
-                :items="states"
                 label="Action"
                 rounded
                 variant="outlined"
@@ -96,7 +91,7 @@
           </v-col>
 
           <v-col cols="12" class="add-new-device-col">
-            <v-btn class="add-new-device-button" @click="addDevice">+ Add New Device +</v-btn>
+            <v-btn class="add-new-device-button" @click="addDeviceToRoutine">+ Add New Device +</v-btn>
           </v-col>
 
         </v-card-text>
@@ -116,83 +111,46 @@
 <script setup>
 
 import { ref } from 'vue';
-import { VTimePicker } from 'vuetify/labs/VTimePicker'
+import { VTimePicker } from 'vuetify/labs/VTimePicker';
 
-const emit = defineEmits(['newRoutineEvent']);
-const closeDialog = () => emit('newRoutineEvent', false, '', '');
-const timeMenu = true;
-const selectedTime = true;
-
-const routine = {
-
+const routine = ref({
   name: '',
-  devices: [{ device: '', time: '', state: '', param1: '', param2: '', param3: '', timeMenu: false }],
-  days: [],
-};
+  devices: [{ device: '', time: '', state: '', action: '', param1: '', param2: '', param3: ''}],
+  days: [
+    { day: 'M', active: false },
+    { day: 'T', active: false },
+    { day: 'W', active: false },
+    { day: 'T', active: false },
+    { day: 'F', active: false },
+    { day: 'S', active: false },
+    { day: 'S', active: false }
+  ]
+});
 
 const devicesAvailable = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
 const devicesAvailableStates = ['Activado', 'Desactivado'];
-const daysSelect = ref([ 
+const selectedTime = true;
+const timeMenu = true;
+
+const emit = defineEmits(['newRoutineEvent']);
+const closeDialog = () => emit('newRoutineEvent', false, '', '');
+const newRoutineEvent = () => emit('newRoutineEvent', true, routine);
+const addDeviceToRoutine = () => routine.value.devices.push({ device: '', time: '', state: '', action: '', param1: '', param2: '', param3: '' });
+const toggleDay = (index) => {
   
-  { day: 'M', active: false },
-  { day: 'T', active: false },
-  { day: 'W', active: false },
-  { day: 'T', active: false },
-  { day: 'F', active: false },
-  { day: 'S', active: false },
-  { day: 'S', active: false }
-]);
+  routine.value.days[index].active = !routine.value.days[index].active;
+  console.log(`Boton apretado: ${index}, estado: ${routine.value.days[index].active}`);
+
+}
 
 const props = defineProps({
   
   addOptionActive: {
-      type: Boolean,
-      required: true
+    type: Boolean,
+    required: true
   }
 });
 
-/*
-  export default {
-    data() {
-      return {
-        dialog: true,
-        routine: {
-          name: 'Routine 3',
-          days: [],
-          devices: [
-            { device: '', time: '', state: '', param1: '', param2: '', param3: '', timeMenu: false },
-          ],
-        },
-        days: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-        devices: ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'],
-        states: ['On', 'Off', 'Active'],
-      };
-    },
-    methods: {
-      closeDialog() {
-        this.dialog = false;
-      },
-      addDevice() {
-        this.routine.devices.push({ device: '', time: '', state: '', param1: '', param2: '', param3: '', timeMenu: false });
-      },
-      removeDevice(index) {
-        this.routine.devices.splice(index, 1);
-      },
-      toggleDay(day) {
-        const index = this.routine.days.indexOf(day);
-        if (index > -1) {
-          this.routine.days.splice(index, 1);
-        } else {
-          this.routine.days.push(day);
-        }
-      },
-      saveRoutine() {
-        // Lógica para guardar la rutina
-        console.log(this.routine);
-        this.closeDialog();
-      },
-    },
-  };*/
 </script>
   
 <style scoped>
@@ -204,7 +162,7 @@ const props = defineProps({
 }
 
 .custom-large-field {
-  margin: .5rem .4rem;
+  margin: .4rem .4rem;
   min-width: 50%;
 }
 
@@ -217,21 +175,28 @@ const props = defineProps({
   overflow-y: auto;
 }
 
-.custom-row {
+.day-buttons-col {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin-top: 1rem;
+  min-width: 50%;
 }
-.day-selector-button {
 
+.day-button {
   background-color: lightgray;
-  margin-inline: .25rem;
+  color: black;
   border-radius: 50%;
-  min-width: 3rem;
+  min-height: 1.5rem;
+  min-width: 1.5rem;
+  margin-inline: .4rem;
+  box-shadow: 0rem .35rem .2rem rgba(0, 0, 0, 0.4);
+}
 
-  border-start-start-radius: 50% !important;
-  border-start-end-radius:50% !important;
-  border-end-end-radius: 50% !important;
-  border-end-start-radius: 50% !important;
+.day-button-selected {
+  background-color: rgb(var(--v-theme-blue_state));
+  color: white;
+  min-height: 2.25rem;
+  box-shadow: inset 0rem .35rem .2rem rgba(0, 0, 0, 0.4);
 }
 
 .custom-title-card {
