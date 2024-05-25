@@ -1,5 +1,5 @@
 <template>
-    <CanvasComponent @emitAddButton="handleAddButtonPressed">
+    <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
         <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState"/>
         <h1 class="title">RUTINAS</h1>
     </CanvasComponent>
@@ -13,13 +13,16 @@ import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewRoutineView from './AddingNewRoutineView';
 
 const addButtonState = ref(false);
+const blurStatus = ref(false);
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
+  blurStatus.value = addButtonState.value;
 };
 
 const handleNewRoutine = (state, name, type) => {
   addButtonState.value = false;
+  blurStatus.value = false;
   console.log(`Nuevo device: ${name} de tipo?: ${type}`);
   // Aquí puedes agregar lógica para añadir el nuevo dispositivo al store y a components
 };

@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div class="d-flex flex-column h-100">
-            <v-main class="d-flex flex-grow-1">
+            <v-main class="d-flex flex-grow-1" :class="props.blurActive === true ? 'custom-blur' : ''">
                 <DrawerComponent />
                 <v-sheet class="d-flex flex-column flex-grow-1 custom-outer-canvas-div">
                     <v-sheet class="mt-2 mb-4" elevation="0" outlined color="transparent">
@@ -27,12 +27,23 @@ import AddButton from './AddButton.vue';
 
 const emit = defineEmits(['emitAddButton']);
 const addButtonPressed = () => emit('emitAddButton');
+const props = defineProps({
+
+    blurActive: {
+        type: Boolean,
+        required: true
+    }
+});
 
 </script>
 
 <style scoped>
 .h-100 {
     height: 100%;
+}
+
+.custom-blur {
+    filter:blur(.2rem);
 }
 
 .custom-outer-canvas-div {

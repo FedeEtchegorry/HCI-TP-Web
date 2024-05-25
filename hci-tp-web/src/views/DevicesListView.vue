@@ -1,5 +1,5 @@
 <template>
-  <CanvasComponent @emitAddButton="handleAddButtonPressed">
+  <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
     <AddingNewSimpleThingView
       @newThingEvent="handleNewDevice"
       :addOptionActive="addButtonState"
@@ -7,6 +7,7 @@
       thingNameLabel="Nombre del dispositivo"
       thingTypeLabel="Tipo de dispositivo"
       :thingTypes="deviceTypeArray"
+      :extraThingParameter="roomsForDevice"
     />
     <h1 class="title">DISPOSITIVOS</h1>
     <GridComponent :items="filteredComponents">
@@ -40,11 +41,17 @@ const search = computed(() => searchStore.getSearch);
 const deviceStore = useDeviceStore();
 const components = shallowRef([]);
 const addButtonState = ref(false);
+const blurStatus = ref(false);
 const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
 const deviceTypeId=['ofglvd9gqx8yfl3l','eu0v2xgprrhhg41g','rnizejqr2di0okho','lsf78ly0eqrjbz91','mxztsyjzsrq7iaqc'];
+const roomsForDevice = {
+  label: 'Vincular a habitación',
+  options: ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio']
+};
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
+  blurStatus.value = addButtonState.value;
 };
 
 
@@ -71,6 +78,8 @@ const handleNewDevice = (state, name, type) => {
   }else {
     errorMsg.value="Error Al agregar el dispositivo";
   }
+  addButtonState.value = false;
+  blurStatus.value = false;
   console.log(`Nuevo device: ${name} de tipo: ${type}`);
 };
 
