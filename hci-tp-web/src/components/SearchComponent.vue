@@ -1,33 +1,54 @@
 <template>
-  <v-text-field v-model="search" label="Buscar" clearable class="custom-text-field ml-4" hide-details variant="outlined"
-    single-line outlined rounded dense>
-    <template v-slot:prepend-inner>
-      <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
-    </template>
-  </v-text-field>
-  <v-icon class="custom-icon mr-15 ml-2">mdi-filter</v-icon>
+  <v-row class="search-bar">
+    <v-text-field v-model="search" label="Buscar" clearable class="custom-text-field" hide-details variant="outlined"
+      single-line outlined rounded dense>
+      <template v-slot:prepend-inner>
+        <v-icon class="custom-icon mr-2 ml-2">mdi-magnify</v-icon>
+      </template>
+    </v-text-field>
+
+    <v-container class="custom-select">
+      <v-select v-model="selected" :items="items" variant="outlined" dense rounded>
+        <template v-slot:prepend-inner>
+          <v-icon class="custom-icon mr-2 ml-2">mdi-filter</v-icon>
+        </template>
+      </v-select>
+    </v-container>
+  </v-row>
 </template>
 
-<script>
+<script setup>
 import { useSearchStore } from '@/stores/searchStore';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
-export default {
-  setup() {
-    const searchStore = useSearchStore();
-    const search = computed({
-      get: () => searchStore.search,
-      set: (value) => searchStore.updateSearch(value)
-    });
+const searchStore = useSearchStore();
+const search = computed({
+  get: () => searchStore.search,
+  set: (value) => searchStore.updateSearch(value)
+});
 
-    return {
-      search
-    };
-  }
-};
+const selected = ref('');
+const items = ref([
+  'Por nombre de dispositivo',
+  'Por habitacion',
+  'Por tipo de dispositivo'
+]);
 </script>
 
 <style scoped>
+.search-bar {
+  min-width: 15rem;
+  justify-content: left;
+  margin-left: 1rem;
+}
+
+.custom-select {
+  padding: 0;
+  height: 3.5rem;
+  width: 3.5rem;
+  margin: 0 1rem;
+}
+
 .custom-icon {
   color: black;
   font-size: 1.5rem;
@@ -39,10 +60,12 @@ export default {
   background-color: rgb(var(--v-theme-primary_v));
   border-radius: 1.5rem;
   height: 3.5rem;
+  margin: 0;
+  /* Asegurarse de que no haya margen */
 }
 
 .custom-text-field:focus {
-  background-color: rgb(var(--v-theme-primary_v));
+  background-color: rgb(var(--v-theme-secondary));
   box-shadow: none;
 }
 </style>
