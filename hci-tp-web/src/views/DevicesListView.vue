@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, shallowRef } from 'vue';
 import DeviceDetail from '@/components/CardDetail/Devices/DeviceDetail.vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import GridComponent from '@/components/GridComponent.vue';
@@ -38,18 +38,40 @@ import { useSearchStore } from '@/stores/searchStore';
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
 const deviceStore = useDeviceStore();
-const components = ref([]);
+const components = shallowRef([]);
 const addButtonState = ref(false);
 const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
+const deviceTypeId=['ofglvd9gqx8yfl3l','eu0v2xgprrhhg41g','rnizejqr2di0okho','lsf78ly0eqrjbz91','mxztsyjzsrq7iaqc'];
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
 };
 
+
+async function addDevice(name, type){
+  try{
+    const newDevice = {
+            type: {
+              id:deviceTypeId.at(deviceTypeArray.findIndex(t => t === type))
+            },
+            name: name,
+        };
+    await deviceStore.add(newDevice);
+    return true;
+  }catch(e){
+    console.log("Problemas");
+    return false;
+  }
+  
+}
+
 const handleNewDevice = (state, name, type) => {
-  addButtonState.value = false;
+  if (addDevice(name, type)){
+    addButtonState.value = false;
+  }else {
+    errorMsg.value="Error Al agregar el dispositivo";
+  }
   console.log(`Nuevo device: ${name} de tipo: ${type}`);
-  // Aquí puedes agregar lógica para añadir el nuevo dispositivo al store y a components
 };
 
 onMounted(async () => {
