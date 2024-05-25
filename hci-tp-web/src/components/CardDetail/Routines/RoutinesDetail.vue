@@ -29,8 +29,8 @@ const myRoutine = ref(props.routine);
 let qtyDevicesByRoutine = ref(0);
 
 onMounted(async () => {
-   const result = await routineStore.getDevicesByRoutine(myRoutine.value.id);
-   qtyDevicesByRoutine.value = result.length;
+   const result = await routineStore.get(myRoutine.value.id);
+   qtyDevicesByRoutine.value = result.actions.length;
 });
 
 
