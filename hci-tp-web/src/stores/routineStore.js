@@ -34,11 +34,6 @@ export const useRoutineStore = defineStore('routine', () => {
         await getAll()
         return Object.assign(new Routine(), result);
     }
-    async function getDevicesByRoutine(routineId) {
-        let result = await RoutineApi.getDevicesByRoutine(routineId);
-        result = result.map((routine) => Object.assign(new Routine(), routine));
-        return result
-    }
 
     async function getAll(controller = null) {
         let result = await RoutineApi.getAll(controller);
@@ -47,5 +42,5 @@ export const useRoutineStore = defineStore('routine', () => {
         return result
     }
 
-    return { routines, add, modify, execute, remove, get, getDevicesByRoutine, getAll }
+    return { routines, add, modify, execute, remove, get, getAll }
 })

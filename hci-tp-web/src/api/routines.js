@@ -20,9 +20,7 @@ class RoutineApi {
     static async get(id, controller) {
         return await Api.get(RoutineApi.getUrl(id), controller);
     }
-    static async getDevicesByRoutine(routineId, controller){
-        return await Api.get(RoutineApi.getUrl(routineId + '/devices'),controller);
-    }
+    
     static async execute(routineId, controller){
         return await Api.put(RoutineApi.getUrl(id + '/execute'), null, controller);
     }
