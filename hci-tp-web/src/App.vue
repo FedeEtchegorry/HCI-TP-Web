@@ -1,5 +1,6 @@
 <template>
   <RouterView />
+
 </template>
 
 <script setup>
@@ -10,7 +11,6 @@ import RoomsListView from './views/RoomsListView.vue'
 import { useDeviceStore } from '@/stores/deviceStore';
 import { RouterLink, RouterView } from 'vue-router'
 import SearchComponent from './components/SearchComponent.vue'
-import NewSearchComponent from './components/NewSearchComponent.vue'
 import DeviceDetail from './components/CardDetail/Devices/DeviceDetail.vue'
 const deviceStore = useDeviceStore();
 
