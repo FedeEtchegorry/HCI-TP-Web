@@ -4,7 +4,7 @@
             <div class="custom-title">
                 <h1>{{ room.name }}</h1>
             </div>
-            <v-icon class="custom-icon" :icon="room.meta.icon"></v-icon>
+            <v-icon class="custom-icon">{{ room.meta.logo }}</v-icon>
             <div class="custom-qty-devices">
                 <h2>DEVICES</h2>
             </div>

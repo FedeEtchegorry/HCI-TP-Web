@@ -1,25 +1,12 @@
 <template>
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-    <AddingNewSimpleThingView
-      @newThingEvent="handleNewDevice"
-      :addOptionActive="addButtonState"
-      headlineName="Agregar Nuevo Dispositivo"
-      thingNameLabel="Nombre del dispositivo"
-      thingTypeLabel="Tipo de dispositivo"
-      :thingTypes="deviceTypeArray"
-      :extraThingParameter="roomsForDevice"
-    />
+    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" :addOptionActive="addButtonState"
+      headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo"
+      thingTypeLabel="Tipo de dispositivo" :thingTypes="Object.keys(deviceType)" :extraThingParameter="roomsForDevice" />
     <h1 class="title">DISPOSITIVOS</h1>
     <GridComponent :items="filteredComponents">
       <template v-slot:default="{ item }">
-        <v-col
-          class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-          xl="2"
-        >
+        <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
           <component :is="item.component" v-bind="item.props"></component>
         </v-col>
       </template>
@@ -35,6 +22,7 @@ import GridComponent from '@/components/GridComponent.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useSearchStore } from '@/stores/searchStore';
+import { Vacuum, Blind, Refrigerator, Door } from '@/api/device';
 
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
@@ -42,8 +30,12 @@ const deviceStore = useDeviceStore();
 const components = shallowRef([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
-const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
-const deviceTypeId=['ofglvd9gqx8yfl3l','eu0v2xgprrhhg41g','rnizejqr2di0okho','lsf78ly0eqrjbz91','mxztsyjzsrq7iaqc'];
+const deviceType = {
+  'Aspiradora': Vacuum,
+  'Persiana': Blind,
+  'Heladera': Refrigerator,
+  'Puerta': Door,
+};
 const roomsForDevice = {
   label: 'Vincular a habitación',
   options: ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio']
@@ -55,32 +47,27 @@ const handleAddButtonPressed = () => {
 };
 
 
-async function addDevice(name, type){
-  try{
-    const newDevice = {
-            type: {
-              id:deviceTypeId.at(deviceTypeArray.findIndex(t => t === type))
-            },
-            name: name,
-        };
+async function addDevice(name, type) {
+  try {
+    const newDevice = new deviceType[type](name);
     await deviceStore.add(newDevice);
+    window.location.reload();
     return true;
-  }catch(e){
-    console.log("Problemas");
+  } catch (e) {
+    console.log("Error creating device: ", e);
     return false;
   }
-  
+
 }
 
 const handleNewDevice = (state, name, type) => {
-  if (addDevice(name, type)){
+  if (addDevice(name, type)) {
     addButtonState.value = false;
-  }else {
-    errorMsg.value="Error Al agregar el dispositivo";
+  } else {
+    errorMsg.value = "Error Al agregar el dispositivo";
   }
   addButtonState.value = false;
   blurStatus.value = false;
-  console.log(`Nuevo device: ${name} de tipo: ${type}`);
 };
 
 onMounted(async () => {
@@ -107,6 +94,7 @@ const filteredComponents = computed(() => {
   height: 21rem;
   overflow: hidden;
 }
+
 .title {
   text-align: center;
   margin: 1rem 0;
