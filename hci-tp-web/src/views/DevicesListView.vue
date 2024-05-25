@@ -1,6 +1,6 @@
 <template>
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" v-model:toggle="addButtonState"
+    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" v-model:toggle="addButtonState" :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"
       headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo"
       thingTypeLabel="Tipo de dispositivo" :thingTypes="Object.keys(deviceType)" :extraThingParameter="roomsForDevice" />
     <h1 class="title">DISPOSITIVOS</h1>
@@ -28,6 +28,7 @@ import { useRoomStore } from '@/stores/roomStore';
 const roomStore = useRoomStore();
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
+const filterSelected = computed(() => searchStore.getSelected);
 const deviceStore = useDeviceStore();
 const components = shallowRef([]);
 let addButtonState = ref(false);
@@ -39,6 +40,8 @@ const deviceType = {
   'Puerta': Door,
 };
 
+const errorMsg=ref('');
+const errorMessageOn =computed(()=>errorMsg.value!='');
 
 const roomsForDevice = {
   label: 'Vincular a habitación',
@@ -53,12 +56,17 @@ const handleAddButtonPressed = () => {
 
 async function addDevice(name, type) {
   try {
-    const newDevice = new deviceType[type](name);
+    const newDevice = {
+      type: {
+        id: deviceTypeId.at(deviceTypeArray.findIndex(t => t === type))
+      },
+      name: name,
+    };
     await deviceStore.add(newDevice);
     window.location.reload();
     return true;
   } catch (e) {
-    console.log("Error creating device: ", e);
+    console.log("Problemas");
     return false;
   }
 
@@ -85,14 +93,57 @@ onMounted(async () => {
   }));
 });
 
-const filteredComponents = computed(() => {
+/*const filteredComponents = computed(() => {
   if (!search.value) {
     return components.value;
   }
   return components.value.filter(item =>
     item.props.device.name.toLowerCase().includes(search.value.toLowerCase())
   );
+});*/
+
+function filterByDeviceName(components) {
+  if (!search.value) {
+    return components;
+  }
+  return components.filter(item =>
+    item.props.device.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+}
+
+function filterByRoom(components) {
+  if (!search.value) {
+    return components;
+  }
+  return components.filter(item =>
+    item.props.device.room?.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+}
+
+function filterByDeviceType(components) {
+  if (!search.value) {
+    return components;
+  }
+  return components.filter(item =>
+  item.props.device.type.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+}
+
+const filteredComponents = computed(() => {
+  let filtered = components.value;
+  switch (filterSelected.value) {
+    case 'Por habitacion':
+      filtered = filterByRoom(filtered);
+      break;
+    case 'Por tipo de dispositivo':
+      filtered = filterByDeviceType(filtered);
+      break;
+    default: filtered = filterByDeviceName(filtered);
+      break;
+  }
+  return filtered;
 });
+
 </script>
 
 <style scoped>

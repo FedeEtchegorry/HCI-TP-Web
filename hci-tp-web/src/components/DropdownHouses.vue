@@ -19,9 +19,6 @@
         ]
       };
     },
-    mounted() {
-      console.log(this.$refs.homeSelect);
-    }
   };
   </script>
   

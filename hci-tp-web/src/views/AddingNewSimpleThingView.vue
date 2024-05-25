@@ -46,7 +46,7 @@
                     </v-container>
 
                 </v-card-text>
-
+                <p v-show="props.errorMessageOn">{{ props.errorMsg }}</p>
                 <v-card-actions>
                     <v-btn class="accept-button" text @click="addThing">Agregar</v-btn>
                     <v-spacer></v-spacer>
@@ -79,7 +79,14 @@ const addThing = () => {
 }
 
 const props = defineProps({
-
+    errorMessageOn:{
+        type: Boolean,
+        required: true
+    },
+    errorMsg:{
+        type: String,
+        required:true
+    },
     headlineName: {
         type: String,
         required: true

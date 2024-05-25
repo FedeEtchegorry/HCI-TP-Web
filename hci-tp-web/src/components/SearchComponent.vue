@@ -27,7 +27,11 @@ const search = computed({
   set: (value) => searchStore.updateSearch(value)
 });
 
-const selected = ref('');
+const selected = computed({
+  get: () => searchStore.getSelected,
+  set: (value) => searchStore.updateSelected(value)
+});
+
 const items = ref([
   'Por nombre de dispositivo',
   'Por habitacion',
