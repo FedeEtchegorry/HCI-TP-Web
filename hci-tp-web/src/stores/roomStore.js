@@ -40,5 +40,5 @@ export const useRoomStore = defineStore('room', () => {
         return result
     }
 
-    return { rooms, add, modify, remove, get, getAll }
+    return { rooms, add, modify, remove, get, getAll, getDevicesByRoom }
 })

@@ -60,7 +60,6 @@ onMounted(async () => {
   }));
 });
 
-// Computed property for filtered components based on search
 const filteredComponents = computed(() => {
   if (!search.value) {
     return components.value;

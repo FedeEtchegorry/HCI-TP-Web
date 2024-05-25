@@ -12,26 +12,15 @@
 
                     <v-container>
                         <v-form ref="form" v-model="valid">
-                            <v-text-field
-                                v-model="newThingName"
-                                class="custom-text-field"
-                                :label="thingNameLabel"
-                                :rules="[v => !!v || 'El nombre es obligatorio']"
-                                required
-                                rounded
-                                variant="outlined"
-                            ></v-text-field>
-                            
-                            <v-select
-                                v-model="newThingType"
-                                class="custom-text-field"
-                                :label="thingTypeLabel"
-                                :items="thingTypes"
-                                :rules="[v => !!v || 'El tipo es obligatorio']"
-                                required
-                                rounded
-                                variant="outlined"
-                            ></v-select>
+                            <v-text-field v-model="newThingName" class="custom-text-field" :label="thingNameLabel"
+                                :rules="[
+                                    v => !!v || 'El nombre es obligatorio',
+                                    v => (v && v.length <= 12) || 'El nombre no puede tener más de 12 letras'
+                                ]" required rounded variant="outlined"></v-text-field>
+
+                            <v-select v-model="newThingType" class="custom-text-field" :label="thingTypeLabel"
+                                :items="thingTypes" :rules="[v => !!v || 'El tipo es obligatorio']" required rounded
+                                variant="outlined"></v-select>
 
                         </v-form>
                     </v-container>
@@ -47,7 +36,7 @@
 
         </v-dialog>
     </v-container>
-  
+
 </template>
 
 <script setup>
@@ -64,10 +53,10 @@ const addThing = () => {
     emit('newThingEvent', true, newThingName.value, newThingType.value);
     newThingName.value = '';
     newThingType.value = '';
-} 
+}
 
 const props = defineProps({
-    
+
     addOptionActive: {
         type: Boolean,
         required: true
@@ -91,9 +80,8 @@ const props = defineProps({
 });
 
 </script>
-    
+
 <style scoped>
-  
 .custom-card {
     background-color: rgb(var(--v-theme-primary_v));
     padding-top: 1rem;
@@ -124,9 +112,8 @@ const props = defineProps({
     margin-left: 1rem;
     margin-bottom: 1rem;
 }
-  
-.v-dialog {
-  width: 35%; /* Establece el ancho del diálogo */
-}
 
+.v-dialog {
+    width: 35%;
+}
 </style>
