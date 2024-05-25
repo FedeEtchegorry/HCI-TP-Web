@@ -40,9 +40,8 @@ class Room {
     }
 }
 class RoomMeta {
-    constructor(size, color) {
-        this.size = size;
-        this.color = color;
+    constructor(logo) {
+        this.logo = logo;
     }
 }
 export { RoomApi, Room, RoomMeta };

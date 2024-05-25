@@ -34,6 +34,26 @@ export default createVuetify({
           second_state:"#DAEA21",
           background: "#FFFFFF",
           blue_state:"#0398FF"
+        },
+        typography: {
+          // Tipografía personalizada
+          fontFamily: 'Roboto', // Fuente principal
+          fontSize: 16, // Tamaño de fuente base
+          h1: {
+            fontFamily: 'Montserrat', // Fuente para títulos de nivel 1
+            fontWeight: 'bold', // Peso de fuente para títulos de nivel 1
+            fontSize: '3rem', // Tamaño de fuente para títulos de nivel 1
+          },
+          h2: {
+            fontFamily: 'Montserrat', // Fuente para títulos de nivel 2
+            fontWeight: 'bold', // Peso de fuente para títulos de nivel 2
+            fontSize: '2.5rem', // Tamaño de fuente para títulos de nivel 2
+          },
+          h3: {
+            fontFamily: 'Montserrat', // Fuente para títulos de nivel 3
+            fontWeight: 'bold', // Peso de fuente para títulos de nivel 3
+            fontSize: '2rem', // Tamaño de fuente para títulos de nivel 3
+          }
         }
       },
     },

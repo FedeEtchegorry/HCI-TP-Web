@@ -8,19 +8,19 @@
     <v-divider :thickness="3" class="divider"></v-divider>
         <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/">
           <v-icon class="icon">mdi-devices</v-icon>
-          <span v-show="!isMini" class="text">DISPOSITIVOS</span>
+          <h2 v-show="!isMini" class="text">DISPOSITIVOS</h2>
         </RouterLink>
         <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/rooms">
           <v-icon class="icon">mdi-home</v-icon>
-          <span v-show="!isMini" class="text">HABITACIONES</span>
+          <h2 v-show="!isMini" class="text">HABITACIONES</h2>
         </RouterLink>
         <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/routines">
           <v-icon class="icon">mdi-calendar-clock</v-icon>
-          <span v-show="!isMini" class="text">RUTINAS</span>
+          <h2 v-show="!isMini" class="text">RUTINAS</h2>
         </RouterLink>
         <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/houses">
           <v-icon class="icon">mdi-home-group</v-icon>
-          <span v-show="!isMini" class="text">HOGARES</span>
+          <h2 v-show="!isMini" class="text">HOGARES</h2>
         </RouterLink>
     
     <div class="bottom">
@@ -136,7 +136,6 @@ onBeforeUnmount(() => {
 }
 
 .drawer_elem .text {
-  font-size: 1.3rem;
   color: rgb(var(--v-theme-primary));
   font-weight: 500;
 }

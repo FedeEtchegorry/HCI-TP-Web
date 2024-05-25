@@ -22,14 +22,14 @@
 
 <script setup>
 
-import { ref, onMounted, shallowRef } from 'vue';
+import { ref, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView';
 import { useRoomStore } from '@/stores/roomStore';
 import RoomDetail from '@/components/CardDetail/Rooms/RoomDetail.vue'
 
 const roomStore = useRoomStore();
-const components = shallowRef([]);
+const components = ref([]);
 const addButtonState = ref(false);
 const roomTypeArray = ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio'];
 const handleAddButtonPressed = () => { addButtonState.value = !addButtonState.value; };
