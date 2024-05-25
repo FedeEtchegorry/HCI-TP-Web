@@ -224,6 +224,8 @@ const props = defineProps({
   margin-right: 1.5rem;
   width: 10rem;
   height: 2.5rem;
+  border-width: .15rem;
+  border-color: grey;
 }
 
 .confirm-button {
@@ -233,6 +235,8 @@ const props = defineProps({
   margin-left: 1.5rem;
   width: 10rem;
   height: 2.5rem;
+  border-width: .15rem;
+  border-color: grey;
 }
 
 </style>

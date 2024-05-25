@@ -145,6 +145,8 @@ const props = defineProps({
     border-radius: 1rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
+    border-width: .15rem;
+    border-color: grey;
 }
 
 .accept-button {
@@ -153,6 +155,8 @@ const props = defineProps({
     border-radius: 1rem;
     margin-left: 1rem;
     margin-bottom: 1rem;
+    border-width: .15rem;
+    border-color: grey;
 }
 
 </style>
