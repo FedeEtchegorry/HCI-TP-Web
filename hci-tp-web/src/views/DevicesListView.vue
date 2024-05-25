@@ -1,8 +1,10 @@
 <template>
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
     <AddingNewSimpleThingView @newThingEvent="handleNewDevice" :addOptionActive="addButtonState"
-      headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo"
-      thingTypeLabel="Tipo de dispositivo" :thingTypes="deviceTypeArray" :extraThingParameter="roomsForDevice" />
+      headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo" 
+      thingTypeLabel="Tipo de dispositivo" :thingTypes="deviceTypeArray" :extraThingParameter="roomsForDevice"
+      :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"
+/>
     <h1 class="title">DISPOSITIVOS</h1>
     <GridComponent :items="filteredComponents">
       <template v-slot:default="{ item }">
@@ -31,6 +33,9 @@ const deviceStore = useDeviceStore();
 const components = shallowRef([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
+const errorMsg=ref('');
+const errorMessageOn =computed(()=>errorMsg.value!='');
+
 const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
 const deviceTypeId = ['ofglvd9gqx8yfl3l', 'eu0v2xgprrhhg41g', 'rnizejqr2di0okho', 'lsf78ly0eqrjbz91', 'mxztsyjzsrq7iaqc'];
 const roomsForDevice = {

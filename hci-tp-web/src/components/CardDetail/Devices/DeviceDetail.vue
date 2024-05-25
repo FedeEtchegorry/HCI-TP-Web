@@ -75,6 +75,7 @@ async function deleteDevice(){
     try {
         await deviceStore.remove(props.device.id);
         toggleDialog();
+        window.location.reload();
     } catch (e) {
         console.log(e);
         errorMsg.value="Error al borrar dispositivo";
