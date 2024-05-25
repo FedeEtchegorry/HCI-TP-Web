@@ -1,25 +1,12 @@
 <template>
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-    <AddingNewSimpleThingView
-      @newThingEvent="handleNewDevice"
-      :addOptionActive="addButtonState"
-      headlineName="Agregar Nuevo Dispositivo"
-      thingNameLabel="Nombre del dispositivo"
-      thingTypeLabel="Tipo de dispositivo"
-      :thingTypes="deviceTypeArray"
-      :extraThingParameter="roomsForDevice"
-    />
+    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" :addOptionActive="addButtonState"
+      headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo"
+      thingTypeLabel="Tipo de dispositivo" :thingTypes="deviceTypeArray" :extraThingParameter="roomsForDevice" />
     <h1 class="title">DISPOSITIVOS</h1>
     <GridComponent :items="filteredComponents">
       <template v-slot:default="{ item }">
-        <v-col
-          class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-          xl="2"
-        >
+        <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
           <component :is="item.component" v-bind="item.props"></component>
         </v-col>
       </template>
@@ -38,12 +25,13 @@ import { useSearchStore } from '@/stores/searchStore';
 
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
+const filterSelected = computed(() => searchStore.getSelected);
 const deviceStore = useDeviceStore();
 const components = shallowRef([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
 const deviceTypeArray = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
-const deviceTypeId=['ofglvd9gqx8yfl3l','eu0v2xgprrhhg41g','rnizejqr2di0okho','lsf78ly0eqrjbz91','mxztsyjzsrq7iaqc'];
+const deviceTypeId = ['ofglvd9gqx8yfl3l', 'eu0v2xgprrhhg41g', 'rnizejqr2di0okho', 'lsf78ly0eqrjbz91', 'mxztsyjzsrq7iaqc'];
 const roomsForDevice = {
   label: 'Vincular a habitación',
   options: ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio']
@@ -55,28 +43,28 @@ const handleAddButtonPressed = () => {
 };
 
 
-async function addDevice(name, type){
-  try{
+async function addDevice(name, type) {
+  try {
     const newDevice = {
-            type: {
-              id:deviceTypeId.at(deviceTypeArray.findIndex(t => t === type))
-            },
-            name: name,
-        };
+      type: {
+        id: deviceTypeId.at(deviceTypeArray.findIndex(t => t === type))
+      },
+      name: name,
+    };
     await deviceStore.add(newDevice);
     return true;
-  }catch(e){
+  } catch (e) {
     console.log("Problemas");
     return false;
   }
-  
+
 }
 
 const handleNewDevice = (state, name, type) => {
-  if (addDevice(name, type)){
+  if (addDevice(name, type)) {
     addButtonState.value = false;
-  }else {
-    errorMsg.value="Error Al agregar el dispositivo";
+  } else {
+    errorMsg.value = "Error Al agregar el dispositivo";
   }
   addButtonState.value = false;
   blurStatus.value = false;
@@ -91,14 +79,57 @@ onMounted(async () => {
   }));
 });
 
-const filteredComponents = computed(() => {
+/*const filteredComponents = computed(() => {
   if (!search.value) {
     return components.value;
   }
   return components.value.filter(item =>
     item.props.device.name.toLowerCase().includes(search.value.toLowerCase())
   );
+});*/
+
+function filterByDeviceName(components) {
+  if (!search.value) {
+    return components;
+  }
+  return components.filter(item =>
+    item.props.device.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+}
+
+function filterByRoom(components) {
+  if (!search.value) {
+    return components;
+  }
+  return components.filter(item =>
+    item.props.device.room?.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+}
+
+function filterByDeviceType(components) {
+  if (!search.value) {
+    return components;
+  }
+  return components.filter(item =>
+  item.props.device.type.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+}
+
+const filteredComponents = computed(() => {
+  let filtered = components.value;
+  switch (filterSelected.value) {
+    case 'Por habitacion':
+      filtered = filterByRoom(filtered);
+      break;
+    case 'Por tipo de dispositivo':
+      filtered = filterByDeviceType(filtered);
+      break;
+    default: filtered = filterByDeviceName(filtered);
+      break;
+  }
+  return filtered;
 });
+
 </script>
 
 <style scoped>
@@ -107,6 +138,7 @@ const filteredComponents = computed(() => {
   height: 21rem;
   overflow: hidden;
 }
+
 .title {
   text-align: center;
   margin: 1rem 0;
