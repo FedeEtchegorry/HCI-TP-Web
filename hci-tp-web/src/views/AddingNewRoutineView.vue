@@ -2,8 +2,8 @@
     <v-dialog v-model="props.addOptionActive" max-width="60rem">
       <v-card class="rounded-xl custom-card">
 
-        <v-card-title class="custom-title-card">
-          <v-row class="custom-row" no-gutters>
+        <v-card-title class="custom-title">
+          <v-row class="custom-row">
             <v-col cols="12" sm="6">
                 <v-text-field
                     v-model="routine.name"
@@ -22,16 +22,18 @@
               </v-btn>
             </v-col>
           </v-row>
-          <div class="custom-divider"></div>
         </v-card-title>
 
+        <div class="custom-coarse-divider"></div>
+        
         <v-card-text class="devices-section">
           <v-col v-for="(device, index) in routine.devices" :key="index">
 
             <v-row class="custom-row" cols="12" sm="6">
+              <span class="device-number-span">{{index+1}}°</span>
               <v-select
                 v-model="device.device"
-                class="custom-large-field"
+                class="custom-flexible-field"
                 :items="devices"
                 label="Device"
                 required
@@ -41,53 +43,22 @@
               <v-select
                 v-model="device.state"
                 class="custom-flexible-field"
-                label="Time"
-                rounded
-                variant="outlined"
-              ></v-select>
-              <v-select
-                v-model="device.state"
-                class="custom-flexible-field"
-                label="State"
-                rounded
-                variant="outlined"
-              ></v-select>
-            </v-row>
-            <!-- <v-time-picker></v-time-picker> -->
-            <v-row class="custom-row" cols="12" sm="6">
-
-              <v-select
-                v-model="device.state"
-                class="custom-flexible-field"
                 label="Action"
                 rounded
                 variant="outlined"
               ></v-select>
               <v-text-field
-                v-model="device.param1"
+                v-model="device.parameter"
                 class="custom-flexible-field"
-                label="Param1"
+                label="Parameter"
                 rounded
                 variant="outlined"
               ></v-text-field>
-              <v-text-field
-                v-model="device.param2"
-                class="custom-flexible-field"
-                label="Param2"
-                rounded
-                variant="outlined"
-              ></v-text-field>
-              <v-text-field
-                v-model="device.param3"
-                class="custom-flexible-field"
-                label="Param3"
-                rounded
-                variant="outlined"
-              ></v-text-field>
-
+              <v-btn class="delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
             </v-row>
 
-            <div class="custom-divider"></div>
+            <div class="custom-thin-divider"></div>
+
           </v-col>
 
           <v-col cols="12" class="add-new-device-col">
@@ -96,7 +67,7 @@
 
         </v-card-text>
 
-        <div class="custom-divider"></div>
+        <div class="custom-coarse-divider"></div>
 
         <v-card-actions>
           <v-btn class="confirm-button" text @click="saveRoutine">Confirm</v-btn>
@@ -137,10 +108,12 @@ const closeDialog = () => emit('newRoutineEvent', false, '', '');
 const newRoutineEvent = () => emit('newRoutineEvent', true, routine);
 const addDeviceToRoutine = () => routine.value.devices.push({ device: '', time: '', state: '', action: '', param1: '', param2: '', param3: '' });
 const toggleDay = (index) => {
-  
   routine.value.days[index].active = !routine.value.days[index].active;
   console.log(`Boton apretado: ${index}, estado: ${routine.value.days[index].active}`);
 
+}
+const deleteDevice = (index) => {
+  routine.value.devices.splice(index, 1);
 }
 
 const props = defineProps({
@@ -158,16 +131,27 @@ const props = defineProps({
 .custom-card {
   background-color: rgb(var(--v-theme-primary_v));
   max-height: 60rem;
-  padding: 1rem;
+  padding-bottom: .5rem;
 }
 
 .custom-large-field {
-  margin: .4rem .4rem;
+  margin-top: 1rem;
   min-width: 50%;
 }
 
+.custom-title {
+  height: 6rem;
+}
+
 .custom-flexible-field {
-  margin: .5rem .4rem;
+  margin: .5rem .5rem;
+}
+
+.custom-row {
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
 }
 
 .devices-section {
@@ -178,6 +162,7 @@ const props = defineProps({
 .day-buttons-col {
   display: flex;
   justify-content: center;
+  justify-items: center;
   margin-top: 1rem;
   min-width: 50%;
 }
@@ -199,18 +184,31 @@ const props = defineProps({
   box-shadow: inset 0rem .35rem .2rem rgba(0, 0, 0, 0.4);
 }
 
-.custom-title-card {
-  padding-bottom: .5rem;
+.custom-coarse-divider {
+  border-bottom: .12rem solid #000;
+  margin-inline: .8rem;
+  margin-bottom: .5rem;
 }
 
-.custom-divider {
-  border-top: .1rem solid #000;
-  margin-bottom: 1.2rem;
+.custom-thin-divider {
+  border-top: .07rem solid #000;
+  margin-bottom: 1rem;
 }
 
 .add-new-device-col {
   display: flex;
   justify-content: center;
+}
+
+.delete-device {
+  margin-top: .9rem;
+  margin-left: .9rem;
+}
+
+.device-number-span {
+  margin-top: 1.4rem;
+  margin-right: .5rem;
+  font-size: large;
 }
 
 .add-new-device-button {
