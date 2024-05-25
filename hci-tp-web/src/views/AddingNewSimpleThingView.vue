@@ -125,4 +125,8 @@ const props = defineProps({
     margin-bottom: 1rem;
 }
   
+.v-dialog {
+  width: 35%; /* Establece el ancho del diálogo */
+}
+
 </style>

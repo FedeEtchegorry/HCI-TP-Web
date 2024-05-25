@@ -114,6 +114,7 @@ onBeforeUnmount(() => {
 }
 
 .drawer_elem {
+  user-select: none;
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
   border-radius: 0.5rem;

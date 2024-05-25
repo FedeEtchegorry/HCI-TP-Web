@@ -42,12 +42,12 @@ export default createVuetify({
           h1: {
             fontFamily: 'Montserrat', // Fuente para títulos de nivel 1
             fontWeight: 'bold', // Peso de fuente para títulos de nivel 1
-            fontSize: '3rem', // Tamaño de fuente para títulos de nivel 1
+            fontSize: '5rem', // Tamaño de fuente para títulos de nivel 1
           },
           h2: {
             fontFamily: 'Montserrat', // Fuente para títulos de nivel 2
             fontWeight: 'bold', // Peso de fuente para títulos de nivel 2
-            fontSize: '2.5rem', // Tamaño de fuente para títulos de nivel 2
+            fontSize: '3.5rem', // Tamaño de fuente para títulos de nivel 2
           },
           h3: {
             fontFamily: 'Montserrat', // Fuente para títulos de nivel 3
