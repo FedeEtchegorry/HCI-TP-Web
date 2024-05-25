@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
   font-size: 2.4rem;
 }
 .bottom {
-  width: 95%;
+  width: 100%;
   position: absolute;
   bottom: 0;
   align-items: center;
