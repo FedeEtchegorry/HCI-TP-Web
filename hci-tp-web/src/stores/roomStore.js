@@ -27,6 +27,12 @@ export const useRoomStore = defineStore('room', () => {
         return Object.assign(new Room(), result);
     }
 
+    async function getDevicesByRoom(roomId) {
+        let result = await RoomApi.getDevicesByRoom(roomId);
+        result = result.map((room) => Object.assign(new Room(), room));
+        return result
+    }
+
     async function getAll(controller = null) {
         let result = await RoomApi.getAll(controller);
         result = result.map((room) => Object.assign(new Room(), room));

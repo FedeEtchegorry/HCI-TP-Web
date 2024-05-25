@@ -22,6 +22,10 @@ class RoomApi {
         return await Api.get(RoomApi.getUrl(id), controller);
     }
 
+    static async getDevicesByRoom(roomId, controller){
+        return await Api.get(RoomApi.getUrl(id + '/devices'),controller);
+    }
+
     static async getAll(controller) {
         return await Api.get(RoomApi.getUrl(), controller);
     }
