@@ -22,6 +22,7 @@ import GridComponent from '@/components/GridComponent.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useSearchStore } from '@/stores/searchStore';
+import { Vacuum, Blind, Refrigerator, Door } from '@/api/device';
 
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
@@ -52,6 +53,7 @@ async function addDevice(name, type) {
       name: name,
     };
     await deviceStore.add(newDevice);
+    window.location.reload();
     return true;
   } catch (e) {
     console.log("Problemas");
@@ -68,7 +70,6 @@ const handleNewDevice = (state, name, type) => {
   }
   addButtonState.value = false;
   blurStatus.value = false;
-  console.log(`Nuevo device: ${name} de tipo: ${type}`);
 };
 
 onMounted(async () => {

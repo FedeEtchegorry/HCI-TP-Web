@@ -1,6 +1,6 @@
 <template>
     <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" :addOptionActive="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="roomTypeArray"/>
+        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" :addOptionActive="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="Object.keys(roomType)"/>
         <h1 class="title">HABITACIONES</h1>
         <GridComponent :items="components">
       <template v-slot:default="{ item }">
@@ -24,23 +24,41 @@
 
 import { ref, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
-import AddingNewSimpleThingView from './AddingNewSimpleThingView';
+import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useRoomStore } from '@/stores/roomStore';
 import RoomDetail from '@/components/CardDetail/Rooms/RoomDetail.vue'
+import { Room, RoomMeta } from '@/api/room';
 
 const roomStore = useRoomStore();
 const components = ref([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
-const roomTypeArray = ['Living', 'Garage', 'Cuarto', 'Cocina', 'Baño', 'Patio'];
+
+const roomType = {
+  'Living': 'mdi-sofa',
+  'Garage': 'mdi-garage',
+  'Cuarto': 'mdi-bed',
+  'Cocina': 'mdi-countertop',
+  'Baño': 'mdi-toilet',
+  'Patio': 'mdi-sprout',
+}
+
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
   blurStatus.value = addButtonState.value;
 };
-const handleNewRoom = (state, name, type) => {
+
+async function handleNewRoom(state, name, type){
   addButtonState.value = false;
   blurStatus.value = false;
-  console.log(`Nueva habitacion: ${name} de tipo: ${type}`);
+  try {
+    const roomMeta = new RoomMeta(roomType[type])
+    const room = new Room(null, name, roomMeta);
+    await roomStore.add(room);
+    window.location.reload();
+  }catch(e){
+    console.log('Error creating room: ', e);
+  }
 }
 
 onMounted(async () => {
