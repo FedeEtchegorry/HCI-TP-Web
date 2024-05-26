@@ -1,38 +1,38 @@
 <template>
     <v-dialog v-model="props.showRoutine" max-width="60rem">
-      <v-card class="rounded-xl custom-card">
+      <v-card class="rounded-xl show-routine-custom-card">
 
-        <v-card-title class="custom-title">
+        <v-card-title class="show-routine-title">
             <v-row justify="space-between">
-                <v-col cols="auto">
-                    <h2 class="left-content"> Rutina: {{props.myRoutine.name}} </h2>
+                <v-col>
+                    <h2> Rutina: {{props.myRoutine.name}} </h2>
                 </v-col>
-                <v-col cols="auto">
+                <v-col>
                     <v-card-actions>
-                        <v-btn class="cancel-button" text @click="closeDialog">X</v-btn>
+                        <v-btn class="show-routine-cancel-button" text @click="closeDialog">X</v-btn>
                     </v-card-actions>
                 </v-col>
             </v-row>
         </v-card-title>
 
-        <div class="custom-coarse-divider"></div>
+        <div class="show-routine-coarse-divider"></div>
 
-        <v-card-text class="devices-section">
+        <v-card-text class="show-routine-devices-section">
 
             <v-col v-if="props.myRoutine.devices" v-for="(device, index) in props.myRoutine.devices" :key="index">
-                <v-row class="custom-row" cols="12" sm="6">
+                <v-row class="show-routine-row" cols="12" sm="6">
 
                     <v-col>
-                        <span class="device-number-span">{{index+1}}°</span>
-                        <span class="device-info-span">Dispositivo: {{device.name}}</span>
+                        <span class="show-routine-number-span">{{index+1}}°</span>
+                        <span class="show-routine-info-span">Dispositivo: {{device.name}}</span>
                     </v-col>
                     <v-col>
-                        <span class="device-info-span">Acción: {{device.action}}</span>
+                        <span class="show-routine-info-span">Acción: {{device.action}}</span>
                     </v-col>
                     <v-col>
-                        <span class="device-info-span">Parámetro: {{device.param}}</span>
+                        <span class="show-routine-info-span">Parámetro: {{device.param}}</span>
                     </v-col>
-                    <div class="custom-thin-divider"></div>
+                    <div class="show-routine-thin-divider"></div>
                 </v-row>
             </v-col>
 
@@ -64,49 +64,49 @@ const props = defineProps({
 
 <style>
 
-.custom-card {
+.show-routine-card {
     background-color: rgb(var(--v-theme-primary_v));
     max-height: 50rem;
     max-width: 70rem;
 }
 
-.custom-title {
+.show-routine-title {
     height: 5rem;
 }
-.custom-row {
+.show-routine-row {
     display: flex;
     justify-content: center;
     justify-self: center;
     justify-items: center;
 }
 
-.devices-section {
+.show-routine-devices-section {
     max-height: 25rem;
     overflow-y: auto;
 }
 
-.custom-coarse-divider {
+.show-routine-coarse-divider {
     border-bottom: .12rem solid #000;
     margin-inline: .8rem;
     margin-bottom: .5rem;
 }
 
-.custom-thin-divider {
+.show-routine-thin-divider {
     border-top: .07rem solid #000;
     margin-bottom: 1rem;
 }
 
-.device-number-span {
+.show-routine-number-span {
     margin-top: 1.4rem;
     margin-right: .5rem;
     font-size: large;
 }
 
-.device-info-span {
+.show-routine-info-span {
     margin-inline: 1rem;
 }
 
-.cancel-button {
+.show-routine-cancel-button {
     border-radius: 1rem;
     font-size: x-large;
 }
