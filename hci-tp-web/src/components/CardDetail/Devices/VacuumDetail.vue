@@ -4,27 +4,29 @@
         <v-btn :disabled="batteryLow" class="button" size="160" :append-icon="batteryLow? '' : !isWorking ? 'mdi-play' : 'mdi-pause'"
             elevation="24" @click="handleClickStatus" :color="!isWorking ? 'green' : ''">
             <div v-if="batteryLow">
-                <p class="red--text font-weight-bold">LOW BATTERY</p>
-                <p v-if="!isDocked" class="red--text">PLEASE DOCK</p>
+                <p class="red--text font-weight-bold">BAJA BATERÍA</p>
+                <p v-if="!isDocked" class="red--text">NECESITA CARGAR</p>
             </div>
             <div v-else>
-                <p v-if="isWorking">PAUSE</p>
-                <p v-else>START</p>
+                <p v-if="isWorking">PAUSA</p>
+                <p v-else>EMPEZAR</p>
             </div>
         </v-btn>
 
         <div class="actions">
             <div class="mode">
-                Change Mode
+                Cambiar modo
                 <v-btn class="mb-2 mode-btn" density="compact" color="blue_state" size="large" @click="handleClickMode">
-                    {{ isMopping ? "Mop" : "Vacuum" }}
+                    {{ isMopping ? "Trapear" : "Aspirar" }}
                 </v-btn>
             </div>
+            <div class="mode">
+                A base
+                <v-btn class="mb-2" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
+                    size="x-large" color="red"></v-btn>
+            </div>    
 
-            <v-btn class="mb-2" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
-                size="x-large" color="red"></v-btn>
-
-            <v-select max-width="40%" return-object item-title="name" v-model="currentLocation" label="Change dock station" :hide-details="true"
+            <v-select max-width="40%" return-object item-title="name" v-model="currentLocation" label="Cambiar puerto de carga" :hide-details="true"
                 :items="roomStore.rooms" @update:modelValue="changeLocation">
             </v-select>
         </div>
@@ -137,5 +139,6 @@ onBeforeMount(async () => {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    align-items: center;
 }
 </style>

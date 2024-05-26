@@ -61,8 +61,8 @@ let fridgeTemp = ref(myDevice.value.state.temperature)
 let freezerTemp = ref(myDevice.value.state.freezerTemperature)
 const allMode = [
     {mode: 'Default', value:'default'},
-    {mode: 'Party', value: 'party'},
-    {mode: 'Vacation', value: 'vacation'},
+    {mode: 'Fiesta', value: 'party'},
+    {mode: 'Vacaciones', value: 'vacation'},
 ]
 
 let mode = ref(allMode.find(m => m.value === myDevice.value.state.mode))
