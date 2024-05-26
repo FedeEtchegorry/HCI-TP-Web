@@ -1,6 +1,6 @@
 <template>
     <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :supportedDevices="devicesAndActions" :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"/>
+        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :myDevices="myDevices" :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"/>
         <h1 class="title">RUTINAS</h1>
         <GridComponent :items="components"><template v-slot:default="{ item }">
         <v-col
@@ -30,13 +30,19 @@ const routineStore = useRoutineStore();
 const components = ref([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
-const devicesAndActions = ref([ 
+const devicesAndActions = ref([
   {type:'Alarma', actions:['Activar', 'Desactivar']},
   {type:'Aspiradora', actions:['Iniciar', 'Pausar', 'Regresar Base de Carga']},
   {type:'Heladera', actions:['Establecer Temp. Freezer', 'Establecer Temp.']},
   {type:'Persiana', actions:['Abrir', 'Cerrar', 'Establecer Posición']},
   {type:'Puerta', actions:['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear']}
 ]);
+const myDevices = ref([
+
+  {name:'Dispositivo_1', type:'Alarma', actions:['Activar', 'Desactivar']}
+
+]);
+
 const errorMsg = ref('');
 const errorMessageOn = computed(() => errorMsg.value != '');
 

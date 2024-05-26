@@ -8,7 +8,7 @@
                 <v-text-field
                     v-model="routine.name"
                     class="custom-large-field"
-                    label="New Routine Name"
+                    label="Nombre de Nueva Rutina"
                     :rules="[v => !!v || 'El nombre es obligatorio']"
                     required
                     rounded
@@ -36,8 +36,8 @@
                 v-model="row.device"
                 @update:model-value="calculatePossibleActions(row.device)"
                 class="custom-flexible-field"
-                :items="deviceTypes"
-                label="Devices"
+                :items="deviceNames"
+                label="Dispositivo"
                 required
                 rounded
                 variant="outlined"
@@ -46,14 +46,14 @@
                 v-model="row.action"
                 class="custom-flexible-field"
                 :items="possibleActions"
-                label="Action"
+                label="Acción"
                 rounded
                 variant="outlined"
               ></v-select>
               <v-text-field
                 v-model="row.param"
                 class="custom-flexible-field"
-                label="Parameter"
+                label="Parametro"
                 rounded
                 variant="outlined"
               ></v-text-field>
@@ -65,7 +65,7 @@
           </v-col>
 
           <v-col cols="12" class="add-new-device-col">
-            <v-btn class="add-new-device-button" @click="addDeviceToRoutine">+ Add New Device +</v-btn>
+            <v-btn class="add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo +</v-btn>
           </v-col>
 
         </v-card-text>
@@ -73,9 +73,9 @@
         <div class="custom-coarse-divider"></div>
 
         <v-card-actions>
-          <v-btn class="confirm-button" text @click="saveRoutine">Confirm</v-btn>
+          <v-btn class="confirm-button" text @click="saveRoutine">Confirmar</v-btn>
           <v-spacer></v-spacer>
-          <v-btn class="cancel-button" text @click="closeDialog">Cancel</v-btn>
+          <v-btn class="cancel-button" text @click="closeDialog">Cancelar</v-btn>
         </v-card-actions>
 
         <span v-if="errorMessageOn" class="custom-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
@@ -124,16 +124,16 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  supportedDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "Tipo" y un arreglo de strings de sus posibles acciones
+  myDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "nombre", "Tipo" y un arreglo de strings de sus posibles acciones
     required: true,
     type: Array,
-    validator(value) { return value.every( item => (typeof(item) === 'object' && typeof(item.type) === 'string' && Array.isArray(item.actions)) ); }
+    validator(value) { return value.every( item => (typeof(item) === 'object' && typeof(item.name) === 'string' && typeof(item.type) === 'string' && Array.isArray(item.actions)) ); }
   }
 });
 
-const deviceTypes = computed(() => props.supportedDevices.map(device => device.type));
+const deviceNames = computed(() => props.myDevices.map(device => device.name));
 const calculatePossibleActions = (deviceSelected) => {
-  const thisDevice = props.supportedDevices.find(dev => dev.type === deviceSelected);
+  const thisDevice = props.myDevices.find(dev => dev.type === deviceSelected);
   if (thisDevice) {
     possibleActions.value = thisDevice.actions;
   } else {
