@@ -51,7 +51,7 @@ const myDevice = ref(props.device);
 const deviceId = computed(() => myDevice.value.id);
 const isOpening = computed(() => myDevice.value.state.status == 'opening');
 const isClosing = computed(() => myDevice.value.state.status == 'closing');
-const isOpene = computed(() => myDevice.value.state.status == 'opened');
+const isOpened = computed(() => myDevice.value.state.status == 'opened');
 const isClosed = computed(() => myDevice.value.state.status == 'closed');
 
 const debouncedSetPosition = debounce(setPosition, 300);
