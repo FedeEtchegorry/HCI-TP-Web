@@ -119,6 +119,7 @@ onBeforeMount(async () => {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    background: rgb(var(--v-theme-primary_v));
 }
 
 .button {
