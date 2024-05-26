@@ -5,8 +5,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon>
-                <v-icon @click="toggleDialog">mdi-menu</v-icon>
+            <v-btn @click="toggleDialog" icon>
+                <v-icon >mdi-menu</v-icon>
             </v-btn >
             <v-btn icon>
                 <v-icon @click="isActive = false">mdi-close</v-icon>
@@ -15,12 +15,12 @@
 
         <component class="device" :is="devices[device.type.name]" :device="device"></component>
 
-        <v-dialog rounded v-model="dialog" width="40%" height="50%">
+        <v-dialog rounded v-model="dialog" width="30%" height="40%">
             <v-card class="dialog-card" height="100%">
-                <v-card-title>
-                    <h3 class="headline">Editar Dispositivo</h3>
-                </v-card-title>
-                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceName"
+                <v-toolbar density="comfortable" color="secondary">
+                    <v-toolbar-title>Editar Dispositivo</v-toolbar-title>
+                </v-toolbar>
+                <v-text-field hide-details class="text-field mt-4" rounded variant="outlined" v-model="editedDeviceName"
                     label="Nombre del dispositivo" :rules="[
                         v => !!v || 'El nombre es obligatorio',
                         v => (v && v.length <= 15) || 'El nombre no puede tener más de 25 letras'
@@ -165,6 +165,7 @@ async function modifyDevice() {
     color: rgb(var(--v-theme-primary));
     background-color: rgb(var(--v-theme-primary_v));
     align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
@@ -181,8 +182,8 @@ async function modifyDevice() {
 }
 
 .unlink-btn {
-    color: rgb(var(--v-theme-primary_v));
-    background-color: red;
+
+    background-color: rgb(var(--v-theme-primary_v));
     font-size: small;
     margin-bottom: 1rem;
 }
