@@ -12,7 +12,9 @@
           lg="3"
           xl="2"
         >
-          <component :is="item.component" v-bind="item.props"></component>
+        <RouterLink class="router-custom" to="/" @click="handleClick(item)">
+            <component :is="item.component" v-bind="item.props"></component>
+        </RouterLink>
         </v-col>
       </template>
     </GridComponent>
@@ -21,7 +23,7 @@
 
 
 <script setup>
-
+import { useSearchStore } from '@/stores/searchStore';
 import { ref, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
@@ -33,6 +35,8 @@ const roomStore = useRoomStore();
 const components = ref([]);
 let addButtonState = ref(false);
 const blurStatus = ref(false);
+
+const searchStore = useSearchStore();
 
 const roomType = {
   'Living': 'mdi-sofa',
@@ -63,6 +67,12 @@ async function handleNewRoom(state, name, type){
   }
 }
 
+const handleClick = (item) => {
+  searchStore.updateSearch(item.props.room.name);
+  searchStore.updateSelected('Por habitacion');
+};
+
+
 onMounted(async () => {
   await roomStore.getAll();
   components.value = roomStore.rooms.map(room => ({
@@ -74,6 +84,10 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.router-custom{
+  text-decoration: none;
+}
+
 .fixed-size-cell {
   width: 15rem;
   height: 21rem;
