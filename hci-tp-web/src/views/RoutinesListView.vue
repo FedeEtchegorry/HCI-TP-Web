@@ -55,7 +55,7 @@ function getDeviceTypeAndActions(deviceType){
     case 'door':
       return {type: 'Puerta', actions: ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'] };
     case 'refrigerator':
-      return {type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.']};
+      return {type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.', 'Modo fiesta', 'Modo default', 'Modo vacaciones']};
     default:
       return null;
   }
