@@ -2,7 +2,7 @@
   <v-card color="primary_v">
     <v-card @click="showCard = true" class="ma-4" outlined>
       <v-card-title><v-icon>{{ device.meta.logo }}</v-icon> {{ device.name }}</v-card-title>
-      <v-card-subtitle>Location: {{ device.room.name }} </v-card-subtitle>
+      <v-card-subtitle>Habitacion: {{ device.room.name }} </v-card-subtitle>
       <v-card-text>
         <div><strong>Consumo de Energía:</strong> {{ device.type.powerUsage }}W</div>
         <div v-if="device.state.batteryLevel"><strong>Nivel de Batería:</strong> {{ device.state.batteryLevel }}%</div>
