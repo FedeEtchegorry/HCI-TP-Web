@@ -16,7 +16,7 @@
                                 v-model="newThingName"
                                 class="custom-text-field"
                                 :label="thingNameLabel"
-                                :rules="[v => !!v || 'El nombre es obligatorio', v => (v && v.length <= 12) || 'El nombre no puede tener más de 12 letras']"
+                                :rules="[v => !!v || 'El nombre es obligatorio', v => (v && v.length <= 15) || 'El nombre no puede tener más de 15 letras']"
                                 required
                                 rounded 
                                 variant="outlined">
@@ -41,12 +41,11 @@
                                 rounded
                                 variant="outlined">
                             </v-select>
-
+                            <p v-if="errorMessageOn" class="error" v-show="props.errorMessageOn">{{ props.errorMsg }}</p>
                         </v-form>
                     </v-container>
 
                 </v-card-text>
-                <p v-show="props.errorMessageOn">{{ props.errorMsg }}</p>
                 <v-card-actions>
                     <v-btn class="accept-button" text @click="addThing">Agregar</v-btn>
                     <v-spacer></v-spacer>
@@ -120,7 +119,6 @@ console.log(props.extraThingParameter)
 </script>
 
 <style scoped>
-
 .v-dialog {
     width: 40%;
     display: flex;
@@ -145,6 +143,11 @@ console.log(props.extraThingParameter)
     border: 1rem;
     padding: 1rem;
     color: black;
+}
+.error{
+    align-items: center;
+    justify-items: center;
+    color: rgb(var(--v-theme-red_state));
 }
 
 .cancel-button {
