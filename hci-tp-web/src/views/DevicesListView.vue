@@ -49,12 +49,14 @@ const roomsForDevice = {
 };
 
 const handleAddButtonPressed = () => {
+  errorMsg.value='';
   addButtonState.value = !addButtonState.value;
   blurStatus.value = addButtonState.value;
 };
 
 
 async function addDevice(name, type) {
+  
   try {
     const newDevice = {
       type: {
@@ -66,7 +68,6 @@ async function addDevice(name, type) {
     window.location.reload();
     return true;
   } catch (e) {
-    console.log("Problemas");
     return false;
   }
 
@@ -77,12 +78,13 @@ async function handleNewDevice(state, name, type){
     addButtonState.value = false;
     blurStatus.value = false;
   }
-  if (await addDevice(name, type)) {
+  else{if (await addDevice(name, type)) {
     addButtonState.value = false;
     blurStatus.value = false;
   } else {
-    errorMsg.value = "Error Al agregar el dispositivo";
+    errorMsg.value = "Error al agregar el dispositivo";
   }
+}
 
 };
 
