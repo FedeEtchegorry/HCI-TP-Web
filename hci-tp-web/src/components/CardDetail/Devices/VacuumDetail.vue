@@ -30,9 +30,9 @@
                 :items="roomStore.rooms" @update:modelValue="changeLocation">
             </v-select>
         </div>
-
+        {{ batteryLevel }}%
         <v-progress-linear :striped="isDocked" width="20" height="20" v-model="batteryLevel" class="bar">
-            {{ batteryLevel }}%
+            
         </v-progress-linear>
 
     </v-card>
@@ -143,6 +143,7 @@ onBeforeMount(async () => {
 .bar{
     background-color: yellow;
     color: rgb(var(--v-theme-blue_state));
+    
 }
 .actions {
     display: flex;

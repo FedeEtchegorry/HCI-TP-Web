@@ -200,6 +200,6 @@ async function changePasscode() {
 }
 .color-red{
     background-color:rgb(var(--v-theme-red_state));
-    color:rgb(var(--v-theme-red_state));
+    color:rgb(var(--v-theme-primary_v));
 }
 </style>
