@@ -5,7 +5,7 @@
                 <h1>{{ routine.name }}</h1>
             </div>
             <!--<v-icon class="custom-icon" :icon="routine.meta.icon"></v-icon>-->
-            <v-btn class="btn" color="green" :disabled="isDisabled" @click="startRoutine" size="110">COMENZAR</v-btn>
+            <v-btn class="btn" :disabled="isDisabled" @click="startRoutine" size="110">COMENZAR</v-btn>
             <p v-show="errorMessageOn">{{ errorMsg }}</p>
                 <div class="custom-qty-devices">
                     <h2>ACCIONES</h2>
@@ -96,6 +96,8 @@ async function startRoutine() {
     border-radius: 50%;
     margin-bottom: 1rem;
     font-size: smaller;
+    background-color: rgv(var(--v-theme-green_state));
+    color: white;
 }
 
 

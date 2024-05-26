@@ -9,7 +9,7 @@
 
         <div class="lock">
             <v-btn class="mb-2" @click="handleClickLock" :icon="isLocked ? 'mdi-lock' : 'mdi-lock-open'" rounded="xl"
-                size="x-large" :color="isLocked ? 'red' : 'green'"></v-btn>
+                size="x-large" :color="isLocked ? 'red' : 'green_state'"></v-btn>
 
             <h2>{{ isLocked ? "BLOQUEADA" : "DESBLOQUEADA" }}</h2>
         </div>

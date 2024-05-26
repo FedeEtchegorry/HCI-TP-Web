@@ -30,7 +30,7 @@ export default createVuetify({
           yellow_state:"#FFDA55",
           red_state:"#CE2C2C",
           orange_state:"#FF8A00",
-          green_state:"#6BE461",
+          green_state:"#4CAF50",
           second_state:"#DAEA21",
           background: "#FFFFFF",
           blue_state:"#0398FF"

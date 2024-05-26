@@ -2,7 +2,7 @@
     <v-card class="device">
 
         <v-btn :disabled="batteryLow" class="button" size="160" :append-icon="batteryLow? '' : !isWorking ? 'mdi-play' : 'mdi-pause'"
-            elevation="24" @click="handleClickStatus" :color="!isWorking ? 'green' : ''">
+            elevation="24" @click="handleClickStatus" :color="!isWorking ? 'green_state' : ''">
             <div v-if="batteryLow">
                 <p class="red--text font-weight-bold">BAJA BATERÍA</p>
                 <p v-if="!isDocked" class="red--text">NECESITA CARGAR</p>

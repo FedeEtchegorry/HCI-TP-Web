@@ -13,7 +13,7 @@
                 thumb-color="blue_state" height="50" elevation="24" persistent-hint hint="Nivel de ventana"></v-slider>
         </v-container>
         <v-row>
-            <v-btn class="mr-1 button" @click="toggleBlind" :color="isClosed || isClosing ? 'green' : 'red'" rounded elevation="24">
+            <v-btn class="mr-1 button" @click="toggleBlind" :color="isClosed || isClosing ? 'green_state' : 'red_state'" rounded elevation="24">
         <v-icon class="icon mr-1">{{ isClosed || isClosing ? 'mdi-blinds-open' : 'mdi-roller-shade-closed' }}</v-icon>
         {{ isClosed || isClosing ? 'Abrir' : 'Cerrar' }}
     </v-btn>
@@ -51,7 +51,7 @@ const myDevice = ref(props.device);
 const deviceId = computed(() => myDevice.value.id);
 const isOpening = computed(() => myDevice.value.state.status == 'opening');
 const isClosing = computed(() => myDevice.value.state.status == 'closing');
-const isOpened = computed(() => myDevice.value.state.status == 'opened');
+const isOpene = computed(() => myDevice.value.state.status == 'opened');
 const isClosed = computed(() => myDevice.value.state.status == 'closed');
 
 const debouncedSetPosition = debounce(setPosition, 300);

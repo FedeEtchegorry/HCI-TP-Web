@@ -3,10 +3,10 @@
         <p v-if="isArmAway">ACTIVA - FUERA DE CASA</p>
         <p v-if="isArmStay">ACTIVA - DENTRO DE CASA</p>
         <p v-if="isDisarm">DESACTIVADA</p>
-        <v-row class="row">
+        <v-row class="row" >
             <v-text-field class="input-class-1" v-model="input" label="Pass (4 caracteres)" maxlength="4" single-line
                 type="Number" variant="outlined" rounded hide-details></v-text-field>
-            <p v-if="hasError" class="error" color="red">ERROR</p>
+            <p v-if="hasError" class="error">ERROR-CÓDIGO INCORRECTO</p>
         </v-row>
         <v-text-field v-show="changePassOn" class="input-class-2" v-model="input_2"
             label="Nueva contraseña (4 caracteres)" maxlength="4" single-line type="Number" variant="outlined" rounded
@@ -15,12 +15,10 @@
                 size="30">mdi-lock-open</v-icon>
             Desactivar
         </v-btn>
-        <v-btn v-show="isDisarm && !changePassOn" class="mb-1" @click="armedAway" rounded size="large"
-            color="green"><v-icon size="30">mdi-lock</v-icon>
+        <v-btn v-show="isDisarm && !changePassOn" class="mb-1 button-arm" @click="armedAway" rounded size="large"><v-icon size="30">mdi-lock</v-icon>
             Activar-Fuera
         </v-btn>
-        <v-btn v-show="isDisarm && !changePassOn" class="mb-1" @click="armedStay" rounded size="large"
-            color="green"><v-icon size="30">mdi-home-lock</v-icon>
+        <v-btn v-show="isDisarm && !changePassOn" class="mb-1 button-arm" @click="armedStay" rounded size="large"><v-icon size="30">mdi-home-lock</v-icon>
             Activar-En casa
         </v-btn>
         <v-btn v-if="!changePassOn" class="mb-1" @click="changePasstoOn" rounded size="large" color="blue_state">
@@ -171,15 +169,19 @@ async function changePasscode() {
     align-items: center;
     justify-items: center;
     width: 100%;
+    justify-content: space-around;
 }
 
 .error {
 
     justify-self: center;
-    align-self: center;
+    align-self: left;
     color: red;
-    margin-left: 0.5rem;
 }
+.button-arm{
+    background-color: rgb(var(--v-theme-green_state));
+    color: white;
+}   
 
 .arm {
     width: 95%;
