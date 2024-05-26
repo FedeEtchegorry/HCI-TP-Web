@@ -8,10 +8,10 @@
                     <span class="add-thing-headline">{{ headlineName }}</span>
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text style="padding-bottom: 0rem;">
 
-                    <v-container>
-                        <v-form ref="form" v-model="valid">
+                    <v-container style="padding-bottom: 0.2rem;">
+                        <v-form ref="form" v-model="valid" class="add-thing-form">
                             <v-text-field
                                 v-model="newThingName"
                                 class="add-thing-text-field"
@@ -117,30 +117,37 @@ const props = defineProps({
 .add-thing-dialog {
     max-width: 60rem;
     width: 40%;
+    max-height: 95%;
 }
 .add-thing-card {
-    background-color: rgb(var(--v-theme-primary_v));
-    padding-top: 1rem;
     display: flex;
     overflow: hidden;
+    background-color: rgb(var(--v-theme-primary_v));
+    padding-top: .8rem;
+    margin-bottom: 0rem;
 }
 
 .add-thing-title {
     display: flex;
     justify-content: center;
-    text-align: center;
     width: 100%;
+    padding: 0rem;
+    margin: 0rem;
 }
 
 .add-thing-text-field {
     border: 1rem;
-    padding: 1rem;
+    padding: .5rem;
+    padding-bottom: 0rem;
+    margin-bottom: 0rem;
     color: black;
 }
 
 .add-thing-error{
     display: flex;
     justify-content: center;
+    align-content: center;
+    padding: 0rem;
     color: rgb(var(--v-theme-red_state));
     text-shadow: .2rem .2rem .4rem rgba(50, 20, 20, 0.6);
 }

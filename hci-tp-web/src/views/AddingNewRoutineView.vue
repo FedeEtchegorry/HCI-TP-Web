@@ -171,9 +171,8 @@ const calculatePossibleActions = (deviceSelected) => {
 
 .add-routine-row {
   display: flex;
-  justify-content: center;
-  justify-self: center;
   justify-items: center;
+  align-items: center;
 }
 
 .add-routine-devices-section {
@@ -185,7 +184,6 @@ const calculatePossibleActions = (deviceSelected) => {
   display: flex;
   justify-content: center;
   justify-items: center;
-  margin-top: 1rem;
   min-width: 50%;
 }
 
@@ -223,14 +221,14 @@ const calculatePossibleActions = (deviceSelected) => {
 }
 
 .add-routine-delete-device {
-  margin-top: .9rem;
   margin-left: .9rem;
+  margin-bottom: 1.5rem;
 }
 
-.add-routine-device-number-span {
-  margin-top: 1.4rem;
+.add-routine-number-span {
   margin-right: .5rem;
   font-size: large;
+  margin-bottom: 1.5rem;
 }
 
 .add-routine-add-new-device-button {
