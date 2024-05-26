@@ -2,7 +2,6 @@
     <EmptyDeviceDialog>
         <v-toolbar density="comfortable" color="primary">
             <v-toolbar-title>{{ device.name }}</v-toolbar-title>
-
             <v-spacer></v-spacer>
 
             <v-btn @click="toggleDialog" icon>

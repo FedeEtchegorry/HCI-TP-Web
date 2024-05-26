@@ -6,8 +6,8 @@
       <v-card-text>
         <div><strong>Consumo de Energía:</strong> {{ device.type.powerUsage }}W</div>
         <div v-if="device.state.batteryLevel"><strong>Nivel de Batería:</strong> {{ device.state.batteryLevel }}%</div>
-        <div v-if="device.state.status"><strong>Estado:</strong> {{ capitalizeFirstLetter(device.state.status) }}</div>
-        <div v-if="device.state.mode"><strong>Modo:</strong> {{ capitalizeFirstLetter(device.state.mode) }}</div>
+        <div v-if="device.state.status"><strong>Estado:</strong> {{ toSpanishState(capitalizeFirstLetter(device.state.status)) }}</div>
+        <div v-if="device.state.mode"><strong>Modo:</strong> {{ toSpanishMode(capitalizeFirstLetter(device.state.mode)) }}</div>
       </v-card-text>
     </v-card>
 
@@ -32,6 +32,54 @@ function capitalizeFirstLetter(string) {
   if (!string) 
     return string; 
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function toSpanishState(string){
+  switch(string){
+    //PUERTA Y VENTANA
+    case 'Opened':
+      return 'Abierto';
+    case 'Closed':
+      return 'Cerrado';
+    case 'Opening':
+      return 'Abriendo';
+    case 'Closing':
+      return 'Cerrando';
+    //ALARMA
+    case 'Disarmed':
+      return 'Desactivada';
+    case 'ArmedStay':
+      return 'Activada-En casa'
+    case 'ArmedAway':
+      return 'Activada-fuera de casa';
+    //ASPIRADORA
+    case 'Docked':
+      return 'En puerto de carga';
+    case 'Inactive':
+      return 'Inactiva';
+    case 'Active':
+      return 'Activa';
+    case 'Pause':
+      return 'Pausa';
+      
+
+  }
+}
+
+function toSpanishMode(string){
+  switch(string){
+    case 'Mop':
+      return 'Trapeando';
+    case 'Vacuum':
+      return 'Aspirando';
+    case 'Party':
+      return 'Fiesta';
+    case 'Vacation':
+      return 'Vacaciones'
+    case 'Default':
+      return 'Default';
+  }
+
 }
 
 let showCard = ref(false);
