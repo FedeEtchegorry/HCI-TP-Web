@@ -1,9 +1,12 @@
 <template>
     <v-card class="device">
         <v-card :class="isClosed || isClosing ? 'boxClose' : 'boxOpen'">
-             <p class="title">{{ isClosed || isClosing ? 'CERRADO' : 'ABIERTO' }}</p>
+             <p v-show="isClosed" class="title">CERRADO</p>
+             <p v-show="isClosing" class="title">CERRANDO</p>
+             <p v-show="isOpened" class="title">ABIERTO</p>
+             <p v-show="isOpening" class="title">ABRIENDO</p>
         </v-card>
-        <v-container class="mb-5">
+        <v-container class="mb-3">
             <v-slider append-icon="mdi-window-shutter" prepend-icon="mdi-window-shutter-open"
                 @click:append="openPercentage += 1" @click:prepend="openPercentage -= 1" v-model="openPercentage" step="1"
                 min="0" max="100" track-fill-color="blue_state" track-color="grey" track-size="6" thumb-label="always"
@@ -46,9 +49,9 @@ const deviceStore = useDeviceStore();
 const myDevice = ref(props.device);
 
 const deviceId = computed(() => myDevice.value.id);
-//const isOpening = computed(() => myDevice.value.state.status == 'opening');
+const isOpening = computed(() => myDevice.value.state.status == 'opening');
 const isClosing = computed(() => myDevice.value.state.status == 'closing');
-//const isOpen = computed(() => myDevice.value.state.status == 'opened');
+const isOpened = computed(() => myDevice.value.state.status == 'opened');
 const isClosed = computed(() => myDevice.value.state.status == 'closed');
 
 const debouncedSetPosition = debounce(setPosition, 300);
@@ -119,7 +122,6 @@ async function closeBlind() {
     border-width: 0.2rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    margin-bottom: 1rem;
 }
 
 .title {

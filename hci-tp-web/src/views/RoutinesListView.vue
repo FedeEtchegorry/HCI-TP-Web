@@ -5,7 +5,7 @@
     <h1 class="title">RUTINAS</h1>
     <v-container fluid>
       <v-row dense justify="center">
-        <template v-for="(item, index) in components" :key="index">
+        <template v-for="(item, index) in filteredRoutines" :key="index">
           <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
             <component :is="item.component" v-bind="item.props"></component>
           </v-col>
@@ -79,15 +79,15 @@ onMounted(async () => {
   ]);
 });
 
-/*
+
 const filteredRoutines = computed(() => {
   if (!search.value) {
     return components.value;
   }
   return components.value.filter(item =>
-    item.props.room.name.toLowerCase().includes(search.value.toLowerCase())
+    item.props.routine.name.toLowerCase().includes(search.value.toLowerCase())
   );
-});*/
+});
 </script>
 
 <style scoped>
