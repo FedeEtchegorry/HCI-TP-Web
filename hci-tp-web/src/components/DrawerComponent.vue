@@ -3,7 +3,7 @@
     class="drawer">
     <v-layout class="d-flex drawer-header">
       <v-app-bar-nav-icon @click="toggleMini" aria-label="minimizar" class="ham-button"></v-app-bar-nav-icon>
-      <v-img :src="profileImage" class="logo-image" v-show="!isMini"></v-img>
+      <v-img :src="profileImage" alt="CONNECTIT-logo" class="logo-image" v-show="!isMini"></v-img>
     </v-layout>
     <v-divider :thickness="3" class="divider"></v-divider>
         <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/">
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import ProfileComponent from './ProfileComponent.vue';
-import profileImage from '../assets/connectit.png';
+import profileImage from '../assets/connectit.webp';
 
 const drawer = ref(true);
 const mini = ref(false);
