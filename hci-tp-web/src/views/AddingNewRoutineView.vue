@@ -1,13 +1,13 @@
 <template>
-    <v-dialog v-model="props.addOptionActive" max-width="60rem">
-      <v-card class="rounded-xl custom-card">
+    <v-dialog v-model="props.addOptionActive" class="add-routine-dialog">
+      <v-card class="rounded-xl add-routine-card">
 
-        <v-card-title class="custom-title">
-          <v-row class="custom-row">
+        <v-card-title class="add-routine-title">
+          <v-row class="add-routine-row">
             <v-col cols="12" sm="6">
                 <v-text-field
                     v-model="routine.name"
-                    class="custom-large-field"
+                    class="add-routine-large-field"
                     label="Nombre de Nueva Rutina"
                     :rules="[v => !!v || 'El nombre es obligatorio']"
                     required
@@ -16,26 +16,26 @@
                     variant="outlined"
                 ></v-text-field>
             </v-col>
-            <v-col class="day-buttons-col">
-              <v-btn v-for="(day, index) in routine.days" :key="index" :class="day.active === true ? 'day-button day-button-selected' : 'day-button'" @click="toggleDay(index)">
+            <v-col class="add-routine-day-buttons-col">
+              <v-btn v-for="(day, index) in routine.days" :key="index" :class="day.active === true ? 'add-routine-day-button add-routine-day-button-selected' : 'add-routine-day-button'" @click="toggleDay(index)">
                 {{ day.day }}
               </v-btn>
             </v-col>
           </v-row>
         </v-card-title>
 
-        <div class="custom-coarse-divider"></div>
+        <div class="add-routine-coarse-divider"></div>
         
-        <v-card-text class="devices-section">
+        <v-card-text class="add-routine-devices-section">
 
           <v-col v-for="(row, index) in routine.devices" :key="index">
 
-            <v-row class="custom-row" cols="12" sm="6">
-              <span class="device-number-span">{{index+1}}°</span>
+            <v-row class="add-routine-row" cols="12" sm="6">
+              <span class="add-routine-number-span">{{index+1}}°</span>
               <v-select
                 v-model="row.device"
                 @update:model-value="calculatePossibleActions(row.device)"
-                class="custom-flexible-field"
+                class="add-routine-flexible-field"
                 :items="deviceNames"
                 label="Dispositivo"
                 required
@@ -44,7 +44,7 @@
               ></v-select>
               <v-select
                 v-model="row.action"
-                class="custom-flexible-field"
+                class="add-routine-flexible-field"
                 :items="possibleActions"
                 label="Acción"
                 rounded
@@ -52,33 +52,33 @@
               ></v-select>
               <v-text-field
                 v-model="row.param"
-                class="custom-flexible-field"
+                class="add-routine-flexible-field"
                 label="Parametro"
                 rounded
                 variant="outlined"
               ></v-text-field>
-              <v-btn class="delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
+              <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
             </v-row>
 
-            <div class="custom-thin-divider"></div>
+            <div class="add-routine-thin-divider"></div>
 
           </v-col>
 
-          <v-col cols="12" class="add-new-device-col">
-            <v-btn class="add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo +</v-btn>
+          <v-col cols="12" class="add-routine-add-new-device-col">
+            <v-btn class="add-routine-add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo +</v-btn>
           </v-col>
 
         </v-card-text>
 
-        <div class="custom-coarse-divider"></div>
+        <div class="add-routine-coarse-divider"></div>
 
         <v-card-actions>
-          <v-btn class="confirm-button" text @click="saveRoutine">Confirmar</v-btn>
+          <v-btn class="add-routine-confirm-button" text @click="saveRoutine">Confirmar</v-btn>
           <v-spacer></v-spacer>
-          <v-btn class="cancel-button" text @click="closeDialog">Cancelar</v-btn>
+          <v-btn class="add-routine-cancel-button" text @click="closeDialog">Cancelar</v-btn>
         </v-card-actions>
 
-        <span v-if="errorMessageOn" class="custom-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
+        <span v-if="errorMessageOn" class="add-routine-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
 
       </v-card>
     </v-dialog>
@@ -145,38 +145,43 @@ const calculatePossibleActions = (deviceSelected) => {
   
 <style scoped>
 
-.custom-card {
+.add-routine-dialog {
+  max-width: 60rem;
+  width: 85%;
+
+}
+.add-routine-card {
   background-color: rgb(var(--v-theme-primary_v));
   max-height: 60rem;
   padding-bottom: .5rem;
 }
 
-.custom-large-field {
+.add-routine-large-field {
   margin-top: 1rem;
   min-width: 50%;
 }
 
-.custom-title {
+.add-routine-title {
   height: 7rem;
 }
 
-.custom-flexible-field {
+.add-routine-flexible-field {
   margin: .5rem .5rem;
 }
 
-.custom-row {
+.add-routine-row {
   display: flex;
   justify-content: center;
   justify-self: center;
   justify-items: center;
 }
 
-.devices-section {
+.add-routine-devices-section {
   max-height: 25rem;
   overflow-y: auto;
 }
 
-.day-buttons-col {
+.add-routine-day-buttons-col {
   display: flex;
   justify-content: center;
   justify-items: center;
@@ -184,7 +189,7 @@ const calculatePossibleActions = (deviceSelected) => {
   min-width: 50%;
 }
 
-.day-button {
+.add-routine-day-button {
   background-color: lightgray;
   color: black;
   border-radius: 50%;
@@ -194,47 +199,47 @@ const calculatePossibleActions = (deviceSelected) => {
   box-shadow: 0rem .35rem .2rem rgba(0, 0, 0, 0.4);
 }
 
-.day-button-selected {
+.add-routine-day-button-selected {
   background-color: rgb(var(--v-theme-blue_state));
   color: white;
   min-height: 2.25rem;
   box-shadow: inset 0rem .35rem .2rem rgba(0, 0, 0, 0.4);
 }
 
-.custom-coarse-divider {
+.add-routine-coarse-divider {
   border-bottom: .12rem solid #000;
   margin-inline: .8rem;
   margin-bottom: .5rem;
 }
 
-.custom-thin-divider {
+.add-routine-thin-divider {
   border-top: .07rem solid #000;
   margin-bottom: 1rem;
 }
 
-.add-new-device-col {
+.add-routine-add-new-device-col {
   display: flex;
   justify-content: center;
 }
 
-.delete-device {
+.add-routine-delete-device {
   margin-top: .9rem;
   margin-left: .9rem;
 }
 
-.device-number-span {
+.add-routine-device-number-span {
   margin-top: 1.4rem;
   margin-right: .5rem;
   font-size: large;
 }
 
-.add-new-device-button {
+.add-routine-add-new-device-button {
   border-radius: 1rem;
   width: 100%;
   max-width: 90rem;
 }
 
-.cancel-button {
+.add-routine-cancel-button {
   border-radius: 1rem;
   margin-right: 1.5rem;
   width: 10rem;
@@ -243,7 +248,7 @@ const calculatePossibleActions = (deviceSelected) => {
   border-color: grey;
 }
 
-.confirm-button {
+.add-routine-confirm-button {
   background-color: rgb(var(--v-theme-blue_state));
   color: white;
   border-radius: 1rem;
@@ -254,7 +259,7 @@ const calculatePossibleActions = (deviceSelected) => {
   border-color: grey;
 }
 
-.custom-error{
+.add-routine-error{
     display: flex;
     justify-content: center;
     color: rgb(var(--v-theme-red_state));

@@ -154,7 +154,7 @@ const filteredComponents = computed(() => {
 <style scoped>
 .fixed-size-cell {
   width: 15rem;
-  height: 15rem;
+  height: 21rem;
   overflow: hidden;
 }
 

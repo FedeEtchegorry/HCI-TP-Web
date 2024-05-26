@@ -90,14 +90,12 @@ onBeforeUnmount(() => {
 .ham-button {
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
-  font-size: 1.2rem;
   border-radius: 50%;
   margin-top: 1rem;
 }
 
 .mini-mode .ham-button {
   justify-content: center;
-  font-size: 1.2rem;
   background: rgb(var(--v-theme-primary_v));
   color: rgb(var(--v-theme-primary));
 }
@@ -128,7 +126,6 @@ onBeforeUnmount(() => {
 
 .router-link-exact-active .icon {
   color: rgb(var(--v-theme-primary_v)) !important;
-  font-size: 2.2rem;
 }
 
 .router-link-exact-active .text {
@@ -149,7 +146,6 @@ onBeforeUnmount(() => {
 }
 
 .mini-mode .drawer_elem {
-  font-size: 2rem;
   color: rgb(var(--v-theme-primary));
   opacity: 1;
 }
