@@ -26,6 +26,7 @@ import { useRoutineStore } from '@/stores/routineStore';
 import { useDeviceStore } from '@/stores/deviceStore';
 import { useSearchStore } from '@/stores/searchStore';
 import RoutinesDetail from '@/components/CardDetail/Routines/RoutinesDetail.vue'
+import { Action, Routine } from '@/api/routines';
 
 const deviceStore = useDeviceStore();
 const searchStore = useSearchStore();
@@ -89,22 +90,33 @@ const handleNewRoutine = (routine) => {
     storeRoutine(routine);
   }
 };
-/*
-const routine = ref({
-  name: '',
-  actions: [{ device: deviceStore.devices.find(device => device.name === device).id, action: '', param: ''}],
-});
-*/
 
-async function storeRoutine(routine){
-    try{
-      if(await routineStore.add(routine))
-        return true;
-    }
-    catch(e){
-      errorMsg.value = "Error al enviar la rutina";
+
+
+
+async function storeRoutine(routineArray) {
+    const routine = new Routine(name, null);
+    routineArray.forEach(row => {
+        const device = deviceStore.devices.find(device => device.name === row.device.value);
+        if (device) {
+            routine.addAction(new Action(device.id, row.action, row.param));
+        } else {
+            throw new Error(`Device ${row.device.value} not found`);
+        }
+    });
+    try {
+        const result = await routineStore.add(routine);
+        if (result) {
+            return true;
+        } else {
+            throw new Error('Failed to add routine');
+        }
+    } catch (e) {
+        errorMsg.value = `Error al enviar la rutina: ${e.message}`;
+        return false;
     }
 }
+
 
 
 onMounted(async () => {
