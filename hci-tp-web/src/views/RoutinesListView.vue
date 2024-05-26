@@ -1,20 +1,18 @@
 <template>
-    <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :myDevices="myDevices" :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"/>
-        <h1 class="title">RUTINAS</h1>
-        <GridComponent :items="components"><template v-slot:default="{ item }">
-        <v-col
-          class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-          xl="2"
-        >
-          <component :is="item.component" v-bind="item.props"></component>
-        </v-col>
-      </template></GridComponent>
-    </CanvasComponent>
+  <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
+    <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :myDevices="myDevices"
+      :errorMessageOn="errorMessageOn" :errorMsg="errorMsg" />
+    <h1 class="title">RUTINAS</h1>
+    <v-container fluid>
+      <v-row dense justify="center">
+        <template v-for="(item, index) in components" :key="index">
+          <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
+            <component :is="item.component" v-bind="item.props"></component>
+          </v-col>
+        </template>
+      </v-row>
+    </v-container>
+  </CanvasComponent>
 </template>
 
 
@@ -31,15 +29,15 @@ const components = ref([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
 const devicesAndActions = ref([
-  {type:'Alarma', actions:['Activar', 'Desactivar']},
-  {type:'Aspiradora', actions:['Iniciar', 'Pausar', 'Regresar Base de Carga']},
-  {type:'Heladera', actions:['Establecer Temp. Freezer', 'Establecer Temp.']},
-  {type:'Persiana', actions:['Abrir', 'Cerrar', 'Establecer Posición']},
-  {type:'Puerta', actions:['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear']}
+  { type: 'Alarma', actions: ['Activar', 'Desactivar'] },
+  { type: 'Aspiradora', actions: ['Iniciar', 'Pausar', 'Regresar Base de Carga'] },
+  { type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.'] },
+  { type: 'Persiana', actions: ['Abrir', 'Cerrar', 'Establecer Posición'] },
+  { type: 'Puerta', actions: ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'] }
 ]);
 const myDevices = ref([
 
-  {name:'Dispositivo_1', type:'Alarma', actions:['Activar', 'Desactivar']}
+  { name: 'Dispositivo_1', type: 'Alarma', actions: ['Activar', 'Desactivar'] }
 
 ]);
 
