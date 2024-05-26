@@ -38,6 +38,8 @@
                                 class="custom-text-field"
                                 :label="extraThingParameter.label"
                                 :items="extraThingParameter.options"
+                                :rules="[v => !!v || 'La habitacion es obligatoria']"
+                                required
                                 rounded
                                 variant="outlined">
                             </v-select>

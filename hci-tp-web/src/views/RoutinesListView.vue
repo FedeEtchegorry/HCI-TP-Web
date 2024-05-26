@@ -1,6 +1,6 @@
 <template>
     <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState"/>
+        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :supportedDevices="devicesAndActions"/>
         <h1 class="title">RUTINAS</h1>
         <GridComponent :items="components"><template v-slot:default="{ item }">
         <v-col
@@ -30,16 +30,31 @@ const routineStore = useRoutineStore();
 const components = ref([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
+const devicesAndActions = ref([ 
+  {type:'Alarma', actions:['Activar', 'Desactivar']},
+  {type:'Aspiradora', actions:['Iniciar', 'Pausar', 'Regresar Base de Carga']},
+  {type:'Heladera', actions:['Establecer Temp. Freezer', 'Establecer Temp.']},
+  {type:'Persiana', actions:['Abrir', 'Cerrar', 'Establecer Posición']},
+  {type:'Puerta', actions:['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear']}
+]);
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
   blurStatus.value = addButtonState.value;
 };
 
-const handleNewRoutine = (state, name, type) => {
-  addButtonState.value = false;
-  blurStatus.value = false;
-  console.log(`Nuevo device: ${name} de tipo?: ${type}`);
+const handleNewRoutine = (routine) => {
+
+  if (routine != null) {
+    // ...
+    console.log(`Nueva rutina: ${routine.value.name}`);
+  }
+  else {
+    addButtonState.value = false;
+    blurStatus.value = false;
+    console.log(`Rutina cancelada`);
+  }
+
   // Aquí puedes agregar lógica para añadir el nuevo dispositivo al store y a components
 };
 

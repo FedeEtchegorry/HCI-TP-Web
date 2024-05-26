@@ -35,11 +35,11 @@ const components = shallowRef([]);
 let addButtonState = ref(false);
 const blurStatus = ref(false);
 const deviceType = {
-  'Aspiradora': Vacuum,
-  'Persiana': Blind,
-  'Heladera': Refrigerator,
-  'Puerta': Door,
   'Alarma': Alarm,
+  'Aspiradora': Vacuum,
+  'Heladera': Refrigerator,
+  'Persiana': Blind,
+  'Puerta': Door,
 };
 
 const errorMsg = ref('');
@@ -55,28 +55,28 @@ const handleAddButtonPressed = () => {
 
 
 async function addDevice(name, type) {
-
   try {
-    const newDevice = new deviceType[type](name);
-    await deviceStore.add(newDevice);
-    window.location.reload();
-    return true;
+    let newDevice = new deviceType[type](name);
+    newDevice = await deviceStore.add(newDevice);
+    return newDevice;
   } catch (e) {
     console.log("Error creating devices: ", e);
-    return false;
+    return null;
   }
 
 }
 
-async function handleNewDevice(state, name, type) {
+async function handleNewDevice(state, name, type, roomName) {
   if (!state) {
     addButtonState.value = false;
     blurStatus.value = false;
   }
   else {
-    if (await addDevice(name, type)) {
-      addButtonState.value = false;
-      blurStatus.value = false;
+    let newDevice;
+    if (newDevice = await addDevice(name, type)) {
+      console.log(roomStore.rooms.find(room => room.name == roomName).id, newDevice.id)
+      await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == roomName).id, newDevice.id)
+      window.location.reload();
     } else {
       errorMsg.value = "Error al agregar el dispositivo";
     }
