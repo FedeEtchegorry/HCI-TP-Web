@@ -23,6 +23,7 @@ import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewRoutineView from './AddingNewRoutineView';
 import ShowRoutineView from './ShowRoutineView';
 import { useRoutineStore } from '@/stores/routineStore';
+import { useDeviceStore } from '@/stores/deviceStore';
 import { useSearchStore } from '@/stores/searchStore';
 import RoutinesDetail from '@/components/CardDetail/Routines/RoutinesDetail.vue'
 
@@ -88,11 +89,12 @@ const handleNewRoutine = (routine) => {
     storeRoutine(routine);
   }
 };
-
+/*
 const routine = ref({
   name: '',
   actions: [{ device: deviceStore.devices.find(device => device.name === device).id, action: '', param: ''}],
 });
+*/
 
 async function storeRoutine(routine){
     try{
