@@ -6,7 +6,7 @@
             </div>
             <v-icon class="custom-icon">{{ room.meta.logo }}</v-icon>
             <div class="custom-qty-devices">
-                <h2>DEVICES</h2>
+                <h2>DISPOSITIVOS</h2>
             </div>
             <div >
                 <h2>{{ qtyDevicesByRoom }}</h2>
