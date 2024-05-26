@@ -2,7 +2,7 @@
   <v-navigation-drawer v-model="drawer" :rail="isMini" permanent :class="{ 'mini-mode': isMini }" :rail-width="80"
     class="drawer">
     <v-layout class="d-flex drawer-header">
-      <v-app-bar-nav-icon @click="toggleMini" class="ham-button"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toggleMini" aria-label="minimizar" class="ham-button"></v-app-bar-nav-icon>
       <v-img :src="profileImage" class="logo-image" v-show="!isMini"></v-img>
     </v-layout>
     <v-divider :thickness="3" class="divider"></v-divider>

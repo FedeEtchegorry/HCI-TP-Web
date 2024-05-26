@@ -16,14 +16,14 @@
         <div class="actions">
             <div class="mode">
                 Cambiar modo
-                <v-btn class="mb-2 mode-btn" density="compact" color="blue_state" size="large" @click="handleClickMode">
+                <v-btn class="mb-2 mode-btn" density="compact"  size="large" @click="handleClickMode">
                     {{ isMopping ? "Trapear" : "Aspirar" }}
                 </v-btn>
             </div>
             <div class="mode">
                 A base
-                <v-btn class="mb-2" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
-                    size="x-large" color="red"></v-btn>
+                <v-btn class="mb-2 base-btn" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
+                    size="x-large"></v-btn>
             </div>    
 
             <v-select max-width="40%" return-object item-title="name" v-model="currentLocation" label="Cambiar puerto de carga" :hide-details="true"
@@ -31,7 +31,7 @@
             </v-select>
         </div>
 
-        <v-progress-linear :striped="isDocked" width="20" height="20" v-model="batteryLevel" color="amber">
+        <v-progress-linear :striped="isDocked" width="20" height="20" v-model="batteryLevel" class="bar">
             {{ batteryLevel }}%
         </v-progress-linear>
 
@@ -134,7 +134,16 @@ onBeforeMount(async () => {
     font-weight: 500;
     font-size: large;
 }
-
+.mode-btn{
+    background-color: rgb(var(--v-theme-blue_state));
+}
+.base-btn{
+    background-color: rgb(var(--v-theme-red_state));
+}
+.bar{
+    background-color: yellow;
+    color: rgb(var(--v-theme-blue_state));
+}
 .actions {
     display: flex;
     justify-content: space-around;
