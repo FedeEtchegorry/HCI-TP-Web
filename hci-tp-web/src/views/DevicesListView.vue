@@ -35,11 +35,11 @@ const components = shallowRef([]);
 let addButtonState = ref(false);
 const blurStatus = ref(false);
 const deviceType = {
-  'Aspiradora': Vacuum,
-  'Persiana': Blind,
-  'Heladera': Refrigerator,
-  'Puerta': Door,
   'Alarma': Alarm,
+  'Aspiradora': Vacuum,
+  'Heladera': Refrigerator,
+  'Persiana': Blind,
+  'Puerta': Door,
 };
 
 const errorMsg = ref('');

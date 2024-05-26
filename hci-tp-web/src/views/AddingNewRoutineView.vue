@@ -27,28 +27,31 @@
         <div class="custom-coarse-divider"></div>
         
         <v-card-text class="devices-section">
-          <v-col v-for="(device, index) in routine.devices" :key="index">
+
+          <v-col v-for="(row, index) in routine.devices" :key="index">
 
             <v-row class="custom-row" cols="12" sm="6">
               <span class="device-number-span">{{index+1}}°</span>
               <v-select
-                v-model="device.device"
+                v-model="row.device"
+                @update:model-value="calculatePossibleActions(row.device)"
                 class="custom-flexible-field"
-                :items="devices"
-                label="Device"
+                :items="deviceTypes"
+                label="Devices"
                 required
                 rounded
                 variant="outlined"
               ></v-select>
               <v-select
-                v-model="device.state"
+                v-model="row.action"
                 class="custom-flexible-field"
+                :items="possibleActions"
                 label="Action"
                 rounded
                 variant="outlined"
               ></v-select>
               <v-text-field
-                v-model="device.parameter"
+                v-model="row.param"
                 class="custom-flexible-field"
                 label="Parameter"
                 rounded
@@ -81,12 +84,11 @@
   
 <script setup>
 
-import { ref } from 'vue';
-import { VTimePicker } from 'vuetify/labs/VTimePicker';
+import { ref, computed } from 'vue';
 
 const routine = ref({
   name: '',
-  devices: [{ device: '', time: '', state: '', action: '', param1: '', param2: '', param3: ''}],
+  devices: [{ device: '', action: '', param: ''}],
   days: [
     { day: 'L', active: false },
     { day: 'M', active: false },
@@ -98,31 +100,36 @@ const routine = ref({
   ]
 });
 
-const devicesAvailable = ['Aspiradora', 'Persiana', 'Heladera', 'Puerta', 'Alarma'];
-const devicesAvailableStates = ['Activado', 'Desactivado'];
-const selectedTime = true;
-const timeMenu = true;
-
 const emit = defineEmits(['newRoutineEvent']);
-const closeDialog = () => emit('newRoutineEvent', false, '', '');
-const newRoutineEvent = () => emit('newRoutineEvent', true, routine);
-const addDeviceToRoutine = () => routine.value.devices.push({ device: '', time: '', state: '', action: '', param1: '', param2: '', param3: '' });
-const toggleDay = (index) => {
-  routine.value.days[index].active = !routine.value.days[index].active;
-  console.log(`Boton apretado: ${index}, estado: ${routine.value.days[index].active}`);
-
-}
-const deleteDevice = (index) => {
-  routine.value.devices.splice(index, 1);
-}
+const closeDialog = () => emit('newRoutineEvent', null);
+const saveRoutine = () => emit('newRoutineEvent', routine);
+const addDeviceToRoutine = () => routine.value.devices.push({ device: '', action: '', param: ''});
+const toggleDay = (index) => { routine.value.days[index].active = !routine.value.days[index].active; }
+const deleteDevice = (index) => { routine.value.devices.splice(index, 1); }
+const possibleActions = ref([]);
 
 const props = defineProps({
   
   addOptionActive: {
     type: Boolean,
     required: true
+  },
+  supportedDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "Tipo" y un arreglo de strings de sus posibles acciones
+    required: true,
+    type: Array,
+    validator(value) { return value.every( item => (typeof(item) === 'object' && typeof(item.type) === 'string' && Array.isArray(item.actions)) ); }
   }
 });
+
+const deviceTypes = computed(() => props.supportedDevices.map(device => device.type));
+const calculatePossibleActions = (deviceSelected) => {
+  const thisDevice = props.supportedDevices.find(dev => dev.type === deviceSelected);
+  if (thisDevice) {
+    possibleActions.value = thisDevice.actions;
+  } else {
+    possibleActions.value = [];
+  }
+};
 
 </script>
   
@@ -140,7 +147,7 @@ const props = defineProps({
 }
 
 .custom-title {
-  height: 6rem;
+  height: 7rem;
 }
 
 .custom-flexible-field {
