@@ -106,6 +106,7 @@ let showCard = ref(false);
   margin: 0;
 }
 .info{
+  padding-top:0.5rem ;
   font-size: medium;
 }
 
