@@ -40,7 +40,6 @@ const errorMsg = ref('');
 const errorMessageOn = computed(() => errorMsg.value != '');
 const filterSelected = computed(() => searchStore.getSelected);
 const search = computed(() => searchStore.getSearch);
-const arraySize=computed(() => filteredComponents.length==0);
 
 let roomsForDevice;
 
