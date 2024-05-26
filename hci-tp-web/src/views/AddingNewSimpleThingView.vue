@@ -138,6 +138,7 @@ const props = defineProps({
     padding: 1rem;
     color: black;
 }
+
 .custom-error{
     display: flex;
     justify-content: center;

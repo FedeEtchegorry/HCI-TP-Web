@@ -1,6 +1,6 @@
 <template>
     <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :supportedDevices="devicesAndActions"/>
+        <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :supportedDevices="devicesAndActions" :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"/>
         <h1 class="title">RUTINAS</h1>
         <GridComponent :items="components"><template v-slot:default="{ item }">
         <v-col
@@ -20,7 +20,7 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewRoutineView from './AddingNewRoutineView';
 import { useRoutineStore } from '@/stores/routineStore';
@@ -37,6 +37,8 @@ const devicesAndActions = ref([
   {type:'Persiana', actions:['Abrir', 'Cerrar', 'Establecer Posición']},
   {type:'Puerta', actions:['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear']}
 ]);
+const errorMsg = ref('');
+const errorMessageOn = computed(() => errorMsg.value != '');
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
@@ -45,17 +47,18 @@ const handleAddButtonPressed = () => {
 
 const handleNewRoutine = (routine) => {
 
-  if (routine != null) {
-    // ...
-    console.log(`Nueva rutina: ${routine.value.name}`);
-  }
-  else {
+  if (routine === null || routine.value === null) {
     addButtonState.value = false;
     blurStatus.value = false;
-    console.log(`Rutina cancelada`);
+    errorMsg.value = '';
   }
-
-  // Aquí puedes agregar lógica para añadir el nuevo dispositivo al store y a components
+  else if (!routine.value.name || routine.value.name === '' || routine.value.devices.length === 0) {
+    errorMsg.value = "Campos incompletos";
+  }
+  else {
+    errorMsg.value = '';
+    // ...
+  }
 };
 
 onMounted(async () => {

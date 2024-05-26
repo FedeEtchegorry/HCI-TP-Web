@@ -78,6 +78,8 @@
           <v-btn class="cancel-button" text @click="closeDialog">Cancel</v-btn>
         </v-card-actions>
 
+        <span v-if="errorMessageOn" class="custom-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
+
       </v-card>
     </v-dialog>
 </template>
@@ -109,7 +111,15 @@ const deleteDevice = (index) => { routine.value.devices.splice(index, 1); }
 const possibleActions = ref([]);
 
 const props = defineProps({
-  
+
+  errorMessageOn:{
+      type: Boolean,
+      required: true
+  },
+  errorMsg:{
+      type: String,
+      required:true
+  },
   addOptionActive: {
     type: Boolean,
     required: true
@@ -242,6 +252,14 @@ const calculatePossibleActions = (deviceSelected) => {
   height: 2.5rem;
   border-width: .15rem;
   border-color: grey;
+}
+
+.custom-error{
+    display: flex;
+    justify-content: center;
+    color: rgb(var(--v-theme-red_state));
+    text-shadow: .2rem .2rem .4rem rgba(50, 20, 20, 0.6);
+    margin-bottom: 1rem;
 }
 
 </style>
