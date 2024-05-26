@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     border: 0.15rem solid;
-    border-radius: 5%;
+    border-radius: 15%;
+    background-color: rgb(var(--v-theme-primary_v));
 }
 </style>
