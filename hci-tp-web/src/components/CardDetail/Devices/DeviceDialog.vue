@@ -1,27 +1,32 @@
 <template>
-  <v-card class="card" >
+  <EmptyCard class="">
     <v-card @click="showCard = true" class="ma-1 card-2" outlined>
-      <v-card-title class="title"><v-icon>{{ device.meta.logo }}</v-icon> {{ device.name }}</v-card-title>
-      <v-card-subtitle class="subtitle">Habitacion: {{ device.room?.name }} </v-card-subtitle>
+      <v-card-title class="title">
+        <h3>{{ device.name }}</h3>
+      </v-card-title>
+      <v-icon class="icon">{{ device.meta.logo }}</v-icon>
+
+      <v-card-subtitle class="subtitle"><h3>Habitacion: {{ device.room ? device.room.name : 'Sin asignar' }}</h3></v-card-subtitle>
       <v-card-text class="info">
         <div><strong>Uso de energía:</strong> {{ device.type.powerUsage }}W</div>
-        <div v-if="device.state.batteryLevel"><strong>Nivel de Batería:</strong> {{ device.state.batteryLevel }}%</div>
-        <div v-if="device.state.status"><strong>Estado:</strong> {{ toSpanishState(capitalizeFirstLetter(device.state.status)) }}</div>
-        <div v-if="device.state.mode"><strong>Modo:</strong> {{ toSpanishMode(capitalizeFirstLetter(device.state.mode)) }}</div>
+        <div v-if="device.state.batteryLevel"><strong>Nivel de Batería:</strong> {{ device.state.batteryLevel }}%
+        </div>
+        <div v-if="device.state.status"><strong>Estado:</strong> {{
+          toSpanishState(capitalizeFirstLetter(device.state.status)) }}</div>
+        <div v-if="device.state.mode"><strong>Modo:</strong> {{
+          toSpanishMode(capitalizeFirstLetter(device.state.mode)) }}</div>
       </v-card-text>
     </v-card>
-
-
     <v-dialog v-model="showCard" max-width="40%" height="50%">
       <DeviceDetail :device="device" v-model="showCard"></DeviceDetail>
     </v-dialog>
-  </v-card>
-
+  </EmptyCard>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import DeviceDetail from './DeviceDetail.vue';
+import EmptyCard from '../EmptyCard.vue';
 
 
 const props = defineProps({
@@ -29,13 +34,13 @@ const props = defineProps({
 });
 
 function capitalizeFirstLetter(string) {
-  if (!string) 
-    return string; 
+  if (!string)
+    return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function toSpanishState(string){
-  switch(string){
+function toSpanishState(string) {
+  switch (string) {
     //PUERTA Y VENTANA
     case 'Opened':
       return 'Abierto';
@@ -64,8 +69,8 @@ function toSpanishState(string){
   }
 }
 
-function toSpanishMode(string){
-  switch(string){
+function toSpanishMode(string) {
+  switch (string) {
     case 'Mop':
       return 'Trapeando';
     case 'Vacuum':
@@ -85,28 +90,41 @@ let showCard = ref(false);
 </script>
 
 <style scoped>
-.card{
-  background-color: rgb(var(--v-theme-primary));
-  border-radius: 5%;
-}
-.card-2{
+.card-2 {
   border-radius: 3%;
+  flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(var(--v-theme-primary_v));
+    border: none;
+    box-shadow: none;
+    user-select: none;
 }
-.title{
+
+.icon {
+  font-size: 4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+
+}
+
+.title {
   font-size: x-large;
   color: rgb(var(--v-theme-primary));
   font-weight: bold;
 }
-.subtitle{
+
+.subtitle {
   font-size: large;
   color: rgb(var(--v-theme-primary));
-  font-weight:400;
+  font-weight: 400;
   opacity: 0.9;
   margin: 0;
 }
-.info{
-  padding-top:0.5rem ;
+
+.info {
+  padding-top: 0.5rem;
   font-size: medium;
 }
-
 </style>
