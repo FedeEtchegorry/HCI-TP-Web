@@ -90,7 +90,6 @@ let showCard = ref(false);
   border-radius: 5%;
 }
 .card-2{
-  margin: 1rem;
   border-radius: 3%;
 }
 .title{

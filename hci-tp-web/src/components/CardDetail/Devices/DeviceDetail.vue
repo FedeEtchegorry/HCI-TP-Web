@@ -1,6 +1,6 @@
 <template>
     <EmptyDeviceDialog>
-        <v-toolbar density="comfortable" color="primary">
+        <v-toolbar density="comfortable" class="title"> 
             <v-toolbar-title>{{ device.name }}</v-toolbar-title>
             <v-spacer></v-spacer>
 
@@ -14,19 +14,19 @@
 
         <component class="device" :is="devices[device.type.name]" :device="device"></component>
 
-        <v-dialog rounded v-model="dialog" width="30%" height="40%">
+        <v-dialog rounded v-model="dialog" width="30%" height="50%">
             <v-card class="dialog-card" height="100%">
-                <v-toolbar density="comfortable" color="secondary">
+                <v-toolbar density="comfortable" class="title">
                     <v-toolbar-title>Editar Dispositivo</v-toolbar-title>
                 </v-toolbar>
-                <v-text-field hide-details class="text-field mt-4" rounded variant="outlined" v-model="editedDeviceName"
+                <v-text-field hide-details class="text-field ma-4" rounded variant="outlined" v-model="editedDeviceName"
                     label="Nombre del dispositivo" :rules="[
                         v => !!v || 'El nombre es obligatorio',
                         v => (v && v.length <= 15) || 'El nombre no puede tener más de 25 letras'
                     ]"></v-text-field>
                 <v-select v-if="!isDeviceAssignedToRoom" class="text-field" :items=roomsForDevice.options rounded
                     variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-select>
-                <v-btn v-else class="unlink-btn" elevation="5" text @click="unlinkFromRoom">Desvincular de {{
+                <v-btn v-else class="unlink-btn" rounded elevation="5" text @click="unlinkFromRoom">Desvincular de {{
                     props.device.room?.name }}</v-btn>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
 
@@ -143,6 +143,11 @@ async function modifyDevice() {
 
 
 <style scoped>
+.title{
+    background: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-primary_v));
+}
+
 .device {
     flex-grow: 1;
 }
@@ -175,14 +180,14 @@ async function modifyDevice() {
 
 .del-btn {
     color: rgb(var(--v-theme-primary_v));
-    background-color: red;
+    background-color: rgb(var(--v-theme-red_state));
     font-size: smaller;
     margin-bottom: 1rem;
 }
 
 .unlink-btn {
-
-    background-color: rgb(var(--v-theme-primary_v));
+    color: rgb(var(--v-theme-primary_v));
+    background-color: rgb(var(--v-theme-red_state));
     font-size: small;
     margin-bottom: 1rem;
 }
