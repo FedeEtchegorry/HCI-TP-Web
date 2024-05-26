@@ -1,5 +1,5 @@
 <template>
-    <v-btn class="me-4 add" icon="mdi-plus" size="80" absolute>
+    <v-btn class="me-4 add" icon="mdi-plus" size="80" absolute aria-label="añadir nuevo dispositivo">
         <v-icon class="icon-size">mdi-plus</v-icon>
     </v-btn>
 </template>
