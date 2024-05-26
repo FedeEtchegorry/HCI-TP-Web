@@ -118,12 +118,8 @@ async function unlinkFromRoom() {
 
 async function modifyDevice() {
     try {
-        const updatedDevice = {
-            id: props.device.id,
-            name: editedDeviceName.value,
-        };
-        if (editedDeviceName.value.length < 20 && await deviceStore.modify(updatedDevice)) {
-            props.device.name = editedDeviceName.value;
+        props.device.name = editedDeviceName.value;
+        if (editedDeviceName.value.length < 20 && await deviceStore.modify(props.device)) {
             toggleDialog();
         } else {
             errorMsg.value = "Error al editar dispositivo";
@@ -134,7 +130,6 @@ async function modifyDevice() {
     }
 
     if (hasChangedRoom) {
-        console.log("HOLAAAAA")
         try {
             await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == editedDeviceRoom.value).id, props.device.id);
             errorMsg.value = '';
