@@ -1,9 +1,16 @@
 <template>
     <v-card class="device">
 
-        <v-btn class="button" size="200" :append-icon="!isWorking ? 'mdi-play' : 'mdi-pause'" elevation="24"
-            @click="handleClickStatus" :color="!isWorking ? 'green' : ''">
-            {{ !isWorking ? "START" : "PAUSE" }}
+        <v-btn :disabled="batteryLow" class="button" size="160" :append-icon="batteryLow? '' : !isWorking ? 'mdi-play' : 'mdi-pause'"
+            elevation="24" @click="handleClickStatus" :color="!isWorking ? 'green' : ''">
+            <div v-if="batteryLow">
+                <p class="red--text font-weight-bold">LOW BATTERY</p>
+                <p v-if="!isDocked" class="red--text">PLEASE DOCK</p>
+            </div>
+            <div v-else>
+                <p v-if="isWorking">PAUSE</p>
+                <p v-else>START</p>
+            </div>
         </v-btn>
 
         <div class="actions">
@@ -13,9 +20,18 @@
                     {{ isMopping ? "Mop" : "Vacuum" }}
                 </v-btn>
             </div>
+
             <v-btn class="mb-2" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
                 size="x-large" color="red"></v-btn>
+
+            <v-select max-width="40%" return-object item-title="name" v-model="currentLocation" label="Change dock station" :hide-details="true"
+                :items="roomStore.rooms" @update:modelValue="changeLocation">
+            </v-select>
         </div>
+
+        <v-progress-linear :striped="isDocked" width="20" height="20" v-model="batteryLevel" color="amber">
+            {{ batteryLevel }}%
+        </v-progress-linear>
 
     </v-card>
 
@@ -23,7 +39,7 @@
 
 <script setup>
 import { useRoomStore } from '@/stores/roomStore';
-import { computed, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 
 const props = defineProps({
@@ -35,10 +51,14 @@ const deviceStore = useDeviceStore();
 
 const myDevice = ref(props.device)
 
+let currentLocation = ref(myDevice.value.state.location);
+
 const deviceId = computed(() => { return myDevice.value.id });
 const isWorking = computed(() => { return myDevice.value.state.status == 'active' });
 const isDocked = computed(() => { return myDevice.value.state.status == 'docked' });
 const isMopping = computed(() => { return myDevice.value.state.mode == 'mop' });
+const batteryLevel = computed(() => { return myDevice.value.state.batteryLevel })
+const batteryLow = computed(() => { return batteryLevel.value < 5 })
 
 async function handleClickStatus() {
     try {
@@ -77,6 +97,20 @@ async function handleClickDock() {
     }
 }
 
+async function changeLocation() {
+    console.log(myDevice.value)
+    console.log(currentLocation.value)
+    try {
+        await deviceStore.execute(deviceId.value, 'setLocation', [currentLocation.value.id]);
+        //myDevice.value.state.location = 
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+onBeforeMount(() => {
+    roomStore.getAll();
+})
 </script>
 
 <style scoped>

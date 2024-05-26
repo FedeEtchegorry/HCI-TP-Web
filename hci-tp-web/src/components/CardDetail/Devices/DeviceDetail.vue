@@ -1,30 +1,36 @@
 <template>
     <EmptyDeviceDialog>
-        <v-card class="title-box">
-            <v-row>
-                <v-col>
-                    <h2>{{ device.name }}</h2>
-                    <h3>{{ device.room?.name }}</h3>
-                </v-col>
-                <v-icon class="setting" @click="toggleDialog">mdi-menu</v-icon>
-            </v-row>
-        </v-card>
-        
+        <v-toolbar density="comfortable" color="primary">
+            <v-toolbar-title>{{ device.name }}</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon>
+                <v-icon @click="toggleDialog">mdi-menu</v-icon>
+            </v-btn >
+            <v-btn icon>
+                <v-icon @click="isActive = false">mdi-close</v-icon>
+            </v-btn>
+        </v-toolbar>
+
         <component class="device" :is="devices[device.type.name]" :device="device"></component>
 
-        <v-dialog rounded v-model="dialog"  width="40%" height="50%">
-            <v-card class="dialog-card" height="100%" >
+        <v-dialog rounded v-model="dialog" width="40%" height="50%">
+            <v-card class="dialog-card" height="100%">
                 <v-card-title>
                     <h3 class="headline">Editar Dispositivo</h3>
                 </v-card-title>
-                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceName" label="Nombre del dispositivo" :rules="[
-                                    v => !!v || 'El nombre es obligatorio',
-                                    v => (v && v.length <= 15) || 'El nombre no puede tener más de 25 letras'
-                                ]"></v-text-field>
-                <v-select v-if="!isDeviceAssignedToRoom" class="text-field" :items=roomsForDevice.options rounded variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-select>
-                <v-btn v-else class="unlink-btn" elevation="5" text @click="unlinkFromRoom">Desvincular de {{ props.device.room?.name }}</v-btn>
+                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceName"
+                    label="Nombre del dispositivo" :rules="[
+                        v => !!v || 'El nombre es obligatorio',
+                        v => (v && v.length <= 15) || 'El nombre no puede tener más de 25 letras'
+                    ]"></v-text-field>
+                <v-select v-if="!isDeviceAssignedToRoom" class="text-field" :items=roomsForDevice.options rounded
+                    variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-select>
+                <v-btn v-else class="unlink-btn" elevation="5" text @click="unlinkFromRoom">Desvincular de {{
+                    props.device.room?.name }}</v-btn>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
-                
+
                 <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
                 <v-card-actions class="mb-3">
                     <v-btn class="save-btn" rounded elevation="5" text @click="modifyDevice">Guardar</v-btn>
@@ -49,15 +55,16 @@ import AlarmDetail from './AlarmDetail.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 import { useRoomStore } from '@/stores/roomStore';
 
+let isActive = defineModel();
 let roomsForDevice;
 const roomStore = useRoomStore();
 
 
 onMounted(async () => {
-  await roomStore.getAll();
-  roomsForDevice = {
-    options: roomStore.rooms.map(room => room.name),
-  };
+    await roomStore.getAll();
+    roomsForDevice = {
+        options: roomStore.rooms.map(room => room.name),
+    };
 });
 
 
@@ -69,11 +76,11 @@ const dialog = ref(false);
 const editedDeviceName = ref(props.device.name);
 const editedDeviceRoom = ref(props.device.room?.name);
 const deviceStore = useDeviceStore();
-const errorMsg=ref('');
-const errorMessageOn =computed(()=>errorMsg.value!='');
+const errorMsg = ref('');
+const errorMessageOn = computed(() => errorMsg.value != '');
 
-const isDeviceAssignedToRoom = computed(()=>props.device.room!=null)
-const hasChangedRoom = computed(()=>props.device.room?.name==editedDeviceRoom);
+const isDeviceAssignedToRoom = computed(() => props.device.room != null)
+const hasChangedRoom = computed(() => props.device.room?.name == editedDeviceRoom);
 
 const devices = {
     blinds: BlindDetail,
@@ -85,25 +92,25 @@ const devices = {
 
 const toggleDialog = () => {
     dialog.value = !dialog.value;
-    errorMsg.value='';
+    errorMsg.value = '';
 };
 
-async function deleteDevice(){
+async function deleteDevice() {
     try {
         await deviceStore.remove(props.device.id);
         toggleDialog();
         window.location.reload();
     } catch (e) {
         console.log(e);
-        errorMsg.value="Error al borrar dispositivo";
+        errorMsg.value = "Error al borrar dispositivo";
     }
 };
 
-async function unlinkFromRoom(){
-    try{
-    if(await roomStore.removeDeviceFromRoom(props.device.id))
+async function unlinkFromRoom() {
+    try {
+        if (await roomStore.removeDeviceFromRoom(props.device.id))
             props.device.room = null;
-    }catch(e) {
+    } catch (e) {
         errorMsg.value = "Error al desvincular dispositivo";
     }
 }
@@ -115,24 +122,24 @@ async function modifyDevice() {
             id: props.device.id,
             name: editedDeviceName.value,
         };
-        if (editedDeviceName.value.length<20 && await deviceStore.modify(updatedDevice)) {
+        if (editedDeviceName.value.length < 20 && await deviceStore.modify(updatedDevice)) {
             props.device.name = editedDeviceName.value;
             toggleDialog();
         } else {
             errorMsg.value = "Error al editar dispositivo";
-        } 
+        }
     } catch (e) {
         console.error(e);
         errorMsg.value = "Error al editar dispositivo";
     }
-    
-    if(hasChangedRoom){
+
+    if (hasChangedRoom) {
         console.log("HOLAAAAA")
-        try{
-        await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == editedDeviceRoom.value).id, props.device.id);
-        errorMsg.value = '';
-        }catch(e){
-            errorMsg.value='No se pudo cambiar la habitación del dispositivo'
+        try {
+            await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == editedDeviceRoom.value).id, props.device.id);
+            errorMsg.value = '';
+        } catch (e) {
+            errorMsg.value = 'No se pudo cambiar la habitación del dispositivo'
         }
         window.location.reload();
     }
@@ -158,36 +165,41 @@ async function modifyDevice() {
     padding-right: 5%;
 }
 
-.dialog-card{
+.dialog-card {
     display: flex;
     color: rgb(var(--v-theme-primary));
     background-color: rgb(var(--v-theme-primary_v));
-    align-items:center;
+    align-items: center;
     width: 100%;
 }
-.text-field{
+
+.text-field {
     width: 15rem;
     min-width: 10rem;
-} 
-.del-btn{
+}
+
+.del-btn {
     color: rgb(var(--v-theme-primary_v));
     background-color: red;
     font-size: smaller;
     margin-bottom: 1rem;
 }
-.unlink-btn{
+
+.unlink-btn {
     color: rgb(var(--v-theme-primary_v));
     background-color: red;
     font-size: small;
     margin-bottom: 1rem;
 }
-.canc-btn{
+
+.canc-btn {
     color: rgb(var(--v-theme-primary));
     background-color: rgb(var(--v-theme-primary_v));
-    
+
     font-size: medium;
 }
-.save-btn{
+
+.save-btn {
     color: rgb(var(--v-theme-primary_v));
     background-color: rgb(var(--v-theme-blue_state));
     font-size: medium;
