@@ -4,20 +4,24 @@
             <div class="custom-title">
                 <h1>{{ routine.name }}</h1>
             </div>
-            <v-icon class="custom-icon" :icon="routine.meta.icon"></v-icon>
-            <div class="custom-qty-devices">
-                <h2>ACCIONES</h2>
-            </div>
-            <div >
-                <h2>{{ qtyDevicesByRoutine }}</h2>
-            </div>
+            <!--<v-icon class="custom-icon" :icon="routine.meta.icon"></v-icon>-->
+            <v-btn class="btn" color="green" :disabled="isDisabled" @click="startRoutine" size="110">COMENZAR</v-btn>
+            <p v-show="errorMessageOn">{{ errorMsg }}</p>
+                <div class="custom-qty-devices">
+                    <h2>ACCIONES</h2>
+                </div>
+                <div >
+                    <h2 class="qty">{{ qtyActionsByRoutine }}</h2>
+                </div>
+            
+            
         </v-card>
     </EmptyCard>
 </template>
 
 <script setup>
 import { useRoutineStore } from '@/stores/routineStore';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const props = defineProps({
     routine: Object,
@@ -26,15 +30,30 @@ const props = defineProps({
 const routineStore = useRoutineStore();
 
 const myRoutine = ref(props.routine);
-let qtyDevicesByRoutine = ref(0);
+let qtyActionsByRoutine = ref(0);
+const errorMsg = ref('');
+const errorMessageOn = computed(() => errorMsg.value != '');
 
 onMounted(async () => {
    const result = await routineStore.get(myRoutine.value.id);
-   qtyDevicesByRoutine.value = result.actions.length;
+   qtyActionsByRoutine.value = result.actions.length;
 });
 
+const disable=ref(false);
+const isDisabled=computed(()=>disable.value==true);
 
 
+
+
+async function startRoutine() {
+    disable.value=true;
+    try {
+        await routineStore.execute(props.routine.id);
+    } catch (e) {
+        console.log('Error executing routine:', e);
+    }
+    disable.value=false;
+}
 
 </script>
 
@@ -68,15 +87,16 @@ onMounted(async () => {
 }
 
 .custom-qty-devices {
-    padding-top: 3rem;
+    padding-top: 1rem;
 }
 
-.custom-qty {
 
+.btn{
+    margin-top: 1rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    font-size: smaller;
 }
 
-h2 {
-    margin: 0;
-    padding: 0;
-}
+
 </style>

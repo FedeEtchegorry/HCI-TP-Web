@@ -12,7 +12,7 @@
     </v-card>
 
 
-    <v-dialog v-model="showCard" max-width="40%" height="40%">
+    <v-dialog v-model="showCard" max-width="40%" height="50%">
       <DeviceDetail :device="device" v-model="showCard"></DeviceDetail>
     </v-dialog>
   </v-card>
