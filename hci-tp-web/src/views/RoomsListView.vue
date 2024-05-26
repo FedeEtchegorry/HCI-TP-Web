@@ -5,15 +5,18 @@
       thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación"
       :thingTypes="Object.keys(roomType)" />
     <h1 class="title">HABITACIONES</h1>
-    <GridComponent :items="filteredRooms">
-      <template v-slot:default="{ item }">
+    <v-container fluid>
+    <v-row dense justify="center">
+      <template v-for="(item, index) in filteredRooms" :key="index">
         <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
           <RouterLink class="router-custom" to="/" @click="handleClick(item)">
             <component v-if="item" :is="item.component" v-bind="item.props"></component>
           </RouterLink>
         </v-col>
       </template>
-    </GridComponent>
+    </v-row>
+  </v-container>
+
   </CanvasComponent>
 </template>
 
@@ -66,7 +69,10 @@ async function handleNewRoom(state, name, type) {
       const room = new Room(null, name, roomMeta);
       await roomStore.add(room);
       errorMsg.value = '';
-      window.location.reload();
+      components.value.push({
+      component: RoomDetail,
+      props: { room }
+    });
     } catch (e) {
       errorMsg.value = "Error al agregar la habitación";
     }
