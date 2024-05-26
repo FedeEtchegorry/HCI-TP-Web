@@ -2,7 +2,7 @@
   <EmptyCard class="">
     <v-card @click="showCard = true" class="ma-1 card-2" outlined>
       <v-card-title class="title">
-        <h3>{{ device.name }}</h3>
+        <h2>{{ device.name }}</h2>
       </v-card-title>
       <v-icon class="icon">{{ device.meta.logo }}</v-icon>
 
@@ -111,14 +111,13 @@ let showCard = ref(false);
 }
 
 .title {
-  font-size: x-large;
   color: rgb(var(--v-theme-primary));
+  text-transform: uppercase;
 }
 
 .subtitle {
   font-size: large;
   color: rgb(var(--v-theme-primary));
-  font-weight: 400;
   opacity: 0.9;
   margin: 0;
 }

@@ -1,14 +1,14 @@
 <template>
-    <EmptyCard class="custom-empty-card" @click="">
-        <v-card class=custom-card>
-            <div class="custom-title">
-                <h1>{{ room.name }}</h1>
-            </div>
-            <v-icon class="custom-icon">{{ room.meta.logo }}</v-icon>
-            <div class="custom-qty-devices">
+    <EmptyCard class="empty-card" @click="">
+        <v-card class=card>
+            <v-card-title class="title">
+                <h2>{{ room.name }}</h2>
+            </v-card-title>
+            <v-icon class="icon">{{ room.meta.logo }}</v-icon>
+            <v-card-subtitle class="subtitle">
                 <h2>DISPOSITIVOS</h2>
-            </div>
-            <div >
+            </v-card-subtitle>
+            <div class="mb-3 devices-qty">
                 <h2>{{ qtyDevicesByRoom }}</h2>
             </div>
         </v-card>
@@ -29,8 +29,8 @@ const myRoom = ref(props.room);
 let qtyDevicesByRoom = ref(0);
 
 onMounted(async () => {
-   const result = await roomStore.getDevicesByRoom(myRoom.value.id);
-   qtyDevicesByRoom.value = result.length;
+    const result = await roomStore.getDevicesByRoom(myRoom.value.id);
+    qtyDevicesByRoom.value = result.length;
 });
 
 
@@ -40,11 +40,11 @@ onMounted(async () => {
 
 
 <style scoped>
-.custom-empty-card {
+.empty-card {
     background-color: rgb(var(--v-theme-primary_v));
 }
 
-.custom-card {
+.card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,23 +54,32 @@ onMounted(async () => {
     user-select: none;
 }
 
-.custom-title {
+.title {
     display: flex;
+    color: rgb(var(--v-theme-primary));
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
     padding: 1rem;
 }
 
-.custom-icon {
+.icon {
     font-size: 4rem;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.custom-qty-devices {
-    padding-top: 3rem;
+.subtitle {
+    padding-top: 2rem;
+    color: rgb(var(--v-theme-primary));
+    opacity: 0.9;
+    margin: 0;
 }
 
+.devices-qty {
+    color: rgb(var(--v-theme-primary));
+    opacity: 0.9;
+}
 
 h2 {
     margin: 0;

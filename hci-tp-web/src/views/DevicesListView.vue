@@ -79,7 +79,6 @@ async function handleNewDevice(state, name, type, roomName) {
     errorMsg.value = "Campos incompletos";
   } else {
     const newDevice = await addDevice(name, type);
-    window.location.reload();
 
     if (newDevice) {
       addButtonState.value = false;
