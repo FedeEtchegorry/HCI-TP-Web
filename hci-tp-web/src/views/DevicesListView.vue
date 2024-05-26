@@ -1,8 +1,9 @@
 <template>
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" v-model:toggle="addButtonState" :errorMessageOn="errorMessageOn" :errorMsg="errorMsg"
-      headlineName="Agregar Nuevo Dispositivo" thingNameLabel="Nombre del dispositivo"
-      thingTypeLabel="Tipo de dispositivo" :thingTypes="Object.keys(deviceType)" :extraThingParameter="roomsForDevice" />
+    <AddingNewSimpleThingView @newThingEvent="handleNewDevice" v-model:toggle="addButtonState"
+      :errorMessageOn="errorMessageOn" :errorMsg="errorMsg" headlineName="Agregar Nuevo Dispositivo"
+      thingNameLabel="Nombre del dispositivo" thingTypeLabel="Tipo de dispositivo" :thingTypes="Object.keys(deviceType)"
+      :extraThingParameter="roomsForDevice" />
     <h1 class="title">DISPOSITIVOS</h1>
     <GridComponent :items="filteredComponents">
       <template v-slot:default="{ item }">
@@ -41,23 +42,20 @@ const deviceType = {
   'Alarma': Alarm,
 };
 
-const errorMsg=ref('');
-const errorMessageOn =computed(()=>errorMsg.value!='');
+const errorMsg = ref('');
+const errorMessageOn = computed(() => errorMsg.value != '');
 
-const roomsForDevice = {
-  label: 'Vincular a habitación',
-  options: roomStore.rooms.map(room => room.name),
-};
+let roomsForDevice;
 
 const handleAddButtonPressed = () => {
-  errorMsg.value='';
+  errorMsg.value = '';
   addButtonState.value = !addButtonState.value;
   blurStatus.value = addButtonState.value;
 };
 
 
 async function addDevice(name, type) {
-  
+
   try {
     const newDevice = new deviceType[type](name);
     await deviceStore.add(newDevice);
@@ -70,23 +68,29 @@ async function addDevice(name, type) {
 
 }
 
-async function handleNewDevice(state, name, type){
-  if(!state){
+async function handleNewDevice(state, name, type) {
+  if (!state) {
     addButtonState.value = false;
     blurStatus.value = false;
   }
-  else{if (await addDevice(name, type)) {
-    addButtonState.value = false;
-    blurStatus.value = false;
-  } else {
-    errorMsg.value = "Error al agregar el dispositivo";
+  else {
+    if (await addDevice(name, type)) {
+      addButtonState.value = false;
+      blurStatus.value = false;
+    } else {
+      errorMsg.value = "Error al agregar el dispositivo";
+    }
   }
-}
 
 };
 
 onMounted(async () => {
   await deviceStore.getAll();
+  await roomStore.getAll();
+  roomsForDevice = {
+    label: 'Vincular a habitación',
+    options: roomStore.rooms.map(room => room.name),
+  };
   components.value = deviceStore.devices.map(device => ({
     component: DeviceDialog,
     props: { device }
@@ -125,7 +129,7 @@ function filterByDeviceType(components) {
     return components;
   }
   return components.filter(item =>
-  item.props.device.type.name.toLowerCase().includes(search.value.toLowerCase())
+    item.props.device.type.name.toLowerCase().includes(search.value.toLowerCase())
   );
 }
 
