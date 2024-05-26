@@ -2,6 +2,7 @@
   <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
     <AddingNewRoutineView @newRoutineEvent="handleNewRoutine" :addOptionActive="addButtonState" :myDevices="myDevices"
       :errorMessageOn="errorMessageOn" :errorMsg="errorMsg" />
+      <ShowRoutineView @showRoutineEvent="handleShowRoutineEvent" :showRoutine="showMyRoutine" :myRoutine="selectedRoutine"/>
     <h1 class="title">RUTINAS</h1>
     <v-container fluid>
       <v-row dense justify="center">
@@ -15,12 +16,12 @@
   </CanvasComponent>
 </template>
 
-
 <script setup>
 
 import { ref, computed, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewRoutineView from './AddingNewRoutineView';
+import ShowRoutineView from './ShowRoutineView';
 import { useRoutineStore } from '@/stores/routineStore';
 import { useSearchStore } from '@/stores/searchStore';
 import RoutinesDetail from '@/components/CardDetail/Routines/RoutinesDetail.vue'
@@ -45,12 +46,31 @@ const myDevices = ref([
 
 ]);
 
+const showMyRoutine = ref(true);
+const selectedRoutine = ref({
+
+  name: 'mi_rutina',
+  devices: [
+    { name: 'Dispo_1', action: 'Apagar', param: 'n/a' },
+    { name: 'Dispo_2', action: 'Prender', param: 'n/a' },
+    { name: 'Dispo_3', action: 'Apagar', param: 'n/a' },
+    { name: 'Dispo_4', action: 'Prender', param: 'n/a' },
+    { name: 'Dispo_5', action: 'Apagar', param: 'n/a' },
+    { name: 'Dispo_6', action: 'Prender', param: 'n/a' }
+  ]
+});
+
 const errorMsg = ref('');
 const errorMessageOn = computed(() => errorMsg.value != '');
 
 const handleAddButtonPressed = () => {
   addButtonState.value = !addButtonState.value;
   blurStatus.value = addButtonState.value;
+};
+
+const handleShowRoutineEvent = () => {
+
+  showMyRoutine.value = !showMyRoutine.value;
 };
 
 const handleNewRoutine = (routine) => {
