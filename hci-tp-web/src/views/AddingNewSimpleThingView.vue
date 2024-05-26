@@ -21,7 +21,7 @@
                                 rounded 
                                 variant="outlined">
                             </v-text-field>
-
+                            
                             <v-select
                                 v-model="newThingType"
                                 class="add-thing-text-field"
@@ -137,10 +137,8 @@ const props = defineProps({
 
 .add-thing-text-field {
     border: 1rem;
-    padding: .5rem;
-    padding-bottom: 0rem;
-    margin-bottom: 0rem;
     color: black;
+    padding-bottom: 1rem;
 }
 
 .add-thing-error{
