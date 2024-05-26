@@ -16,7 +16,7 @@
                                 v-model="newThingName"
                                 class="custom-text-field"
                                 :label="thingNameLabel"
-                                :rules="[v => !!v || 'El nombre es obligatorio', v => (v && v.length <= 12) || 'El nombre no puede tener más de 12 letras']"
+                                :rules="[v => !!v || 'El nombre es obligatorio', v => (v && v.length <= 15) || 'El nombre no puede tener más de 15 letras']"
                                 required
                                 rounded 
                                 variant="outlined">
