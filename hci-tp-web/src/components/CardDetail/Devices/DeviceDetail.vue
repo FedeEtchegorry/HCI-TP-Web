@@ -12,8 +12,8 @@
         
         <component class="device" :is="devices[device.type.name]" :device="device"></component>
 
-        <v-dialog rounded v-model="dialog" persistent max-width="20rem">
-            <v-card class="dialog-card">
+        <v-dialog rounded v-model="dialog"  width="40%" height="50%">
+            <v-card class="dialog-card" height="100%" >
                 <v-card-title>
                     <h3 class="headline">Editar Dispositivo</h3>
                 </v-card-title>
@@ -21,8 +21,10 @@
                                     v => !!v || 'El nombre es obligatorio',
                                     v => (v && v.length <= 15) || 'El nombre no puede tener más de 25 letras'
                                 ]"></v-text-field>
-                <v-text-field class="text-field" rounded variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-text-field>
+                <v-select v-if="!isDeviceAssignedToRoom" class="text-field" :items=roomsForDevice.options rounded variant="outlined" v-model="editedDeviceRoom" label="Nombre de la habitación"></v-select>
+                <v-btn v-else class="unlink-btn" elevation="5" text @click="unlinkFromRoom">Desvincular de {{ props.device.room?.name }}</v-btn>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
+                
                 <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
                 <v-card-actions class="mb-3">
                     <v-btn class="save-btn" rounded elevation="5" text @click="modifyDevice">Guardar</v-btn>
@@ -37,7 +39,7 @@
 
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import EmptyDeviceDialog from '../EmptyDeviceDetail.vue';
 import DoorDetail from './DoorDetail.vue';
 import BlindDetail from './BlindDetail.vue';
@@ -45,6 +47,19 @@ import RefrigeratorDetail from './RefrigeratorDetail.vue';
 import VacuumDetail from './VacuumDetail.vue';
 import AlarmDetail from './AlarmDetail.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
+import { useRoomStore } from '@/stores/roomStore';
+
+let roomsForDevice;
+const roomStore = useRoomStore();
+
+
+onMounted(async () => {
+  await roomStore.getAll();
+  roomsForDevice = {
+    options: roomStore.rooms.map(room => room.name),
+  };
+});
+
 
 const props = defineProps({
     device: Object,
@@ -57,6 +72,8 @@ const deviceStore = useDeviceStore();
 const errorMsg=ref('');
 const errorMessageOn =computed(()=>errorMsg.value!='');
 
+const isDeviceAssignedToRoom = computed(()=>props.device.room!=null)
+const hasChangedRoom = computed(()=>props.device.room?.name==editedDeviceRoom);
 
 const devices = {
     blinds: BlindDetail,
@@ -82,6 +99,16 @@ async function deleteDevice(){
     }
 };
 
+async function unlinkFromRoom(){
+    try{
+    if(await roomStore.removeDeviceFromRoom(props.device.id))
+            props.device.room = null;
+    }catch(e) {
+        errorMsg.value = "Error al desvincular dispositivo";
+    }
+}
+
+
 async function modifyDevice() {
     try {
         const updatedDevice = {
@@ -93,10 +120,21 @@ async function modifyDevice() {
             toggleDialog();
         } else {
             errorMsg.value = "Error al editar dispositivo";
-        }
+        } 
     } catch (e) {
         console.error(e);
         errorMsg.value = "Error al editar dispositivo";
+    }
+    
+    if(hasChangedRoom){
+        console.log("HOLAAAAA")
+        try{
+        await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == editedDeviceRoom.value).id, props.device.id);
+        errorMsg.value = '';
+        }catch(e){
+            errorMsg.value='No se pudo cambiar la habitación del dispositivo'
+        }
+        window.location.reload();
     }
 }
 
@@ -130,12 +168,17 @@ async function modifyDevice() {
 .text-field{
     width: 15rem;
     min-width: 10rem;
-
 } 
 .del-btn{
     color: rgb(var(--v-theme-primary_v));
     background-color: red;
-    font-size: medium;
+    font-size: smaller;
+    margin-bottom: 1rem;
+}
+.unlink-btn{
+    color: rgb(var(--v-theme-primary_v));
+    background-color: red;
+    font-size: small;
     margin-bottom: 1rem;
 }
 .canc-btn{
