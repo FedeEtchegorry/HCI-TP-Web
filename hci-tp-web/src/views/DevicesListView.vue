@@ -13,13 +13,14 @@
             <component :is="item.component" v-bind="item.props"></component>
           </v-col>
         </template>
+        <h2 v-show="components.length==0">AGREGA TU PRIMER DISPOSITIVO</h2>
       </v-row>
     </v-container>
   </CanvasComponent>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, onBeforeMount } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import DeviceDialog from '@/components/CardDetail/Devices/DeviceDialog.vue';
@@ -39,6 +40,8 @@ const errorMsg = ref('');
 const errorMessageOn = computed(() => errorMsg.value != '');
 const filterSelected = computed(() => searchStore.getSelected);
 const search = computed(() => searchStore.getSearch);
+const arraySize=computed(() => filteredComponents.length==0);
+
 let roomsForDevice;
 
 const deviceType = {
@@ -94,7 +97,7 @@ async function handleNewDevice(state, name, type, roomName) {
   }
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await deviceStore.getAll();
   await roomStore.getAll();
   roomsForDevice = {

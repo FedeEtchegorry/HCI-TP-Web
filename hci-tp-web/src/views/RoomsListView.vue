@@ -14,7 +14,9 @@
           </RouterLink>
         </v-col>
       </template>
+      <h2 v-show="components.length==0">AGREGA TU PRIMER HABITACIÓN</h2>
     </v-row>
+    
   </v-container>
 
   </CanvasComponent>
