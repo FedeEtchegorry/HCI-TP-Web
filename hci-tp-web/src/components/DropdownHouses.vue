@@ -10,7 +10,7 @@
   export default {
     data() {
       return {
-        selectedOption: 'Casa en la ciudad', // Set the initial value to the first home
+        selectedOption: 'Casa en la ciudad', 
         options: [
           'Casa en la ciudad',
           'Casa en el country',

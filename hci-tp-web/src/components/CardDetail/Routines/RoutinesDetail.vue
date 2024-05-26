@@ -6,7 +6,7 @@
             </div>
             <v-icon class="custom-icon" :icon="routine.meta.icon"></v-icon>
             <div class="custom-qty-devices">
-                <h2>DEVICES</h2>
+                <h2>ACCIONES</h2>
             </div>
             <div >
                 <h2>{{ qtyDevicesByRoutine }}</h2>
