@@ -11,7 +11,7 @@
             <v-btn class="mb-2" @click="handleClickLock" :icon="isLocked ? 'mdi-lock' : 'mdi-lock-open'" rounded="xl"
                 size="x-large" :color="isLocked ? 'red' : 'green'"></v-btn>
 
-            {{ isLocked ? "LOCKED" : "UNLOCKED" }}
+            <h2>{{ isLocked ? "BLOQUEADA" : "DESBLOQUEADA" }}</h2>
         </div>
 
     </v-card>
