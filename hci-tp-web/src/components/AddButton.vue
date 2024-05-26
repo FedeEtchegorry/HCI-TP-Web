@@ -1,7 +1,7 @@
 <template>
-    <v-fab class="me-4" color="rgba(var(--v-theme-blue_state))" icon="mdi-plus" size="80" absolute>
+    <v-btn class="me-4 add" icon="mdi-plus" size="80" absolute>
         <v-icon class="icon-size">mdi-plus</v-icon>
-    </v-fab>
+    </v-btn>
 </template>
 
 <style scoped>
@@ -9,6 +9,9 @@
 .icon-size {
     font-size: 4rem;
     color: rgba(var(--v-theme-secondary_v));
+}
+.add{
+    background-color: rgba(var(--v-theme-blue_state)) ;
 }
 
 </style>
