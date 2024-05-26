@@ -1,20 +1,26 @@
+// stores/searchStore.js
 import { defineStore } from 'pinia';
 
-export const useSearchStore = defineStore('search', {
+export const useSearchStore = defineStore('searchStore', {
   state: () => ({
     search: '',
-    selected: '' // Agregar la propiedad para el valor seleccionado del dropdown
+    selected: '',
+    items: []  // Nueva propiedad para las opciones del v-select
   }),
-  actions: {
-    updateSearch(newSearch) {
-      this.search = newSearch;
-    },
-    updateSelected(newSelected) { // Método para actualizar el valor seleccionado del dropdown
-      this.selected = newSelected;
-    }
-  },
   getters: {
     getSearch: (state) => state.search,
-    getSelected: (state) => state.selected // Getter para obtener el valor seleccionado del dropdown
+    getSelected: (state) => state.selected,
+    getItems: (state) => state.items  // Getter para las opciones del v-select
+  },
+  actions: {
+    updateSearch(value) {
+      this.search = value;
+    },
+    updateSelected(value) {
+      this.selected = value;
+    },
+    setItems(items) {  // Nueva acción para actualizar las opciones del v-select
+      this.items = items;
+    }
   }
 });

@@ -100,6 +100,11 @@ onMounted(async () => {
     component: DeviceDialog,
     props: { device }
   }));
+  searchStore.setItems([
+    'Por nombre de dispositivo',
+    'Por habitacion',
+    'Por tipo de dispositivo'
+  ]);
 });
 
 /*const filteredComponents = computed(() => {

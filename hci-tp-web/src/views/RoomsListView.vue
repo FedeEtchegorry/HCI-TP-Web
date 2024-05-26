@@ -1,32 +1,26 @@
 <template>
-    <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" v-model:toggle="addButtonState"
-        :errorMessageOn="errorMessageOn" :errorMsg="errorMsg" headlineName="Agregar Nueva Habitacion"
-        thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="Object.keys(roomType)"/>
-        <h1 class="title">HABITACIONES</h1>
-        <GridComponent :items="components">
+  <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
+    <AddingNewSimpleThingView @newThingEvent="handleNewRoom" v-model:toggle="addButtonState"
+      :errorMessageOn="errorMessageOn" :errorMsg="errorMsg" headlineName="Agregar Nueva Habitacion"
+      thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación"
+      :thingTypes="Object.keys(roomType)" />
+    <h1 class="title">HABITACIONES</h1>
+    <GridComponent :items="filteredRooms">
       <template v-slot:default="{ item }">
-        <v-col
-          class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-          xl="2"
-        >
-        <RouterLink class="router-custom" to="/" @click="handleClick(item)">
-            <component :is="item.component" v-bind="item.props"></component>
-        </RouterLink>
+        <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
+          <RouterLink class="router-custom" to="/" @click="handleClick(item)">
+            <component v-if="item" :is="item.component" v-bind="item.props"></component>
+          </RouterLink>
         </v-col>
       </template>
     </GridComponent>
-    </CanvasComponent>
+  </CanvasComponent>
 </template>
 
 
 <script setup>
 import { useSearchStore } from '@/stores/searchStore';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, shallowRef } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useRoomStore } from '@/stores/roomStore';
@@ -34,10 +28,11 @@ import RoomDetail from '@/components/CardDetail/Rooms/RoomDetail.vue'
 import { Room, RoomMeta } from '@/api/room';
 
 const roomStore = useRoomStore();
-const components = ref([]);
+const components = shallowRef([]);
 let addButtonState = ref(false);
 const blurStatus = ref(false);
 const searchStore = useSearchStore();
+const search = computed(() => searchStore.getSearch);
 const errorMsg = ref('');
 const errorMessageOn = computed(() => errorMsg.value != '');
 
@@ -56,7 +51,7 @@ const handleAddButtonPressed = () => {
 };
 
 async function handleNewRoom(state, name, type) {
-  if(!state) {
+  if (!state) {
     addButtonState.value = false;
     blurStatus.value = false;
     errorMsg.value = '';
@@ -65,14 +60,14 @@ async function handleNewRoom(state, name, type) {
     errorMsg.value = "Campos incompletos";
   }
   else {
-    
+
     try {
       const roomMeta = new RoomMeta(roomType[type])
       const room = new Room(null, name, roomMeta);
       await roomStore.add(room);
       errorMsg.value = '';
       window.location.reload();
-    } catch(e) {
+    } catch (e) {
       errorMsg.value = "Error al agregar la habitación";
     }
   }
@@ -90,12 +85,23 @@ onMounted(async () => {
     component: RoomDetail,
     props: { room }
   }));
+  searchStore.setItems([
+    'Por nombre de habitacion',
+  ]);
 });
 
+const filteredRooms = computed(() => {
+  if (!search.value) {
+    return components.value;
+  }
+  return components.value.filter(item =>
+    item.props.room.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+});
 </script>
 
 <style scoped>
-.router-custom{
+.router-custom {
   text-decoration: none;
 }
 
@@ -111,5 +117,4 @@ onMounted(async () => {
   font-size: 2.5rem;
   color: rgb(var(--v-theme-primary));
 }
-
 </style>

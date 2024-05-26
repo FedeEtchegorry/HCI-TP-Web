@@ -8,7 +8,7 @@
     </v-text-field>
 
     <v-container class="custom-select">
-      <v-select v-model="selected" :items="items" variant="outlined" dense rounded>
+      <v-select v-model="selected" :items="items" variant="outlined" dense rounded menu-icon="false">
         <template v-slot:prepend-inner>
           <v-icon class="custom-icon mr-2 ml-2">mdi-filter</v-icon>
         </template>
@@ -19,7 +19,7 @@
 
 <script setup>
 import { useSearchStore } from '@/stores/searchStore';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 const searchStore = useSearchStore();
 const search = computed({
@@ -32,11 +32,7 @@ const selected = computed({
   set: (value) => searchStore.updateSelected(value)
 });
 
-const items = ref([
-  'Por nombre de dispositivo',
-  'Por habitacion',
-  'Por tipo de dispositivo'
-]);
+const items = computed(() => searchStore.getItems);  // Obtener las opciones del v-select desde el store
 </script>
 
 <style scoped>
@@ -53,6 +49,10 @@ const items = ref([
   margin: 0 1rem;
 }
 
+::v-deep .custom-icon-append .v-input__append-inner{
+display: none;
+}
+
 .custom-icon {
   color: black;
   font-size: 1.5rem;
@@ -65,7 +65,6 @@ const items = ref([
   border-radius: 1.5rem;
   height: 3.5rem;
   margin: 0;
-  /* Asegurarse de que no haya margen */
 }
 
 .custom-text-field:focus {
