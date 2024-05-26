@@ -2,9 +2,7 @@
     <EmptyDeviceDialog>
         <v-toolbar density="comfortable" color="primary">
             <v-toolbar-title>{{ device.name }}</v-toolbar-title>
-
             <v-spacer></v-spacer>
-
             <v-btn icon>
                 <v-icon @click="toggleDialog">mdi-menu</v-icon>
             </v-btn >
@@ -15,7 +13,7 @@
 
         <component class="device" :is="devices[device.type.name]" :device="device"></component>
 
-        <v-dialog rounded v-model="dialog" width="40%" height="50%">
+        <v-dialog rounded v-model="dialog" width="40%" height="60%">
             <v-card class="dialog-card" height="100%">
                 <v-card-title>
                     <h3 class="headline">Editar Dispositivo</h3>
