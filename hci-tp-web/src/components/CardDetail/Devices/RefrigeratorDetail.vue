@@ -27,7 +27,7 @@
 
         
         <v-select item-title="mode" item-value="value"
-        :readonly="!isEditing" label="Select mode" variant="outlined" v-model="mode" class="select" :hide-details="true"
+        :readonly="!isEditing" label="Elija un modo (para editar presione el lapiz y confirme con el tick)" variant="outlined" v-model="mode" class="select" :hide-details="true"
             :items="allMode" @update:modelValue="changeMode">
             <template v-slot:append>
                   <v-icon
