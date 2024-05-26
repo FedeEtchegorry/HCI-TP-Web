@@ -6,15 +6,16 @@
       </v-card-title>
       <v-icon class="icon">{{ device.meta.logo }}</v-icon>
 
-      <v-card-subtitle class="subtitle"><h3>Habitacion: {{ device.room ? device.room.name : 'Sin asignar' }}</h3></v-card-subtitle>
+      <v-card-subtitle class="subtitle">
+        <h3>Habitacion: {{ device.room ? device.room.name : 'Sin asignar' }}</h3>
+      </v-card-subtitle>
       <v-card-text class="info">
-        <div><strong>Uso de energía:</strong> {{ device.type.powerUsage }}W</div>
-        <div v-if="device.state.batteryLevel"><strong>Nivel de Batería:</strong> {{ device.state.batteryLevel }}%
+        <div>
+          <h3>Uso de energía: {{ device.type.powerUsage }}W</h3>
         </div>
-        <div v-if="device.state.status"><strong>Estado:</strong> {{
-          toSpanishState(capitalizeFirstLetter(device.state.status)) }}</div>
-        <div v-if="device.state.mode"><strong>Modo:</strong> {{
-          toSpanishMode(capitalizeFirstLetter(device.state.mode)) }}</div>
+        <div v-if="device.state.batteryLevel"><h3>Nivel de Batería: {{ device.state.batteryLevel }}%</h3></div>
+        <div v-if="device.state.status"><h3>Estado: {{ toSpanishState(capitalizeFirstLetter(device.state.status)) }}</h3></div>
+        <div v-if="device.state.mode"><h3>Modo: {{ toSpanishMode(capitalizeFirstLetter(device.state.mode)) }}</h3></div>
       </v-card-text>
     </v-card>
     <v-dialog v-model="showCard" max-width="40%" height="50%">
@@ -93,13 +94,13 @@ let showCard = ref(false);
 .card-2 {
   border-radius: 3%;
   flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(var(--v-theme-primary_v));
-    border: none;
-    box-shadow: none;
-    user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(var(--v-theme-primary_v));
+  border: none;
+  box-shadow: none;
+  user-select: none;
 }
 
 .icon {
@@ -112,7 +113,6 @@ let showCard = ref(false);
 .title {
   font-size: x-large;
   color: rgb(var(--v-theme-primary));
-  font-weight: bold;
 }
 
 .subtitle {
@@ -125,6 +125,6 @@ let showCard = ref(false);
 
 .info {
   padding-top: 0.5rem;
-  font-size: medium;
+  flex-grow: 1;
 }
 </style>
