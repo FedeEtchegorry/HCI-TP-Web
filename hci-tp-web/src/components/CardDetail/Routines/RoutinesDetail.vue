@@ -96,7 +96,7 @@ async function startRoutine() {
     border-radius: 50%;
     margin-bottom: 1rem;
     font-size: smaller;
-    background-color: rgv(var(--v-theme-green_state));
+    background-color: rgb(var(--v-theme-green_state));
     color: white;
 }
 
