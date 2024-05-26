@@ -1,6 +1,8 @@
 <template>
     <CanvasComponent @emitAddButton="handleAddButtonPressed" :blurActive="blurStatus">
-        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" v-model:toggle="addButtonState" headlineName="Agregar Nueva Habitacion" thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="Object.keys(roomType)"/>
+        <AddingNewSimpleThingView @newThingEvent="handleNewRoom" v-model:toggle="addButtonState"
+        :errorMessageOn="errorMessageOn" :errorMsg="errorMsg" headlineName="Agregar Nueva Habitacion"
+        thingNameLabel="Nombre de la habitación" thingTypeLabel="Tipo de habitación" :thingTypes="Object.keys(roomType)"/>
         <h1 class="title">HABITACIONES</h1>
         <GridComponent :items="components">
       <template v-slot:default="{ item }">
@@ -24,7 +26,7 @@
 
 <script setup>
 import { useSearchStore } from '@/stores/searchStore';
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useRoomStore } from '@/stores/roomStore';
@@ -35,8 +37,9 @@ const roomStore = useRoomStore();
 const components = ref([]);
 let addButtonState = ref(false);
 const blurStatus = ref(false);
-
 const searchStore = useSearchStore();
+const errorMsg = ref('');
+const errorMessageOn = computed(() => errorMsg.value != '');
 
 const roomType = {
   'Living': 'mdi-sofa',
@@ -52,18 +55,26 @@ const handleAddButtonPressed = () => {
   blurStatus.value = addButtonState.value;
 };
 
-async function handleNewRoom(state, name, type){
-  addButtonState.value = false;
-  blurStatus.value = false;
-  if(!state)
-    return;
-  try {
-    const roomMeta = new RoomMeta(roomType[type])
-    const room = new Room(null, name, roomMeta);
-    await roomStore.add(room);
-    window.location.reload();
-  }catch(e){
-    console.log('Error creating room: ', e);
+async function handleNewRoom(state, name, type) {
+  if(!state) {
+    addButtonState.value = false;
+    blurStatus.value = false;
+    errorMsg.value = '';
+  }
+  else if (!name || name === '' || !type || type === '') {
+    errorMsg.value = "Campos incompletos";
+  }
+  else {
+    
+    try {
+      const roomMeta = new RoomMeta(roomType[type])
+      const room = new Room(null, name, roomMeta);
+      await roomStore.add(room);
+      errorMsg.value = '';
+      window.location.reload();
+    } catch(e) {
+      errorMsg.value = "Error al agregar la habitación";
+    }
   }
 }
 

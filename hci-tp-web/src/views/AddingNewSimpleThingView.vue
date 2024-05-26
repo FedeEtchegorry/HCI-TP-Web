@@ -38,12 +38,11 @@
                                 class="custom-text-field"
                                 :label="extraThingParameter.label"
                                 :items="extraThingParameter.options"
-                                :rules="[v => !!v || 'La habitacion es obligatoria']"
                                 required
                                 rounded
                                 variant="outlined">
                             </v-select>
-                            <p v-if="errorMessageOn" class="error" v-show="props.errorMessageOn">{{ props.errorMsg }}</p>
+                            <span v-if="errorMessageOn" class="custom-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
                         </v-form>
                     </v-container>
 
@@ -72,12 +71,7 @@ const emit = defineEmits(['newThingEvent']);
 const closeDialog = () => emit('newThingEvent', false, '', '');
 let addOptionActive = defineModel('toggle');
 
-const addThing = () => {
-    emit('newThingEvent', true, newThingName.value, newThingType.value, newExtraThingParameter.value);
-    newThingName.value = '';
-    newThingType.value = '';
-    newExtraThingParameter.value = '';
-}
+const addThing = () => { emit('newThingEvent', true, newThingName.value, newThingType.value, newExtraThingParameter.value); };
 
 const props = defineProps({
     errorMessageOn:{
@@ -116,7 +110,6 @@ const props = defineProps({
     }
 });
 
-
 </script>
 
 <style scoped>
@@ -145,10 +138,11 @@ const props = defineProps({
     padding: 1rem;
     color: black;
 }
-.error{
-    align-items: center;
-    justify-items: center;
+.custom-error{
+    display: flex;
+    justify-content: center;
     color: rgb(var(--v-theme-red_state));
+    text-shadow: .2rem .2rem .4rem rgba(50, 20, 20, 0.6);
 }
 
 .cancel-button {

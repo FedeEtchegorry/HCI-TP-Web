@@ -55,6 +55,7 @@ const handleAddButtonPressed = () => {
 
 
 async function addDevice(name, type) {
+
   try {
     let newDevice = new deviceType[type](name);
     newDevice = await deviceStore.add(newDevice);
@@ -63,25 +64,29 @@ async function addDevice(name, type) {
     console.log("Error creating devices: ", e);
     return null;
   }
-
 }
 
 async function handleNewDevice(state, name, type, roomName) {
   if (!state) {
     addButtonState.value = false;
     blurStatus.value = false;
+    errorMsg.value = '';
+  }
+  else if (!name || name === '' || !type || type === '') {
+    errorMsg.value = "Campos incompletos";
   }
   else {
     let newDevice;
     if (newDevice = await addDevice(name, type)) {
-      console.log(roomStore.rooms.find(room => room.name == roomName).id, newDevice.id)
-      await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == roomName).id, newDevice.id)
+      addButtonState.value = false;
+      blurStatus.value = false;
+      await roomStore.addDeviceToRoom(roomStore.rooms.find(room => room.name == roomName).id, newDevice.id);
+      errorMsg.value = '';
       window.location.reload();
     } else {
       errorMsg.value = "Error al agregar el dispositivo";
     }
   }
-
 };
 
 onMounted(async () => {
