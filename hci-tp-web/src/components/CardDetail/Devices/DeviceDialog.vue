@@ -61,8 +61,6 @@ function toSpanishState(string){
       return 'Activa';
     case 'Pause':
       return 'Pausa';
-      
-
   }
 }
 
