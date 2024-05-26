@@ -1,10 +1,10 @@
 <template>
-  <v-card color="primary_v">
-    <v-card @click="showCard = true" class="ma-4" outlined>
-      <v-card-title><v-icon>{{ device.meta.logo }}</v-icon> {{ device.name }}</v-card-title>
-      <v-card-subtitle>Habitacion: {{ device.room?.name }} </v-card-subtitle>
-      <v-card-text>
-        <div><strong>Consumo de Energía:</strong> {{ device.type.powerUsage }}W</div>
+  <v-card class="card" >
+    <v-card @click="showCard = true" class="ma-1 card-2" outlined>
+      <v-card-title class="title"><v-icon>{{ device.meta.logo }}</v-icon> {{ device.name }}</v-card-title>
+      <v-card-subtitle class="subtitle">Habitacion: {{ device.room?.name }} </v-card-subtitle>
+      <v-card-text class="info">
+        <div><strong>Uso de energía:</strong> {{ device.type.powerUsage }}W</div>
         <div v-if="device.state.batteryLevel"><strong>Nivel de Batería:</strong> {{ device.state.batteryLevel }}%</div>
         <div v-if="device.state.status"><strong>Estado:</strong> {{ toSpanishState(capitalizeFirstLetter(device.state.status)) }}</div>
         <div v-if="device.state.mode"><strong>Modo:</strong> {{ toSpanishMode(capitalizeFirstLetter(device.state.mode)) }}</div>
@@ -54,15 +54,13 @@ function toSpanishState(string){
       return 'Activada-fuera de casa';
     //ASPIRADORA
     case 'Docked':
-      return 'En puerto de carga';
+      return 'Puerto de carga';
     case 'Inactive':
       return 'Inactiva';
     case 'Active':
       return 'Activa';
     case 'Pause':
       return 'Pausa';
-      
-
   }
 }
 
@@ -86,4 +84,29 @@ let showCard = ref(false);
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.card{
+  background-color: rgb(var(--v-theme-primary));
+  border-radius: 5%;
+}
+.card-2{
+  border-radius: 3%;
+}
+.title{
+  font-size: x-large;
+  color: rgb(var(--v-theme-primary));
+  font-weight: bold;
+}
+.subtitle{
+  font-size: large;
+  color: rgb(var(--v-theme-primary));
+  font-weight:400;
+  opacity: 0.9;
+  margin: 0;
+}
+.info{
+  padding-top:0.5rem ;
+  font-size: medium;
+}
+
+</style>

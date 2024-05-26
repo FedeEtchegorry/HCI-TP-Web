@@ -71,14 +71,9 @@ onMounted(async () => {
     padding-top: 3rem;
 }
 
-.custom-qty {
-
-}
 
 h2 {
     margin: 0;
-    /* Elimina cualquier margen adicional alrededor del h2 */
     padding: 0;
-    /* Ajusta el padding si es necesario */
 }
 </style>

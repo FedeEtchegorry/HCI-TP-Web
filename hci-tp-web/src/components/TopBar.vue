@@ -1,7 +1,7 @@
 <template>
   <v-card class="custom-card" height="4rem" flat>
     <v-toolbar dense flat class="custom-toolbar">
-      <SearchComponent class="mr-auto"/> <!-- Aquí se aplica la clase `mr-auto` -->
+      <SearchComponent class="mr-auto"/> 
       <DropdownHouses class="custom-dropdown mr-2 ml-2"/>
       <v-icon class="custom-icon-2 mr-5">mdi-pencil</v-icon>
     </v-toolbar>

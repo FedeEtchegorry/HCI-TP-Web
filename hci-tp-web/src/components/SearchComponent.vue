@@ -45,8 +45,8 @@ const items = computed(() => searchStore.getItems);  // Obtener las opciones del
 .custom-select {
   padding: 0;
   height: 3.5rem;
-  width: 3.5rem;
-  margin: 0 1rem;
+  width: 4rem;
+  margin: 0 1rem
 }
 
 ::v-deep .custom-icon-append .v-input__append-inner{
