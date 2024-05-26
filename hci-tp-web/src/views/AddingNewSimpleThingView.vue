@@ -114,7 +114,6 @@ const props = defineProps({
     }
 });
 
-console.log(props.extraThingParameter)
 
 </script>
 
