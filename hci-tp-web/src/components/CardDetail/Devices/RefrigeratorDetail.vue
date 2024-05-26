@@ -3,23 +3,23 @@
 
         <div class="container">
             <div class="temp">
-                <v-btn @click="changeFridgeTemp(fridgeTemp + 1)" color="primary">
+                <v-btn @click="changeFridgeTemp(fridgeTemp + 1)" class="make-color">
                     <v-icon>mdi-chevron-up</v-icon>
                 </v-btn>
                 <v-text-field v-model="fridgeTemp" type="number" class="bold-text" readonly hide-details
                     prepend-inner-icon="mdi-fridge" suffix="°C" single-line></v-text-field>
-                <v-btn @click="changeFridgeTemp(fridgeTemp - 1)" color="primary">
+                <v-btn @click="changeFridgeTemp(fridgeTemp - 1)" class="make-color">
                     <v-icon>mdi-chevron-down</v-icon>
                 </v-btn>
             </div>
 
             <div class="temp">
-                <v-btn @click="changeFreezerTemp(freezerTemp + 1)" color="primary">
+                <v-btn @click="changeFreezerTemp(freezerTemp + 1)" class="make-color">
                     <v-icon>mdi-chevron-up</v-icon>
                 </v-btn>
                 <v-text-field v-model="freezerTemp" type="number" class="bold-text" readonly hide-details
                     prepend-inner-icon="mdi-snowflake" suffix="°C" single-line></v-text-field>
-                <v-btn @click="changeFreezerTemp(freezerTemp - 1)" color="primary">
+                <v-btn @click="changeFreezerTemp(freezerTemp - 1)" class="make-color">
                     <v-icon>mdi-chevron-down</v-icon>
                 </v-btn>
             </div>
@@ -141,5 +141,10 @@ async function changeMode() {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.make-color{
+    background-color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-primary_v));
 }
 </style>

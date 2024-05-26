@@ -1,8 +1,8 @@
 <template>
     <v-card class="device">
-        <p v-if="isArmAway">ACTIVA - FUERA DE CASA</p>
-        <p v-if="isArmStay">ACTIVA - DENTRO DE CASA</p>
-        <p v-if="isDisarm">DESACTIVADA</p>
+        <h3 v-if="isArmAway">ACTIVA - FUERA DE CASA</h3>
+        <h3 v-if="isArmStay">ACTIVA - DENTRO DE CASA</h3>
+        <h3 v-if="isDisarm">DESACTIVADA</h3>
         <v-row class="row" >
             <v-text-field class="input-class-1" v-model="input" label="Pass (4 caracteres)" maxlength="4" single-line
                 type="Number" variant="outlined" rounded hide-details></v-text-field>
@@ -11,7 +11,7 @@
         <v-text-field v-show="changePassOn" class="input-class-2" v-model="input_2"
             label="Nueva contraseña (4 caracteres)" maxlength="4" single-line type="Number" variant="outlined" rounded
             hide-details></v-text-field>
-        <v-btn v-show="!isDisarm && !changePassOn" @click="disarm" rounded size="large" color="red" class="mb-1"><v-icon
+        <v-btn v-show="!isDisarm && !changePassOn" @click="disarm" rounded size="large" class="mb-1 color-red"><v-icon
                 size="30">mdi-lock-open</v-icon>
             Desactivar
         </v-btn>
@@ -21,10 +21,10 @@
         <v-btn v-show="isDisarm && !changePassOn" class="mb-1 button-arm" @click="armedStay" rounded size="large"><v-icon size="30">mdi-home-lock</v-icon>
             Activar-En casa
         </v-btn>
-        <v-btn v-if="!changePassOn" class="mb-1" @click="changePasstoOn" rounded size="large" color="blue_state">
+        <v-btn v-if="!changePassOn" class="mb-1 color-blue" @click="changePasstoOn" rounded size="large">
             Cambiar contraseña
         </v-btn>
-        <v-btn v-if="changePassOn" class="mb-1" @click="changePasscode" rounded size="large" color="blue_state">
+        <v-btn v-if="changePassOn" class="mb-1 color-blue" @click="changePasscode" rounded size="large">
             Confirmar contraseña
         </v-btn>
 
@@ -192,5 +192,14 @@ async function changePasscode() {
     align-items: center;
     justify-content: center;
     height: 2.5rem;
+}
+
+.color-blue{
+    background-color:rgb(var(--v-theme-blue_state));
+    color:rgb(var(--v-theme-primary_v));
+}
+.color-red{
+    background-color:rgb(var(--v-theme-red_state));
+    color:rgb(var(--v-theme-red_state));
 }
 </style>
