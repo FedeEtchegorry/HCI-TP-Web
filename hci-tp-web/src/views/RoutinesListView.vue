@@ -25,6 +25,7 @@ import { useRoutineStore } from '@/stores/routineStore';
 import { useSearchStore } from '@/stores/searchStore';
 import RoutinesDetail from '@/components/CardDetail/Routines/RoutinesDetail.vue'
 
+const deviceStore = useDeviceStore();
 const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
 const routineStore = useRoutineStore();
@@ -64,9 +65,25 @@ const handleNewRoutine = (routine) => {
   }
   else {
     errorMsg.value = '';
-    // ...
+    storeRoutine(routine);
   }
 };
+
+const routine = ref({
+  name: '',
+  actions: [{ device: deviceStore.devices.find(device => device.name === device).id, action: '', param: ''}],
+});
+
+async function storeRoutine(routine){
+    try{
+      if(await routineStore.add(routine))
+        return true;
+    }
+    catch(e){
+      errorMsg.value = "Error al enviar la rutina";
+    }
+}
+
 
 onMounted(async () => {
   await routineStore.getAll();
