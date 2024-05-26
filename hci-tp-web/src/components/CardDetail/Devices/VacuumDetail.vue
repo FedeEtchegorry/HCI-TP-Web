@@ -39,7 +39,7 @@
 
 <script setup>
 import { useRoomStore } from '@/stores/roomStore';
-import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 
 const props = defineProps({
@@ -98,18 +98,18 @@ async function handleClickDock() {
 }
 
 async function changeLocation() {
-    console.log(myDevice.value)
-    console.log(currentLocation.value)
+
     try {
         await deviceStore.execute(deviceId.value, 'setLocation', [currentLocation.value.id]);
-        //myDevice.value.state.location = 
+        myDevice.value.state.location.id=currentLocation.value.id;
+        myDevice.value.state.location.name=currentLocation.value.name;
     } catch (e) {
         console.log(e);
     }
 }
 
-onBeforeMount(() => {
-    roomStore.getAll();
+onBeforeMount(async () => {
+    await roomStore.getAll();
 })
 </script>
 

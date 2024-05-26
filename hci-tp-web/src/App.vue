@@ -7,10 +7,8 @@
 
 
 import {  RouterView } from 'vue-router'
-import { onMounted } from 'vue';
 
-onMounted(async () => {
-});
+
 
 
 </script>

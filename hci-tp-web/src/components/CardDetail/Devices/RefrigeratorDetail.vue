@@ -103,7 +103,7 @@ async function changeMode() {
 
 <style scoped>
 .select {
-    width: 90%;
+    width: 95%;
     max-height: 20%;
 }
 
