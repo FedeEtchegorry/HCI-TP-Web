@@ -22,8 +22,11 @@ import { ref, computed, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import AddingNewRoutineView from './AddingNewRoutineView';
 import { useRoutineStore } from '@/stores/routineStore';
+import { useSearchStore } from '@/stores/searchStore';
 import RoutinesDetail from '@/components/CardDetail/Routines/RoutinesDetail.vue'
 
+const searchStore = useSearchStore();
+const search = computed(() => searchStore.getSearch);
 const routineStore = useRoutineStore();
 const components = ref([]);
 const addButtonState = ref(false);
@@ -71,8 +74,20 @@ onMounted(async () => {
     component: RoutinesDetail,
     props: { routine }
   }));
+  searchStore.setItems([
+    'Por nombre de rutina',
+  ]);
 });
 
+/*
+const filteredRoutines = computed(() => {
+  if (!search.value) {
+    return components.value;
+  }
+  return components.value.filter(item =>
+    item.props.room.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+});*/
 </script>
 
 <style scoped>
