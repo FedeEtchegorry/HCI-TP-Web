@@ -1,5 +1,5 @@
 <template>
-    <EmptyCard>
+    <EmptyDeviceDialog>
         <v-card class="title-box">
             <v-row>
                 <v-col>
@@ -31,14 +31,14 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </EmptyCard>
+    </EmptyDeviceDialog>
 </template>
 
 
 
 <script setup>
 import { ref, computed } from 'vue';
-import EmptyCard from '../EmptyCard.vue';
+import EmptyDeviceDialog from '../EmptyDeviceDetail.vue';
 import DoorDetail from './DoorDetail.vue';
 import BlindDetail from './BlindDetail.vue';
 import RefrigeratorDetail from './RefrigeratorDetail.vue';

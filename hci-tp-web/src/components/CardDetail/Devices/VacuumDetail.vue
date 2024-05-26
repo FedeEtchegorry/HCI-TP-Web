@@ -1,7 +1,7 @@
 <template>
     <v-card class="device">
 
-        <v-btn class="button" size="124" :append-icon="!isWorking ? 'mdi-play' : 'mdi-pause'" elevation="24"
+        <v-btn class="button" size="200" :append-icon="!isWorking ? 'mdi-play' : 'mdi-pause'" elevation="24"
             @click="handleClickStatus" :color="!isWorking ? 'green' : ''">
             {{ !isWorking ? "START" : "PAUSE" }}
         </v-btn>

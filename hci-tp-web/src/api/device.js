@@ -46,7 +46,7 @@ class Device {
     constructor(name, meta) {
         this.name = name;
         this.type = new DeviceType();
-        this.meta = meta;
+        this.meta = new DeviceMeta();
     }
 
     toString() {
@@ -59,6 +59,7 @@ class Vacuum extends Device{
     constructor(...args) {
         super(...args)
         this.type.id = "ofglvd9gqx8yfl3l";
+        this.meta.logo = 'mdi-vacuum'
     }
 }
 
@@ -66,6 +67,7 @@ class Door extends Device{
     constructor(...args) {
         super(...args)
         this.type.id = "lsf78ly0eqrjbz91";
+        this.meta.logo = 'mdi-door'
     }
 }
 
@@ -73,6 +75,7 @@ class Refrigerator extends Device{
     constructor(...args) {
         super(...args)
         this.type.id = "rnizejqr2di0okho";
+        this.meta.logo = 'mdi-fridge'
     }
 }
 
@@ -80,6 +83,7 @@ class Blind extends Device{
     constructor(...args) {
         super(...args)
         this.type.id = "eu0v2xgprrhhg41g";
+        this.meta.logo = 'mdi-blinds'
     }
 }
 
@@ -87,6 +91,7 @@ class Alarm extends Device{
     constructor(... args){
         super(...args)
         this.type.id = "mxztsyjzsrq7iaqc";
+        this.meta.logo = 'mdi-shield-lock'
     }
 }
 
@@ -101,9 +106,9 @@ class DeviceType {
 
 
 class DeviceMeta {
-    constructor() {
-        //json con informacion extra acerca del dispositivo
+    constructor(logo) {
+        this.logo = logo;
     }
 }
 
-export { DeviceApi, Device, Vacuum, Door, Refrigerator, Blind, DeviceMeta};
+export { DeviceApi, Device, Vacuum, Alarm, Door, Refrigerator, Blind, DeviceMeta};

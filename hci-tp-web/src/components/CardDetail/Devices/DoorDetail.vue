@@ -1,7 +1,7 @@
 <template>
     <v-card class="device">
 
-        <v-btn class="button" variant="outlined" size="124" elevation="24" :disabled="isLocked && !isOpen"
+        <v-btn class="button" variant="outlined" size="200" elevation="24" :disabled="isLocked && !isOpen"
             @click="handleClickStatus">
             <v-icon size="86" :icon="isOpen ? 'mdi-door-open' : 'mdi-door'"></v-icon>
         </v-btn>

@@ -16,14 +16,14 @@
 
 <script setup>
 import { ref, onMounted, computed, shallowRef } from 'vue';
-import DeviceDetail from '@/components/CardDetail/Devices/DeviceDetail.vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
 import GridComponent from '@/components/GridComponent.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 import AddingNewSimpleThingView from './AddingNewSimpleThingView.vue';
 import { useSearchStore } from '@/stores/searchStore';
-import { Vacuum, Blind, Refrigerator, Door } from '@/api/device';
+import { Vacuum, Blind, Refrigerator, Door, Alarm } from '@/api/device';
 import { useRoomStore } from '@/stores/roomStore';
+import DeviceDialog from '@/components/CardDetail/Devices/DeviceDialog.vue';
 
 const roomStore = useRoomStore();
 const searchStore = useSearchStore();
@@ -38,6 +38,7 @@ const deviceType = {
   'Persiana': Blind,
   'Heladera': Refrigerator,
   'Puerta': Door,
+  'Alarma': Alarm,
 };
 
 const errorMsg=ref('');
@@ -56,17 +57,12 @@ const handleAddButtonPressed = () => {
 
 async function addDevice(name, type) {
   try {
-    const newDevice = {
-      type: {
-        id: deviceTypeId.at(deviceTypeArray.findIndex(t => t === type))
-      },
-      name: name,
-    };
+    const newDevice = new deviceType[type](name);
     await deviceStore.add(newDevice);
     window.location.reload();
     return true;
   } catch (e) {
-    console.log("Problemas");
+    console.log("Error creating devices: ", e);
     return false;
   }
 
@@ -88,7 +84,7 @@ async function handleNewDevice(state, name, type){
 onMounted(async () => {
   await deviceStore.getAll();
   components.value = deviceStore.devices.map(device => ({
-    component: DeviceDetail,
+    component: DeviceDialog,
     props: { device }
   }));
 });
