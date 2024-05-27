@@ -30,7 +30,7 @@
                     props.device.room?.name }}</v-btn>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
 
-                <v-btn class="del-btn" elevation="5" text @click.="deleteDevice">Eliminar</v-btn>
+                <v-btn class="del-btn" elevation="5" text @click="deleteDevice">Eliminar</v-btn>
                 <v-card-actions class="mb-3">
                     <v-btn class="save-btn" rounded elevation="5" text @click="modifyDevice">Guardar</v-btn>
                     <v-spacer></v-spacer>
