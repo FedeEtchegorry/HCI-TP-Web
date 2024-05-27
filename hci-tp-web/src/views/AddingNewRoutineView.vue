@@ -94,16 +94,7 @@ import { ref, computed } from 'vue';
 
 const routine = ref({
   name: '',
-  devices: [{ device: '', action: '', param: ''}],
-  days: [
-    { day: 'L', active: false },
-    { day: 'M', active: false },
-    { day: 'X', active: false },
-    { day: 'J', active: false },
-    { day: 'V', active: false },
-    { day: 'S', active: false },
-    { day: 'D', active: false }
-  ]
+  devices: [{ device: '', action: '', param: ''}]
 });
 
 const emit = defineEmits(['newRoutineEvent']);
