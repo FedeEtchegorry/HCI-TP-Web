@@ -114,7 +114,7 @@ function getDeviceActions(deviceType) {
     case 'blinds':
       return ['Abrir', 'Cerrar', 'Establecer Posición'];
     case 'vacuum':
-      return ['Iniciar', 'Pausar', 'Regresar Base de Carga'];
+      return ['Iniciar', 'Pausar', 'Regresar Base de Carga', 'Modo trapear', 'Modo aspirar'];
     case 'door':
       return ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'];
     case 'refrigerator':
@@ -130,11 +130,13 @@ function getActionParameter(actionType) {
 
     case 'Establecer Temp. Freezer':
     case 'Establecer Posición':
+    case 'Activar Casa':
+    case 'Activar Fuera':
+    case 'Desactivar':
       return true;
     case 'Abrir':
     case 'Cerrar':
     case 'Pausar':
-    case 'Activar':
     case 'Iniciar':
     case 'Bloquear':
     case 'Desactivar':
@@ -143,6 +145,8 @@ function getActionParameter(actionType) {
     case 'Modo default':
     case 'Modo vacaciones':
     case 'Regresar Base de Carga':
+    case 'Modo trapear':
+    case 'Modo aspirar':
       return false;
     default:
       return false;
