@@ -129,6 +129,7 @@ function getActionParameter(actionType) {
   switch (actionType) {
 
     case 'Establecer Temp. Freezer':
+    case 'Establecer Temp.':
     case 'Establecer Posición':
       return true;
     case 'Abrir':
