@@ -17,12 +17,7 @@
         <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/routines">
           <v-icon class="icon">mdi-calendar-clock</v-icon>
           <h2 v-show="!isMini" class="text">RUTINAS</h2>
-        </RouterLink>
-        <RouterLink class="d-flex drawer_elem ma-1 pt-2 pb-2 pl-5 pr-5" to="/houses">
-          <v-icon class="icon">mdi-home-group</v-icon>
-          <h2 v-show="!isMini" class="text">HOGARES</h2>
-        </RouterLink>
-    
+        </RouterLink>   
     <div class="bottom">
       <ProfileComponent v-if="!isMini"></ProfileComponent>
       <v-icon class="icon-account" v-else>mdi-account</v-icon>
