@@ -44,6 +44,7 @@
               ></v-select>
               <v-select
                 v-model="row.action"
+                @update:focused="calculatePossibleActions(row.device)"
                 class="add-routine-flexible-field"
                 :items="possibleActions"
                 label="Acción"
@@ -126,16 +127,53 @@ const props = defineProps({
   },
   myDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "nombre", "Tipo" y un arreglo de strings de sus posibles acciones
     required: true,
-    type: Array,
-    validator(value) { return value.every( item => (typeof(item) === 'object' && typeof(item.name) === 'string' && typeof(item.type) === 'string' && Array.isArray(item.actions)) ); }
+    type: Object/*Array,
+    validator(value) { return value.every( item => (typeof(item) === 'object' && typeof(item.name) === 'string' && typeof(item.type) === 'string' && Array.isArray(item.actions)) ); }*/
   }
 });
 
 const deviceNames = computed(() => props.myDevices.map(device => device.name));
+
+function getDeviceTypeAndActions(deviceType){
+  switch(deviceType){
+    case 'alarm':
+      return {type: 'Alarma', actions: ['Activar', 'Desactivar'] };
+    case 'blinds':
+      return {type: 'Persiana', actions: ['Abrir', 'Cerrar', 'Establecer Posición'] };
+    case 'vacuum':
+      return{type: 'Aspiradora', actions: ['Iniciar', 'Pausar', 'Regresar Base de Carga']};
+    case 'door':
+      return {type: 'Puerta', actions: ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'] };
+    case 'refrigerator':
+      return {type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.', 'Modo fiesta', 'Modo default', 'Modo vacaciones']};
+    default:
+      return null;
+  }
+}
+
+function getDeviceActions(deviceType){
+  switch(deviceType){
+    case 'alarm':
+      return ['Activar', 'Desactivar'];
+    case 'blinds':
+      return ['Abrir', 'Cerrar', 'Establecer Posición'];
+    case 'vacuum':
+      return ['Iniciar', 'Pausar', 'Regresar Base de Carga'];
+    case 'door':
+      return ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'];
+    case 'refrigerator':
+      return ['Establecer Temp. Freezer', 'Establecer Temp.', 'Modo fiesta', 'Modo default', 'Modo vacaciones'];
+    default:
+      return null;
+  }
+}
+
 const calculatePossibleActions = (deviceSelected) => {
-  const thisDevice = props.myDevices.find(dev => dev.type === deviceSelected);
+
+  const thisDevice = props.myDevices.find(myDevice => myDevice.name === deviceSelected);
+
   if (thisDevice) {
-    possibleActions.value = thisDevice.actions;
+    possibleActions.value = getDeviceActions(thisDevice.type);
   } else {
     possibleActions.value = [];
   }

@@ -34,38 +34,9 @@ const searchStore = useSearchStore();
 const search = computed(() => searchStore.getSearch);
 const routineStore = useRoutineStore();
 const components = ref([]);
+const myDevices = ref([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
-const devicesAndActions = ref([
-  { type: 'Alarma', actions: ['Activar', 'Desactivar'] },
-  { type: 'Aspiradora', actions: ['Iniciar', 'Pausar', 'Regresar Base de Carga'] },
-  { type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.'] },
-  { type: 'Persiana', actions: ['Abrir', 'Cerrar', 'Establecer Posición'] },
-  { type: 'Puerta', actions: ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'] }
-]);
-
-function getDeviceTypeAndActions(deviceType){
-  switch(deviceType){
-    case 'alarm':
-      return {type: 'Alarma', actions: ['Activar', 'Desactivar'] };
-    case 'blinds':
-      return {type: 'Persiana', actions: ['Abrir', 'Cerrar', 'Establecer Posición'] };
-    case 'vacuum':
-      return{type: 'Aspiradora', actions: ['Iniciar', 'Pausar', 'Regresar Base de Carga']};
-    case 'door':
-      return {type: 'Puerta', actions: ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'] };
-    case 'refrigerator':
-      return {type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.', 'Modo fiesta', 'Modo default', 'Modo vacaciones']};
-    default:
-      return null;
-  }
-}
-
-const myDevices = ref([
-
-  { name: 'Dispositivo_1', type: 'Alarma', actions: ['Activar', 'Desactivar'] }
-
-]);
 
 const showMyRoutine = ref(true);
 const selectedRoutine = ref({
@@ -110,9 +81,6 @@ const handleNewRoutine = (routine) => {
   }
 };
 
-
-
-
 async function storeRoutine(routineArray) {
     const routine = new Routine(name, null);
     routineArray.forEach(row => {
@@ -136,9 +104,8 @@ async function storeRoutine(routineArray) {
     }
 }
 
-
-
 onMounted(async () => {
+  await deviceStore.getAll();
   await routineStore.getAll();
   components.value = routineStore.routines.map(routine => ({
     component: RoutinesDetail,
@@ -147,8 +114,10 @@ onMounted(async () => {
   searchStore.setItems([
     'Por nombre de rutina',
   ]);
-});
 
+  myDevices.value = deviceStore.devices.map(device => { return { name: device.name, type: device.type.name}; });
+  console.log(`${myDevices}`)
+});
 
 const filteredRoutines = computed(() => {
   if (!search.value) {
