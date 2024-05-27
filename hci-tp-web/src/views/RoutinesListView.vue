@@ -121,6 +121,9 @@ function createRoutine(routineData){
   const routine = new Routine(routineData.name, null);
   for (const deviceEntry of routineData.devices){
     if (deviceEntry.device!=''){
+      if (deviceEntry.param==''){
+        deviceEntry.param=null
+      }
       const action = new Action((deviceStore.devices.find(device => device.name == deviceEntry.device)).id, getAction(deviceEntry.action), new Array(deviceEntry.param), null);
       console.log(action);
       routine.addAction(action);
