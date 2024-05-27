@@ -30,7 +30,20 @@
                     props.device.room?.name }}</v-btn>
                 <p v-show="errorMessageOn">{{ errorMsg }}</p>
 
-                <v-btn class="del-btn" elevation="5" text @click.="deleteDevice">Eliminar</v-btn>
+                <v-btn class="del-btn" elevation="5" text @click="deleteDialog = true">Eliminar</v-btn>
+                <v-dialog v-model="deleteDialog" max-width="400">
+                    <v-card>
+                      <v-card-title class="headline">Confirmación de Eliminación</v-card-title>
+                      <v-card-text>
+                        ¿Estás seguro de que deseas eliminar este dispositivo?
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red darken-1" text @click="deleteDevice">Eliminar</v-btn>
+                        <v-btn color="grey darken-1" text @click="deleteDialog = false">Cancelar</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
                 <v-card-actions class="mb-3">
                     <v-btn class="save-btn" rounded elevation="5" text @click="modifyDevice">Guardar</v-btn>
                     <v-spacer></v-spacer>
@@ -71,6 +84,7 @@ const props = defineProps({
     device: Object,
 });
 
+const deleteDialog = ref(false);
 const dialog = ref(false);
 const editedDeviceName = ref(props.device.name);
 const editedDeviceRoom = ref(props.device.room?.name);
