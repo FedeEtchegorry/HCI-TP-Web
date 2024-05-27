@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="props.showRoutine" max-width="60rem">
+    <v-dialog v-model="props.showRoutine" max-width="40rem">
       <v-card class="rounded-xl show-routine-custom-card">
 
         <v-card-title class="show-routine-title">
@@ -20,18 +20,18 @@
 
         <v-card-text class="show-routine-devices-section">
 
-            <v-col v-if="props.myRoutine.devices" v-for="(device, index) in props.myRoutine.devices" :key="index">
+            <v-col v-if="props.myRoutine.actions" v-for="(action, index) in props.myRoutine.actions" :key="index">
                 <v-row class="show-routine-row">
 
                     <v-col cols="auto">
                         <span class="show-routine-number-span">{{index+1}}°</span>
-                        <span class="show-routine-info-span">Dispositivo: {{device.name}}</span>
+                        <span class="show-routine-info-span">Dispositivo: {{action.device.name}}</span>
                     </v-col>
                     <v-col cols="auto">
-                        <span class="show-routine-info-span">Acción: {{device.action}}</span>
+                        <span class="show-routine-info-span">Acción: {{getAction(action.actionName)}}</span>
                     </v-col>
-                    <v-col cols="auto">
-                        <span class="show-routine-info-span">Parámetro: {{device.param}}</span>
+                    <v-col cols="auto" v-if="action.params[0]">
+                        <span class="show-routine-info-span">Parámetro: {{action.params[0]}}</span>
                     </v-col>
                 </v-row>
             </v-col>
@@ -43,7 +43,7 @@
 
 <script setup>
 
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 const emit = defineEmits(['showRoutineEvent']);
 const closeDialog = () => emit('showRoutineEvent', false);
@@ -60,14 +60,48 @@ const props = defineProps({
   }
 });
 
+function getAction(actionName) {
+
+  switch(actionName) {
+    case 'armStay':
+      return 'Activar Casa';
+    case 'armAway':
+      return 'Activar Fuera';
+    case 'disarm':
+      return 'Desactivar';
+    case 'open':
+      return 'Abrir';
+    case 'close':
+      return 'Cerrar';
+    case 'setLevel':
+      return 'Establecer Posición';
+    case 'start':
+      return 'Iniciar';
+    case 'stop':
+      return 'Pausar';
+    case 'dock':
+      return 'Regresar Base de Carga';
+    case 'lock':
+      return 'Bloquear';
+    case 'unlock':
+      return 'Desbloquear';
+    case 'setTempFreezer':
+      return 'Establecer Temp. Freezer';
+    case 'setTemp':
+      return 'Establecer Temp.';
+    case 'mode':
+      return 'Modo';
+    default:
+      return 'Desconocida D:';
+  }
+}
+
 </script>
 
-<style>
+<style scoped>
 
 .show-routine-card {
     background-color: rgb(var(--v-theme-primary_v));
-    max-height: 50rem;
-    max-width: 70rem;
 }
 
 .show-routine-title {

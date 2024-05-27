@@ -1,5 +1,5 @@
 <template>
-    <EmptyCard class="custom-empty-card" @click="">
+    <EmptyCard class="custom-empty-card" @click="showDetails">
         <v-card class=custom-card>
             <div class="custom-title">
                 <h1>{{ routine.name }}</h1>
@@ -20,8 +20,12 @@
 </template>
 
 <script setup>
+
 import { useRoutineStore } from '@/stores/routineStore';
 import { ref, onMounted, computed } from 'vue';
+
+const emit = defineEmits(['clickForDetails']);
+const showDetails = () => emit('clickForDetails', myRoutine.value.id);
 
 const props = defineProps({
     routine: Object,
