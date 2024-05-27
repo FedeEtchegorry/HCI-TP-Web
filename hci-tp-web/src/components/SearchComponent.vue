@@ -49,9 +49,6 @@ const items = computed(() => searchStore.getItems);  // Obtener las opciones del
   margin: 0 1rem
 }
 
-::v-deep .custom-icon-append .v-input__append-inner{
-display: none;
-}
 
 .custom-icon {
   color: black;
