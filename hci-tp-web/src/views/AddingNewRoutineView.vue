@@ -44,19 +44,22 @@
               ></v-select>
               <v-select
                 v-model="row.action"
-                @update:focused="calculatePossibleActions(row.device)"
+                @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
                 class="add-routine-flexible-field"
                 :items="possibleActions"
                 label="Acción"
                 rounded
                 variant="outlined"
               ></v-select>
+
               <v-text-field
                 v-model="row.param"
+                @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
                 class="add-routine-flexible-field"
                 label="Parametro"
                 rounded
                 variant="outlined"
+                :readonly="!possibleParameters"
               ></v-text-field>
               <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
             </v-row>
@@ -110,6 +113,7 @@ const addDeviceToRoutine = () => routine.value.devices.push({ device: '', action
 const toggleDay = (index) => { routine.value.days[index].active = !routine.value.days[index].active; }
 const deleteDevice = (index) => { routine.value.devices.splice(index, 1); }
 const possibleActions = ref([]);
+const possibleParameters = ref(false);
 
 const props = defineProps({
 
@@ -127,32 +131,14 @@ const props = defineProps({
   },
   myDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "nombre", "Tipo" y un arreglo de strings de sus posibles acciones
     required: true,
-    type: Object/*Array,
-    validator(value) { return value.every( item => (typeof(item) === 'object' && typeof(item.name) === 'string' && typeof(item.type) === 'string' && Array.isArray(item.actions)) ); }*/
+    type: Object
   }
 });
 
 const deviceNames = computed(() => props.myDevices.map(device => device.name));
 
-function getDeviceTypeAndActions(deviceType){
-  switch(deviceType){
-    case 'alarm':
-      return {type: 'Alarma', actions: ['Activar', 'Desactivar'] };
-    case 'blinds':
-      return {type: 'Persiana', actions: ['Abrir', 'Cerrar', 'Establecer Posición'] };
-    case 'vacuum':
-      return{type: 'Aspiradora', actions: ['Iniciar', 'Pausar', 'Regresar Base de Carga']};
-    case 'door':
-      return {type: 'Puerta', actions: ['Abrir', 'Cerrar', 'Bloquear', 'Desbloquear'] };
-    case 'refrigerator':
-      return {type: 'Heladera', actions: ['Establecer Temp. Freezer', 'Establecer Temp.', 'Modo fiesta', 'Modo default', 'Modo vacaciones']};
-    default:
-      return null;
-  }
-}
-
-function getDeviceActions(deviceType){
-  switch(deviceType){
+function getDeviceActions(deviceType) {
+  switch (deviceType) {
     case 'alarm':
       return ['Activar', 'Desactivar'];
     case 'blinds':
@@ -168,6 +154,31 @@ function getDeviceActions(deviceType){
   }
 }
 
+function getActionParameter(actionType) {
+
+  switch (actionType) {
+
+    case 'Establecer Temp. Freezer':
+    case 'Establecer Posición':
+      return true;
+    case 'Abrir':
+    case 'Cerrar':
+    case 'Pausar':
+    case 'Activar':
+    case 'Iniciar':
+    case 'Bloquear':
+    case 'Desactivar':
+    case 'Desbloquear':
+    case 'Modo fiesta':
+    case 'Modo default':
+    case 'Modo vacaciones':
+    case 'Regresar Base de Carga':
+      return false;
+    default:
+      return false;
+  }
+}
+
 const calculatePossibleActions = (deviceSelected) => {
 
   const thisDevice = props.myDevices.find(myDevice => myDevice.name === deviceSelected);
@@ -178,6 +189,17 @@ const calculatePossibleActions = (deviceSelected) => {
     possibleActions.value = [];
   }
 };
+
+const calculatePossibleParameters = (actionSelected) => {
+
+  if (actionSelected) {
+    possibleParameters.value = getActionParameter(actionSelected);
+  }
+  else {
+    possibleParameters.value = false;
+  }
+
+}
 
 </script>
   
