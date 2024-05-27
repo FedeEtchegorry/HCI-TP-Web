@@ -79,6 +79,10 @@ function getAction(actionName){
       return 'stop';
     case 'Regresar Base de Carga':
       return 'dock';
+    case 'Modo trapear':
+      return 'setMode';
+    case 'Modo aspirar':
+      return 'setMode';
     case 'Bloquear':
       return 'lock';
     case 'Desbloquear':
@@ -133,6 +137,12 @@ function createRoutine(routineData){
       if (deviceEntry.action=='Modo default'){
         deviceEntry.param='default';
       }
+      if (deviceEntry.action=='Modo trapear'){
+        deviceEntry.param='mop';
+      }
+      if (deviceEntry.action=='Modo aspirar'){
+        deviceEntry.param='vacuum';
+      }
       const action = new Action((deviceStore.devices.find(device => device.name == deviceEntry.device)).id, getAction(deviceEntry.action), new Array(deviceEntry.param), null);
       console.log(action);
       routine.addAction(action);
@@ -148,7 +158,6 @@ async function storeRoutine(routine) {
         await routineStore.add(createRoutine(routine));
         addButtonState.value = false;
         blurStatus.value = false;
-    
 }
     
     
