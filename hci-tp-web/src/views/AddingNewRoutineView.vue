@@ -31,14 +31,14 @@
               class="add-routine-flexible-field" :items="deviceNames" label="Dispositivo" required rounded
               variant="outlined"></v-select>
             <v-select v-model="row.action"
-              @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
+              @update:focused="calculatePossibleActions(row.device)"
+              @update:menu="calculatePossibleParameters(row.action); checkParameter(row);"
               class="add-routine-flexible-field" :items="possibleActions" label="Acción" rounded
               variant="outlined"></v-select>
 
             <v-text-field v-model="row.param"
-              @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
               class="add-routine-flexible-field" label="Parametro" rounded variant="outlined"
-              :readonly="!possibleParameters"></v-text-field>
+              :disabled="!possibleParameters"></v-text-field>
             <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
           </v-row>
 
@@ -47,8 +47,7 @@
         </v-col>
 
         <v-col cols="12" class="add-routine-add-new-device-col">
-          <v-btn class="add-routine-add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo
-            +</v-btn>
+          <v-btn class="add-routine-add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo +</v-btn>
         </v-col>
 
       </v-card-text>
@@ -129,6 +128,7 @@ function getActionParameter(actionType) {
   switch (actionType) {
 
     case 'Establecer Temp. Freezer':
+    case 'Establecer Temp.':
     case 'Establecer Posición':
     case 'Activar Casa':
     case 'Activar Fuera':
@@ -172,7 +172,12 @@ const calculatePossibleParameters = (actionSelected) => {
   else {
     possibleParameters.value = false;
   }
+}
 
+const checkParameter = (options) => {
+  if (!possibleParameters.value) {
+    options.param = '';
+  }
 }
 
 </script>
