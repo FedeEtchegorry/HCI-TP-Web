@@ -37,8 +37,9 @@
               variant="outlined"></v-select>
 
             <v-text-field v-model="row.param"
+              @update:focused="calculatePossibleParameters(row.action)"
               class="add-routine-flexible-field" label="Parametro" rounded variant="outlined"
-              :disabled="!possibleParameters"></v-text-field>
+              :readonly="!possibleParameters"></v-text-field>
             <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
           </v-row>
 
@@ -98,7 +99,7 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  myDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "nombre", "Tipo" y un arreglo de strings de sus posibles acciones
+  myDevices: {
     required: true,
     type: Object
   }
