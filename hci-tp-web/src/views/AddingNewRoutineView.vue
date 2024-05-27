@@ -37,8 +37,9 @@
               variant="outlined"></v-select>
 
             <v-text-field v-model="row.param"
+              @update:focused="calculatePossibleParameters(row.action)"
               class="add-routine-flexible-field" label="Parametro" rounded variant="outlined"
-              :disabled="!possibleParameters"></v-text-field>
+              :readonly="!possibleParameters"></v-text-field>
             <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
           </v-row>
 
