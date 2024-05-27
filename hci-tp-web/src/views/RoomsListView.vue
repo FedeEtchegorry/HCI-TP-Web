@@ -71,10 +71,9 @@ async function handleNewRoom(state, name, type) {
       const room = new Room(null, name, roomMeta);
       await roomStore.add(room);
       errorMsg.value = '';
-      components.value.push({
-      component: RoomDetail,
-      props: { room }
-    });
+      components.value.push({ component: RoomDetail, props: { room }});
+      addButtonState.value = false;
+      blurStatus.value = false;
     } catch (e) {
       errorMsg.value = "Error al agregar la habitación";
     }

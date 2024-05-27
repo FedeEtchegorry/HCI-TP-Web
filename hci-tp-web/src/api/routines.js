@@ -25,6 +25,7 @@ class RoutineApi {
         return await Api.put(RoutineApi.getUrl(id + '/execute'), null, controller);
     }
 
+
     static async getAll(controller) {
         return await Api.get(RoutineApi.getUrl(), controller);
     }
