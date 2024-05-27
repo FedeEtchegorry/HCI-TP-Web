@@ -99,7 +99,7 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  myDevices: {  // Devices es un arreglo de los dispositivos soportados que contiene "nombre", "Tipo" y un arreglo de strings de sus posibles acciones
+  myDevices: {
     required: true,
     type: Object
   }
