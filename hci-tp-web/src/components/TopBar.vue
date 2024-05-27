@@ -21,13 +21,6 @@
   justify-content: space-between;
 }
 
-.custom-dropdown {
-  max-width: 16rem;
-  min-width: 10rem;
-  height: 3.5rem;
-  background-color: rgb(var(--v-theme-primary_v));
-  color: black;
-}
 
 .custom-icon-2 {
   color: black;
