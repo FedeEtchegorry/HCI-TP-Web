@@ -6,7 +6,7 @@
         <v-row class="row" >
             <v-text-field class="input-class-1" v-model="input" label="Pass (4 caracteres)" maxlength="4" single-line
                 type="Number" variant="outlined" rounded hide-details></v-text-field>
-            <p v-if="hasError" class="error">ERROR-CÓDIGO INCORRECTO</p>
+            <p v-if="hasError" class="error">ERROR-PASS</p>
         </v-row>
         <v-text-field v-show="changePassOn" class="input-class-2" v-model="input_2"
             label="Nueva contraseña (4 caracteres)" maxlength="4" single-line type="Number" variant="outlined" rounded
