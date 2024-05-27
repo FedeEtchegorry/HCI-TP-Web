@@ -110,6 +110,8 @@ const handleNewRoutine = (routine) => {
   }
   else {
     errorMsg.value = '';
+    addButtonState.value = false;
+    blurStatus.value = false;
     storeRoutine(routine.value);
   }
 };
