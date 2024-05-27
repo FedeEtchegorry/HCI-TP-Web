@@ -154,7 +154,7 @@ function getDeviceTypeAndActions(deviceType){
 function getDeviceActions(deviceType){
   switch(deviceType){
     case 'alarm':
-      return ['Activar', 'Desactivar'];
+      return ['Activar Casa','Activar Fuera', 'Desactivar'];
     case 'blinds':
       return ['Abrir', 'Cerrar', 'Establecer Posición'];
     case 'vacuum':
