@@ -8,7 +8,7 @@
       <v-row dense justify="center">
         <template v-for="(item, index) in filteredRoutines" :key="index">
           <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
-            <component :is="item.component" v-bind="item.props"></component>
+            <component :is="item.component" v-bind="item.props" @clickForDetails="clickRoutine"></component>
           </v-col>
         </template>
         <h2 v-show="components.length==0">AGREGA TU PRIMERA RUTINA</h2>
@@ -38,19 +38,13 @@ const myDevices = ref([]);
 const addButtonState = ref(false);
 const blurStatus = ref(false);
 
-const showMyRoutine = ref(true);
-const selectedRoutine = ref({
+const showMyRoutine = ref(false);
+const selectedRoutine = ref({});
 
-  name: 'mi_rutina',
-  devices: [
-    { name: 'Dispo_1', action: 'Apagar', param: 'n/a' },
-    { name: 'Dispo_2', action: 'Prender', param: 'n/a' },
-    { name: 'Dispo_3', action: 'Apagar', param: 'n/a' },
-    { name: 'Dispo_4', action: 'Prender', param: 'n/a' },
-    { name: 'Dispo_5', action: 'Apagar', param: 'n/a' },
-    { name: 'Dispo_6', action: 'Prender', param: 'n/a' }
-  ]
-});
+const clickRoutine = (id) => {
+  selectedRoutine.value = routineStore.routines.find(routine => routine.id === id);
+  showMyRoutine.value = !showMyRoutine.value;
+};
 
 const errorMsg = ref('');
 const errorMessageOn = computed(() => errorMsg.value != '');
@@ -93,8 +87,12 @@ function getAction(actionName){
       return 'setTempFreezer';
     case 'Establecer Temp.':
       return 'setTemp';
-    case 'Modo':
-      return 'mode';
+    case 'Modo fiesta':
+      return 'setMode';
+    case 'Modo default':
+      return 'setMode';
+    case 'Modo vacaciones':
+      return 'setMode';
     default:
       return null;
   }
@@ -123,6 +121,15 @@ function createRoutine(routineData){
     if (deviceEntry.device!=''){
       if (deviceEntry.param==''){
         deviceEntry.param=null
+      }
+      if (deviceEntry.action=='Modo fiesta'){
+        deviceEntry.param='party';
+      }
+      if (deviceEntry.action=='Modo vacaciones'){
+        deviceEntry.param='vacation';
+      }
+      if (deviceEntry.action=='Modo default'){
+        deviceEntry.param='default';
       }
       const action = new Action((deviceStore.devices.find(device => device.name == deviceEntry.device)).id, getAction(deviceEntry.action), new Array(deviceEntry.param), null);
       console.log(action);
