@@ -21,7 +21,6 @@
                 </v-btn>
             </div>
             <div class="mode">
-                A base
                 <v-btn class="mb-2 base-btn" @click="handleClickDock" :disabled="isDocked" icon="mdi-backup-restore" rounded="xl"
                     size="x-large"></v-btn>
             </div>    
@@ -135,7 +134,7 @@ onBeforeMount(async () => {
     font-size: large;
 }
 .mode-btn{
-    background-color: rgb(var(--v-theme-blue_state));
+    background-color: rgb(var(--v-theme-primary_v));
 }
 .base-btn{
     background-color: rgb(var(--v-theme-red_state));

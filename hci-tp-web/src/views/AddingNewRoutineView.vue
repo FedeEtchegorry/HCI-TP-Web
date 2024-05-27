@@ -1,100 +1,79 @@
 <template>
-    <v-dialog v-model="props.addOptionActive" class="add-routine-dialog">
-      <v-card class="rounded-xl add-routine-card">
+  <v-dialog v-model="props.addOptionActive" class="add-routine-dialog">
+    <v-card class="rounded-xl add-routine-card">
 
-        <v-card-title class="add-routine-title">
-          <v-row class="add-routine-row">
-            <v-col cols="12" sm="6">
-                <v-text-field
-                    v-model="routine.name"
-                    class="add-routine-large-field"
-                    label="Nombre de Nueva Rutina"
-                    :rules="[v => !!v || 'El nombre es obligatorio']"
-                    required
-                    rounded
-                    outlined
-                    variant="outlined"
-                ></v-text-field>
-            </v-col>
-            <v-col class="add-routine-day-buttons-col">
-              <v-btn v-for="(day, index) in routine.days" :key="index" :class="day.active === true ? 'add-routine-day-button add-routine-day-button-selected' : 'add-routine-day-button'" @click="toggleDay(index)">
-                {{ day.day }}
-              </v-btn>
-            </v-col>
+      <v-card-title class="add-routine-title">
+        <v-row class="add-routine-row">
+          <v-col cols="12" sm="6">
+            <v-text-field v-model="routine.name" class="add-routine-large-field" label="Nombre de Nueva Rutina"
+              :rules="[v => !!v || 'El nombre es obligatorio']" required rounded outlined
+              variant="outlined"></v-text-field>
+          </v-col>
+          <v-col class="add-routine-day-buttons-col">
+            <v-btn v-for="(day, index) in routine.days" :key="index"
+              :class="day.active === true ? 'add-routine-day-button add-routine-day-button-selected' : 'add-routine-day-button'"
+              @click="toggleDay(index)">
+              {{ day.day }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-title>
+
+      <div class="add-routine-coarse-divider"></div>
+
+      <v-card-text class="add-routine-devices-section">
+
+        <v-col v-for="(row, index) in routine.devices" :key="index">
+
+          <v-row class="add-routine-row" cols="12" sm="6">
+            <span class="add-routine-number-span">{{ index + 1 }}°</span>
+            <v-select v-model="row.device" @update:model-value="calculatePossibleActions(row.device)"
+              class="add-routine-flexible-field" :items="deviceNames" label="Dispositivo" required rounded
+              variant="outlined"></v-select>
+            <v-select v-model="row.action"
+              @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
+              class="add-routine-flexible-field" :items="possibleActions" label="Acción" rounded
+              variant="outlined"></v-select>
+
+            <v-text-field v-model="row.param"
+              @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
+              class="add-routine-flexible-field" label="Parametro" rounded variant="outlined"
+              :readonly="!possibleParameters"></v-text-field>
+            <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
           </v-row>
-        </v-card-title>
 
-        <div class="add-routine-coarse-divider"></div>
-        
-        <v-card-text class="add-routine-devices-section">
+          <div class="add-routine-thin-divider"></div>
 
-          <v-col v-for="(row, index) in routine.devices" :key="index">
+        </v-col>
 
-            <v-row class="add-routine-row" cols="12" sm="6">
-              <span class="add-routine-number-span">{{index+1}}°</span>
-              <v-select
-                v-model="row.device"
-                @update:model-value="calculatePossibleActions(row.device)"
-                class="add-routine-flexible-field"
-                :items="deviceNames"
-                label="Dispositivo"
-                required
-                rounded
-                variant="outlined"
-              ></v-select>
-              <v-select
-                v-model="row.action"
-                @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
-                class="add-routine-flexible-field"
-                :items="possibleActions"
-                label="Acción"
-                rounded
-                variant="outlined"
-              ></v-select>
+        <v-col cols="12" class="add-routine-add-new-device-col">
+          <v-btn class="add-routine-add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo
+            +</v-btn>
+        </v-col>
 
-              <v-text-field
-                v-model="row.param"
-                @update:focused="calculatePossibleActions(row.device); calculatePossibleParameters(row.action);"
-                class="add-routine-flexible-field"
-                label="Parametro"
-                rounded
-                variant="outlined"
-                :readonly="!possibleParameters"
-              ></v-text-field>
-              <v-btn class="add-routine-delete-device" icon="mdi-delete" size="40" @click="deleteDevice(index)"></v-btn>
-            </v-row>
+      </v-card-text>
 
-            <div class="add-routine-thin-divider"></div>
+      <div class="add-routine-coarse-divider"></div>
 
-          </v-col>
+      <v-card-actions>
+        <v-btn class="add-routine-confirm-button" text @click="saveRoutine">Confirmar</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn class="add-routine-cancel-button" text @click="closeDialog">Cancelar</v-btn>
+      </v-card-actions>
 
-          <v-col cols="12" class="add-routine-add-new-device-col">
-            <v-btn class="add-routine-add-new-device-button" @click="addDeviceToRoutine">+ Agregar otro dispositivo +</v-btn>
-          </v-col>
+      <span v-if="errorMessageOn" class="add-routine-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
 
-        </v-card-text>
-
-        <div class="add-routine-coarse-divider"></div>
-
-        <v-card-actions>
-          <v-btn class="add-routine-confirm-button" text @click="saveRoutine">Confirmar</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn class="add-routine-cancel-button" text @click="closeDialog">Cancelar</v-btn>
-        </v-card-actions>
-
-        <span v-if="errorMessageOn" class="add-routine-error" v-show="props.errorMessageOn">{{ props.errorMsg }}</span>
-
-      </v-card>
-    </v-dialog>
+    </v-card>
+  </v-dialog>
 </template>
-  
+
 <script setup>
 
 import { ref, computed } from 'vue';
 
 const routine = ref({
   name: '',
-  devices: [{ device: '', action: '', param: ''}],
+  devices: [{ device: '', action: '', param: '' }],
   days: [
     { day: 'L', active: false },
     { day: 'M', active: false },
@@ -109,7 +88,7 @@ const routine = ref({
 const emit = defineEmits(['newRoutineEvent']);
 const closeDialog = () => emit('newRoutineEvent', null);
 const saveRoutine = () => emit('newRoutineEvent', routine);
-const addDeviceToRoutine = () => routine.value.devices.push({ device: '', action: '', param: ''});
+const addDeviceToRoutine = () => routine.value.devices.push({ device: '', action: '', param: '' });
 const toggleDay = (index) => { routine.value.days[index].active = !routine.value.days[index].active; }
 const deleteDevice = (index) => { routine.value.devices.splice(index, 1); }
 const possibleActions = ref([]);
@@ -117,13 +96,13 @@ const possibleParameters = ref(false);
 
 const props = defineProps({
 
-  errorMessageOn:{
-      type: Boolean,
-      required: true
+  errorMessageOn: {
+    type: Boolean,
+    required: true
   },
-  errorMsg:{
-      type: String,
-      required:true
+  errorMsg: {
+    type: String,
+    required: true
   },
   addOptionActive: {
     type: Boolean,
@@ -140,7 +119,7 @@ const deviceNames = computed(() => props.myDevices.map(device => device.name));
 function getDeviceActions(deviceType) {
   switch (deviceType) {
     case 'alarm':
-      return ['Activar Casa','Activar Fuera', 'Desactivar'];
+      return ['Activar Casa', 'Activar Fuera', 'Desactivar'];
     case 'blinds':
       return ['Abrir', 'Cerrar', 'Establecer Posición'];
     case 'vacuum':
@@ -202,14 +181,14 @@ const calculatePossibleParameters = (actionSelected) => {
 }
 
 </script>
-  
-<style scoped>
 
+<style scoped>
 .add-routine-dialog {
   max-width: 60rem;
   width: 85%;
 
 }
+
 .add-routine-card {
   background-color: rgb(var(--v-theme-primary_v));
   max-height: 60rem;
@@ -317,13 +296,11 @@ const calculatePossibleParameters = (actionSelected) => {
   border-color: grey;
 }
 
-.add-routine-error{
-    display: flex;
-    justify-content: center;
-    color: rgb(var(--v-theme-red_state));
-    text-shadow: .2rem .2rem .4rem rgba(50, 20, 20, 0.6);
-    margin-bottom: 1rem;
+.add-routine-error {
+  display: flex;
+  justify-content: center;
+  color: rgb(var(--v-theme-red_state));
+  text-shadow: .2rem .2rem .4rem rgba(50, 20, 20, 0.6);
+  margin-bottom: 1rem;
 }
-
 </style>
-  

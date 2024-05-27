@@ -21,7 +21,7 @@
 
 import { ref, computed, onMounted } from 'vue';
 import CanvasComponent from '@/components/CanvasComponent.vue';
-import AddingNewRoutineView from './AddingNewRoutineView';
+import AddingNewRoutineView from './AddingNewRoutineView.vue';
 import ShowRoutineView from './ShowRoutineView';
 import { useRoutineStore } from '@/stores/routineStore';
 import { useDeviceStore } from '@/stores/deviceStore';

@@ -6,6 +6,30 @@
             </div>
             <!--<v-icon class="custom-icon" :icon="routine.meta.icon"></v-icon>-->
             <v-btn class="btn" :disabled="isDisabled" @click="startRoutine" size="110">COMENZAR</v-btn>
+            <v-dialog v-model="routineExecuted" max-width="400">
+                <v-card>
+                  <v-card-title class="headline">Confirmación</v-card-title>
+                  <v-card-text>
+                    La rutina se ha ejecutado correctamente
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" text @click="routineExecuted = false">Aceptar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <v-dialog v-model="routineError" max-width="400">
+                <v-card>
+                  <v-card-title class="headline">Error</v-card-title>
+                  <v-card-text>
+                    La rutina no se ha podido ejecutar
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="red darken-1" text @click="routineError = false">Aceptar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             <p v-show="errorMessageOn">{{ errorMsg }}</p>
                 <div class="custom-qty-devices">
                     <h2>ACCIONES</h2>
@@ -28,7 +52,8 @@ const props = defineProps({
 })
 
 const routineStore = useRoutineStore();
-
+const routineError = ref(false);
+const routineExecuted = ref(false);
 const myRoutine = ref(props.routine);
 let qtyActionsByRoutine = ref(0);
 const errorMsg = ref('');
@@ -49,7 +74,9 @@ async function startRoutine() {
     disable.value=true;
     try {
         await routineStore.execute(props.routine.id);
+        routineExecuted.value=true;
     } catch (e) {
+        routineError.value=true;
         console.log('Error executing routine:', e);
     }
     disable.value=false;

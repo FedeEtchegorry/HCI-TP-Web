@@ -94,6 +94,7 @@ async function changeFreezerTemp(value) {
 async function changeMode() {
     try {
         await deviceStore.execute(deviceId.value, 'setMode', [mode.value])
+        myDevice.value.state.mode = mode.value;
     } catch (e) {
         console.log(e);
     }
