@@ -93,8 +93,12 @@ function getAction(actionName){
       return 'setTempFreezer';
     case 'Establecer Temp.':
       return 'setTemp';
-    case 'Modo':
-      return 'mode';
+    case 'Modo fiesta':
+      return 'setMode';
+    case 'Modo default':
+      return 'setMode';
+    case 'Modo vacaciones':
+      return 'setMode';
     default:
       return null;
   }
@@ -123,6 +127,15 @@ function createRoutine(routineData){
     if (deviceEntry.device!=''){
       if (deviceEntry.param==''){
         deviceEntry.param=null
+      }
+      if (deviceEntry.action=='Modo fiesta'){
+        deviceEntry.param='party';
+      }
+      if (deviceEntry.action=='Modo vacaciones'){
+        deviceEntry.param='vacation';
+      }
+      if (deviceEntry.action=='Modo default'){
+        deviceEntry.param='default';
       }
       const action = new Action((deviceStore.devices.find(device => device.name == deviceEntry.device)).id, getAction(deviceEntry.action), new Array(deviceEntry.param), null);
       console.log(action);
