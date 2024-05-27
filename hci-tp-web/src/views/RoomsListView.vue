@@ -9,7 +9,7 @@
     <v-row dense justify="center">
       <template v-for="(item, index) in filteredRooms" :key="index">
         <v-col class="d-flex flex-column grow-1 ma-2 ml-4 mr-4 fixed-size-cell" cols="12" sm="6" md="4" lg="3" xl="2">
-          <RouterLink class="router-custom" to="/" @click="handleClick(item)">
+          <RouterLink class="router-custom" to="/" @click.stop="handleClick(item)">
             <component v-if="item" :is="item.component" v-bind="item.props"></component>
           </RouterLink>
         </v-col>
@@ -74,6 +74,7 @@ async function handleNewRoom(state, name, type) {
       components.value.push({ component: RoomDetail, props: { room }});
       addButtonState.value = false;
       blurStatus.value = false;
+      await window.location.reload();
     } catch (e) {
       errorMsg.value = "Error al agregar la habitación";
     }
