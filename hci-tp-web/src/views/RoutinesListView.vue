@@ -65,6 +65,41 @@ const handleShowRoutineEvent = () => {
   showMyRoutine.value = !showMyRoutine.value;
 };
 
+function getAction(actionName){
+  switch(actionName){
+    case 'Activar Casa':
+      return 'armStay';
+    case 'Activar Fuera':
+      return 'armAway';
+    case 'Desactivar':
+      return 'disarm';
+    case 'Abrir':
+      return 'open';
+    case 'Cerrar':
+      return 'close';
+    case 'Establecer Posición':
+      return 'setLevel';
+    case 'Iniciar':
+      return 'start';
+    case 'Pausar':
+      return 'stop';
+    case 'Regresar Base de Carga':
+      return 'dock';
+    case 'Bloquear':
+      return 'lock';
+    case 'Desbloquear':
+      return 'unlock';
+    case 'Establecer Temp. Freezer':
+      return 'setTempFreezer';
+    case 'Establecer Temp.':
+      return 'setTemp';
+    case 'Modo':
+      return 'mode';
+    default:
+      return null;
+  }
+}
+
 const handleNewRoutine = (routine) => {
 
   if (routine === null || routine.value === null) {
@@ -77,32 +112,34 @@ const handleNewRoutine = (routine) => {
   }
   else {
     errorMsg.value = '';
-    storeRoutine(routine);
+    storeRoutine(routine.value);
   }
 };
 
-async function storeRoutine(routineArray) {
-    const routine = new Routine(name, null);
-    routineArray.forEach(row => {
-        const device = deviceStore.devices.find(device => device.name === row.device.value);
-        if (device) {
-            routine.addAction(new Action(device.id, row.action, row.param));
-        } else {
-            throw new Error(`Device ${row.device.value} not found`);
-        }
-    });
-    try {
-        const result = await routineStore.add(routine);
-        if (result) {
-            return true;
-        } else {
-            throw new Error('Failed to add routine');
-        }
-    } catch (e) {
-        errorMsg.value = `Error al enviar la rutina: ${e.message}`;
-        return false;
+
+function createRoutine(routineData){
+  const routine = new Routine(routineData.name, null);
+  for (const deviceEntry of routineData.devices){
+    if (deviceEntry.device!=''){
+      const action = new Action((deviceStore.devices.find(device => device.name == deviceEntry.device)).id, getAction(deviceEntry.action), new Array(deviceEntry.param), null);
+      console.log(action);
+      routine.addAction(action);
+      } else {
+          throw new Error(`Device ${deviceEntry.device} not found`);
     }
 }
+console.log(`${routine}`);
+return routine
+}
+
+async function storeRoutine(routine) {
+        await routineStore.add(createRoutine(routine));
+        addButtonState.value = false;
+        blurStatus.value = false;
+    
+}
+    
+    
 
 onMounted(async () => {
   await deviceStore.getAll();

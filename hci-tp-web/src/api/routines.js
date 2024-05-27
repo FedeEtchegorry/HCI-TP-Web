@@ -39,7 +39,7 @@ class Routine {
     }
 
     addAction(action){
-        actions.push(action);
+        this.actions.push(action);
     }
 
     toString() {
@@ -56,10 +56,16 @@ class RoutineMeta {
 //------------------------Actions for routines---------------------------
 class Action {
     constructor(deviceId, actionName, params, meta){
-        this.device.id = deviceId;
+        this.device = new ActionDevice(deviceId);
         this.actionName = actionName;
         this.params = params;
         this.meta = meta;
+
+    }
+}
+class ActionDevice{
+    constructor(deviceId){
+        this.id=deviceId;
     }
 }
 
