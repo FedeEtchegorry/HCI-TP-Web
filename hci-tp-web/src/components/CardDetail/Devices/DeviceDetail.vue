@@ -66,6 +66,7 @@ import VacuumDetail from './VacuumDetail.vue';
 import AlarmDetail from './AlarmDetail.vue';
 import { useDeviceStore } from '@/stores/deviceStore';
 import { useRoomStore } from '@/stores/roomStore';
+import { useRoutineStore } from '@/stores/routineStore';
 
 let isActive = defineModel();
 let roomsForDevice;
@@ -84,6 +85,7 @@ const props = defineProps({
     device: Object,
 });
 
+const routineStore = useRoutineStore();
 const deleteDialog = ref(false);
 const dialog = ref(false);
 const editedDeviceName = ref(props.device.name);
@@ -111,6 +113,8 @@ const toggleDialog = () => {
 async function deleteDevice() {
     try {
         await deviceStore.remove(props.device.id);
+        const aux = routineStore.routines.filter(routine => routine.actions.some(action => action.device.id == props.device.id))
+        aux.forEach(async (routine) => await routineStore.remove(routine.id))
         toggleDialog();
         window.location.reload();
     } catch (e) {
